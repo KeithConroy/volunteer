@@ -1,0 +1,123 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+ body {
+   background-color: #E9EAED;
+   height: 100%;
+ }
+
+#main {
+  background-color: #ffffff;
+  min-height: 100%;
+  padding: 0 5% 5% 5%;
+  margin-top: 70px;
+  margin-bottom: 25px;
+  border-left: 7px solid #D2D2D2;
+  border-right: 7px solid #D2D2D2;
+  border-bottom-left-radius: 25px;
+  border-top-right-radius: 25px;
+}
+
+.page-header {
+  border-bottom: 1px solid #a0a0a0;
+}
+
+$bgDefault      : #0096b5;
+$bgHighlight    : #00667a;
+$colDefault     : #ffffff;
+$colHighlight   : #00667a;
+$dropDown       : true;
+.navbar-custom {
+  background-color: $bgDefault;
+  border-color: $bgHighlight;
+  border: 0;
+  .navbar-brand {
+    color: $colDefault;
+    -webkit-transition-duration: 1s; /* Safari */
+      transition-duration: 1s;
+    &:hover, &:focus {
+      color: white;
+      transform: scale(1.1);
+      -webkit-transition-duration: 1s; /* Safari */
+        transition-duration: 1s;}}
+  .navbar-text {
+    color: $colDefault; }
+  .navbar-nav {
+    > li {
+      > a {
+        color: $colDefault;
+        > i.heart {
+          -webkit-transition-duration: .7s; /* Safari */
+            transition-duration: .7s;
+        }
+        &:hover,  &:focus {
+          > i.heart {
+            color: #ff0004;
+            // transform: scale(1.5);
+            -webkit-transition-duration: .7s; /* Safari */
+              transition-duration: .7s;
+          }
+          color: $colHighlight; }}
+      @if $dropDown {
+        > .dropdown-menu {
+          background-color: $bgDefault;
+          > li > a {
+            color: $colDefault;
+            &:hover,  &:focus {
+              color: $colHighlight;
+              background-color: $bgHighlight; }}
+          .divider {
+            background-color: $bgHighlight;}}}
+    }
+    > .active {
+      > a, > a:hover, > a:focus {
+        color: $colHighlight;
+        background-color: $colDefault; }}
+    > .open {
+      > a, > a:hover, > a:focus {
+        color: $colHighlight;
+        background-color: $colDefault; }}}
+  .navbar-toggle {
+    border-color: $bgHighlight;
+    &:hover, &:focus {
+      background-color: $bgHighlight; }
+    .icon-bar {
+      background-color: $colDefault; }}
+  .navbar-collapse,
+  .navbar-form {
+    border-color: $colDefault; }
+  .navbar-link {
+    color: $colDefault;
+    &:hover {
+      color: $colHighlight; }}}
+@media (max-width: 767px) {
+  .navbar-custom .navbar-nav .open .dropdown-menu {
+    > li > a {
+      color: $colDefault;
+      &:hover, &:focus {
+        color: $colHighlight; }}
+    > .active {
+      > a, > a:hover, > a:focus {
+        color: $colHighlight;
+        background-color: $colDefault; }}}
+}
+
+.nav>li>a:hover {
+  background-color: $colDefault;
+}
+
+ul.nav li.dropdown:hover > ul.dropdown-menu {
+  display: block;
+}

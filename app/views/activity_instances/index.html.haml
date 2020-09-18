@@ -1,0 +1,24 @@
+%h2.page-header Activities
+.panel.panel-default
+  .table-responsive
+    %table.table.table-striped
+      %tbody
+        %tr
+          %td Org
+          %td Name
+          %td Start
+          %td End
+          %td Slots
+          %td
+        - @activities.each do |activity|
+          %tr
+            %td= activity.activity_type.organization.name
+            %td= activity.activity_type.name
+            %td= activity.starts_at.strftime("%m/%d/%Y %I:%M %p")
+            %td= activity.ends_at.strftime("%m/%d/%Y %I:%M %p")
+            %td= "(#{activity.remaining_slots}/#{activity.slots})"
+            %td
+              - if activity.remaining_slots.positive?
+                %button.btn.btn-default Sign Up
+              - else
+                %button.disabled Full
