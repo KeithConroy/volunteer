@@ -1,0 +1,14 @@
+- content_for :title, @organization.name
+
+%h2.page-header= @organization.name
+
+.panel.panel-default
+  .table-responsive
+    %table.table.table-striped
+      %tbody
+        %tr
+          %td Name
+          %td Description
+        %tr
+          %td= @organization.name
+          %td= @organization.description

@@ -1,7 +1,7 @@
-class CreateActivityInstances < ActiveRecord::Migration[6.0]
+class CreateShifts < ActiveRecord::Migration[6.0]
   def change
-    create_table :activity_instances do |t|
-      t.references :activity_type, null: true, foreign_key: true
+    create_table :shifts do |t|
+      t.references :shift_type, null: true, foreign_key: true
       t.integer :slots
       t.references :address, null: true, foreign_key: true
       t.datetime :starts_at

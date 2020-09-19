@@ -15,34 +15,34 @@ ActiveRecord::Schema.define(version: 2020_09_18_195442) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "activity_instances", force: :cascade do |t|
-    t.bigint "activity_type_id", null: false
+  create_table "shifts", force: :cascade do |t|
+    t.bigint "shift_type_id", null: false
     t.integer "slots"
-    t.bigint "address_id", null: false
+    t.bigint "address_id", null: true
     t.datetime "starts_at"
     t.datetime "ends_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["activity_type_id"], name: "index_activity_instances_on_activity_type_id"
-    t.index ["address_id"], name: "index_activity_instances_on_address_id"
+    t.index ["shift_type_id"], name: "index_shifts_on_shift_type_id"
+    t.index ["address_id"], name: "index_shifts_on_address_id"
   end
 
-  create_table "activity_slots", force: :cascade do |t|
-    t.bigint "activity_instance_id", null: false
+  create_table "user_shifts", force: :cascade do |t|
+    t.bigint "shift_id", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["activity_instance_id"], name: "index_activity_slots_on_activity_instance_id"
-    t.index ["user_id"], name: "index_activity_slots_on_user_id"
+    t.index ["shift_id"], name: "index_user_shifts_on_shift_id"
+    t.index ["user_id"], name: "index_user_shifts_on_user_id"
   end
 
-  create_table "activity_types", force: :cascade do |t|
+  create_table "shift_types", force: :cascade do |t|
     t.bigint "organization_id", null: false
     t.string "name"
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["organization_id"], name: "index_activity_types_on_organization_id"
+    t.index ["organization_id"], name: "index_shift_types_on_organization_id"
   end
 
   create_table "addresses", force: :cascade do |t|
@@ -73,10 +73,10 @@ ActiveRecord::Schema.define(version: 2020_09_18_195442) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "activity_instances", "activity_types"
-  add_foreign_key "activity_instances", "addresses"
-  add_foreign_key "activity_slots", "activity_instances"
-  add_foreign_key "activity_slots", "users"
-  add_foreign_key "activity_types", "organizations"
+  add_foreign_key "shifts", "shift_types"
+  add_foreign_key "shifts", "addresses"
+  add_foreign_key "user_shifts", "shifts"
+  add_foreign_key "user_shifts", "users"
+  add_foreign_key "shift_types", "organizations"
   add_foreign_key "addresses", "organizations"
 end

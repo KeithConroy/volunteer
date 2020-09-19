@@ -16,25 +16,27 @@ org = Organization.create(
   description: '',
   url: 'www.google.com'
 )
-type = ActivityType.create(
+type = ShiftType.create(
   organization_id: org.id,
   name: 'Animal Care AM',
   description: 'Feed/Clean'
 )
-instance = ActivityInstance.create(
-  activity_type_id: type.id,
-  starts_at: DateTime.now,
-  ends_at: DateTime.now + 1.hour,
-  slots: 2
-)
-ActivitySlot.create(
-  user_id: 1,
-  activity_instance_id: 1
-)
-Address.create(
+address = Address.create(
   line_1: '123 Main Street',
   city: 'Gotham',
   state: 'CA',
   zip_code: '12345',
   organization_id: org.id
 )
+shift = Shift.create(
+  shift_type_id: 1,
+  starts_at: DateTime.now,
+  ends_at: DateTime.now + 1.hour,
+  slots: 2,
+  address_id: address.id
+)
+UserShift.create(
+  user_id: user.id,
+  shift_id: shift.id
+)
+

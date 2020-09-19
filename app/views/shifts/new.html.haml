@@ -1,0 +1,9 @@
+- content_for :title, "Create Shift"
+
+%h2.page-header Create a new shift
+
+= form_for @shift do |f|
+  = f.select(:shift_type_id, @types)
+  = f.datetime_select :starts_at, label: 'Start', :ampm => true, :minute_step => 15, :order => [:month, :day, :year]
+  = f.datetime_select :ends_at, label: 'End', :ampm => true, :minute_step => 15, :order => [:month, :day, :year]
+  = f.submit

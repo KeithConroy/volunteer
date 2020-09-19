@@ -1,0 +1,17 @@
+- content_for :title, 'Shift Types'
+
+%h2.page-header Shift Types
+
+.panel.panel-default
+  .table-responsive
+    %table.table.table-striped
+      %tbody
+        %tr
+          %td Organization
+          %td Name
+          %td Description
+        - @types.each do |type|
+          %tr
+            %td= link_to type.organization.name, organization_path(type.organization)
+            %td= link_to type.name, shift_type_path(type)
+            %td= type.description

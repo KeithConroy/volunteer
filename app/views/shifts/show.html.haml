@@ -1,0 +1,34 @@
+- content_for :title, @shift.name
+
+%h2.page-header= @shift.name
+
+%h3 Details
+
+.panel.panel-default
+  .table-responsive
+    %table.table.table-striped
+      %tbody
+        %tr
+          %td Organization
+          %td Name
+          %td Date
+          %td Time
+          %td Slots
+        %tr
+          %td= link_to @shift.organization.name, organization_path(@shift.organization)
+          %td= @shift.shift_type.name
+          %td= @shift.formatted_date
+          %td= @shift.formatted_time_range
+          %td= "(#{@shift.remaining_slots}/#{@shift.slots})"
+
+%h3 Volunteers
+
+.panel.panel-default
+  .table-responsive
+    %table.table.table-striped
+      %tbody
+        %tr
+          %td Name
+        - @shift.users.each do |user|
+          %tr
+            %td= link_to user.full_name, user_path(user)

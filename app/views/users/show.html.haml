@@ -1,0 +1,44 @@
+- content_for :title, @user.full_name
+
+%h2.page-header= @user.full_name
+
+%h3 Scheduled Shifts
+
+- if @user.shifts.scheduled.any?
+  .panel.panel-default
+    .table-responsive
+      %table.table.table-striped
+        %tbody
+          %tr
+            %td Organization
+            %td Name
+            %td Date
+            %td Time
+          - @user.shifts.scheduled.each do |shift|
+            %tr
+              %td= link_to shift.organization.name, organization_path(shift.organization)
+              %td= link_to shift.name, shift_path(shift)
+              %td= shift.formatted_date
+              %td= shift.formatted_time_range
+- else
+  %p You don't have any upcoming shifts
+
+- if @user.shifts.completed.any?
+  %h3 Completed Shifts
+
+  .panel.panel-default
+    .table-responsive
+      %table.table.table-striped
+        %tbody
+          %tr
+            %td Organization
+            %td Name
+            %td Date
+            %td Time
+          - @user.shifts.completed.each do |shift|
+            %tr
+              %td= link_to shift.organization.name, organization_path(shift.organization)
+              %td= link_to shift.name, shift_path(shift)
+              %td= shift.formatted_date
+              %td= shift.formatted_time_range
+

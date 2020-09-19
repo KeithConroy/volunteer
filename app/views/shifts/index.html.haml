@@ -1,0 +1,21 @@
+- content_for :title, 'Shifts'
+
+%h2.page-header Shifts
+
+.panel.panel-default
+  .table-responsive
+    %table.table.table-striped
+      %tbody
+        %tr
+          %td Organization
+          %td Name
+          %td Date
+          %td Time
+          %td Slots
+        - @shifts.each do |shift|
+          %tr
+            %td= link_to shift.organization.name, organization_path(shift.organization)
+            %td= link_to shift.name, shift_path(shift)
+            %td= shift.formatted_date
+            %td= shift.formatted_time_range
+            %td= "(#{shift.remaining_slots}/#{shift.slots})"

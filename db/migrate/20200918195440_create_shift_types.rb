@@ -1,6 +1,6 @@
-class CreateActivityTypes < ActiveRecord::Migration[6.0]
+class CreateShiftTypes < ActiveRecord::Migration[6.0]
   def change
-    create_table :activity_types do |t|
+    create_table :shift_types do |t|
       t.references :organization, null: true, foreign_key: true
       t.string :name
       t.text :description
