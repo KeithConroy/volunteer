@@ -26,6 +26,6 @@
               - if shift.users.include?(User.first)
                 = button_to '✔', {}, {disabled: true, class: 'btn btn-success disabled'}
               - elsif shift.remaining_slots.positive?
-                = button_to 'Sign Up', sign_up_shift_path(shift), {class: 'btn btn-primary'}
+                = button_to 'Sign Up', sign_up_shift_path(shift), {class: 'btn btn-primary', data: { confirm: "Are you sure you want to sign up for #{shift.name} on #{shift.formatted_date}?" }}
               - else
                 = button_to 'Full', {}, {disabled: true, class: 'btn btn-primary'}

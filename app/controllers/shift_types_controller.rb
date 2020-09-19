@@ -1,11 +1,23 @@
 class ShiftTypesController < ApplicationController
-  before_action :find_shift_type, only: [:show]
+  before_action :find_shift_type, only: [:show, :edit, :update]
 
   def index
     @types = ShiftType.all
   end
 
   def show
+  end
+
+  def edit
+  end
+
+  def update
+    if @type.update_attributes(shift_type_params)
+      flash[:info] = "Shift Type updated"
+      redirect_to @type
+    else
+      # render json: @type.errors.full_messages, status: 400
+    end
   end
 
   def new
@@ -18,7 +30,7 @@ class ShiftTypesController < ApplicationController
     if @type.save!
       redirect_to @type
     else
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 

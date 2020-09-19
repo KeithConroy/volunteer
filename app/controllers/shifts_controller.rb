@@ -1,12 +1,26 @@
 class ShiftsController < ApplicationController
-  before_action :find_shift, only: [:show, :sign_up]
+  before_action :find_shift, only: [:show, :sign_up, :edit, :update]
   before_action :find_organization
 
   def index
-    @shifts = Shift.all
+    @shifts = Shift.all.order(:starts_at)
   end
 
   def show
+  end
+
+  def edit
+    @types = @organization.shift_types.pluck(:name, :id)
+    @addresses = @organization.addresses.pluck(:line_1, :id)
+  end
+
+  def update
+    if @shift.update_attributes(shift_params)
+      flash[:info] = "Shift updated"
+      redirect_to @shift
+    else
+      # render json: @shift.errors.full_messages, status: 400
+    end
   end
 
   def new
@@ -28,19 +42,19 @@ class ShiftsController < ApplicationController
   def sign_up
     unless @shift.remaining_slots.positive?
       flash[:error] = 'Shift is full'
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
 
     if @shift.users.include?(User.first)
       flash[:error] = 'You have already signed up for this shift'
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
 
     UserShift.create(
       shift: @shift,
       user: User.first
     )
-    redirect_to @shift
+    redirect_back(fallback_location: root_path)
   end
 
   private

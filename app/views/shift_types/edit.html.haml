@@ -1,0 +1,9 @@
+- content_for :title, "Edit Shift Type"
+
+%h2.page-header= "Edit #{@type.name}"
+
+= bootstrap_form_for @type, layout: :horizontal, control_col: "col-sm-9" do |f|
+  = f.hidden_field :organization_id, value: 1
+  = f.text_field :name
+  = f.text_area :description
+  = f.submit
