@@ -20,4 +20,12 @@ class Shift < ApplicationRecord
   def formatted_time_range
     "#{starts_at.strftime("%-I:%M %p")} - #{ends_at.strftime("%-I:%M %p")}"
   end
+
+  def formatted_available_slots
+    "#{remaining_slots}/#{slots}"
+  end
+
+  def formatted_filled_slots
+    "#{user_shifts.count}/#{slots}"
+  end
 end

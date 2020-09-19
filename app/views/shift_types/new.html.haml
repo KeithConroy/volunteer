@@ -1,0 +1,9 @@
+- content_for :title, "Create Shift Type"
+
+%h2.page-header Create a new shift type
+
+= bootstrap_form_for @type, layout: :horizontal, control_col: "col-sm-9" do |f|
+  = f.hidden_field :organization_id, value: 1
+  = f.text_field :name
+  = f.text_area :description
+  = f.submit

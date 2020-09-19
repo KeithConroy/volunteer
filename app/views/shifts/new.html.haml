@@ -2,8 +2,11 @@
 
 %h2.page-header Create a new shift
 
-= form_for @shift do |f|
+= bootstrap_form_for @shift, layout: :horizontal, control_col: "col-sm-9" do |f|
   = f.select(:shift_type_id, @types)
-  = f.datetime_select :starts_at, label: 'Start', :ampm => true, :minute_step => 15, :order => [:month, :day, :year]
-  = f.datetime_select :ends_at, label: 'End', :ampm => true, :minute_step => 15, :order => [:month, :day, :year]
+  = link_to "Create New Shift Type", new_shift_type_path
+  = f.select(:address_id, @addresses)
+  = f.datetime_field :starts_at, label: 'Start'
+  = f.datetime_field :ends_at, label: 'End'
+  = f.number_field :slots, label: 'Volunteers Needed'
   = f.submit

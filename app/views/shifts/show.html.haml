@@ -1,6 +1,8 @@
 - content_for :title, @shift.name
 
-%h2.page-header= @shift.name
+%h2.page-header
+  = @shift.name
+  %small= @shift.formatted_date
 
 %h3 Details
 
@@ -13,15 +15,17 @@
           %td Name
           %td Date
           %td Time
-          %td Slots
+          %td Available Slots
         %tr
           %td= link_to @shift.organization.name, organization_path(@shift.organization)
           %td= @shift.shift_type.name
           %td= @shift.formatted_date
           %td= @shift.formatted_time_range
-          %td= "(#{@shift.remaining_slots}/#{@shift.slots})"
+          %td= @shift.formatted_available_slots
 
-%h3 Volunteers
+%h3
+  = 'Volunteers'
+  %small= @shift.formatted_filled_slots
 
 .panel.panel-default
   .table-responsive
