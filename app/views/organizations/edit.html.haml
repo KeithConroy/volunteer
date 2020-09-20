@@ -1,0 +1,10 @@
+- content_for :title, "Edit #{@organization.name}"
+
+%h2.page-header= "Edit #{@organization.name}"
+
+= bootstrap_form_for @organization, layout: :horizontal, control_col: "col-sm-9" do |f|
+  = f.text_field :name
+  = f.text_area :description
+  = f.url_field :url, label: "Website"
+  = f.check_box :requires_approval, label: "Only approved users can sign up for shifts"
+  = f.submit

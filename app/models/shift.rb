@@ -1,6 +1,5 @@
 class Shift < ApplicationRecord
   belongs_to :shift_type
-  belongs_to :address
   has_many :user_shifts
   has_many :users, through: :user_shifts
 

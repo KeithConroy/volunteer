@@ -29,7 +29,7 @@ class ShiftsController < ApplicationController
   def create
     case params[:frequency]
     when 'recurring'
-
+      # create multiple
     else
       @shift = Shift.create!(shift_params)
       redirect_to @shift
@@ -42,15 +42,16 @@ class ShiftsController < ApplicationController
       redirect_back(fallback_location: root_path)
     end
 
-    if @shift.users.include?(User.first)
+    if @shift.users.include?(@current_user)
       flash[:error] = 'You have already signed up for this shift'
       redirect_back(fallback_location: root_path)
     end
 
     UserShift.create(
       shift: @shift,
-      user: User.first
+      user: @current_user
     )
+    # notify user
     redirect_back(fallback_location: root_path)
   end
 
@@ -66,10 +67,9 @@ class ShiftsController < ApplicationController
 
   def find_selections
     @types = @organization.shift_types.pluck(:name, :id)
-    @addresses = @organization.addresses.pluck(:line_1, :id)
   end
 
   def shift_params
-    params.require(:shift).permit(:shift_type_id, :slots, :address_id, :starts_at, :ends_at)
+    params.require(:shift).permit(:shift_type_id, :slots, :starts_at, :ends_at)
   end
 end

@@ -8,4 +8,9 @@ class User < ApplicationRecord
   def full_name
     "#{first_name} #{last_name}"
   end
+
+  def admin_organization
+    # AdminUser.where(user_id: id).first&.organization
+    Organization.first
+  end
 end

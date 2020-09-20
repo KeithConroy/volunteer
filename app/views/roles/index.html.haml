@@ -9,11 +9,17 @@
     %table.table.table-striped
       %tbody
         %tr
-          %td Organization
-          %td Name
-          %td Description
+          %th Name
+          %th Description
+          %th
+          %th
         - @roles.each do |role|
           %tr
-            %td= link_to role.organization.name, organization_path(role.organization)
             %td= link_to role.name, role_path(role)
             %td= role.description
+            %td
+              = link_to edit_role_path(role), class: 'header-icon-right' do
+                %i.fa.fa-pencil.fa-lg{"data-placement" => "right", "data-toggle" => "tooltip", :title => ""}
+            %td
+              = link_to role_path(role), method: :delete, data: { confirm: "Are you sure you want to remove the #{role.name} role?" }, class: 'header-icon-right' do
+                %i.fa.fa-trash.fa-lg{"data-placement" => "right", "data-toggle" => "tooltip", :title => ""}

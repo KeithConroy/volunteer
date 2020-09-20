@@ -7,11 +7,13 @@
     %table.table.table-striped
       %tbody
         %tr
-          %td Name
-          %td Description
-          %td Url
+          %th Name
+          %th Description
+          %th Url
+          %th Requires Approval
         - @organizations.each do |org|
           %tr
             %td= link_to org.name, organization_path(org)
             %td= org.description
             %td= org.url
+            %td= org.requires_approval

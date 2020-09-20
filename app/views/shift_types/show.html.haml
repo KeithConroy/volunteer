@@ -1,24 +1,26 @@
-- content_for :title, @type.name
+- content_for :title, @shift_type.name
 
-%h2.page-header= @type.name
+%h2.page-header= @shift_type.name
 
-%p= link_to "Edit", edit_shift_type_path(@type)
+%p= link_to "Edit", edit_shift_type_path(@shift_type)
 
 .panel.panel-default
   .table-responsive
     %table.table.table-striped
       %tbody
         %tr
-          %td Organization
-          %td Name
-          %td Description
-          %td Required Role
+          %th Organization
+          %th Name
+          %th Description
+          %th Address
+          %th Required Role
         %tr
-          %td= link_to @type.organization.name, organization_path(@type.organization)
-          %td= @type.name
-          %td= @type.description
+          %td= link_to @shift_type.organization.name, organization_path(@shift_type.organization)
+          %td= @shift_type.name
+          %td= @shift_type.description
+          %td= @shift_type.address.line_1
           %td
-            - if @type.role
-              = link_to @type.role.name, role_path(@type.role)
+            - if @shift_type.role
+              = link_to @shift_type.role.name, role_path(@shift_type.role)
             - else
               N/A

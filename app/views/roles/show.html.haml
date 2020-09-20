@@ -4,14 +4,17 @@
 
 %p= link_to "Edit", edit_role_path(@role)
 
+= link_to role_path(@role), method: :delete, data: { confirm: "Are you sure you want to remove the #{@role.name} role?" }, class: 'header-icon-right' do
+  %i.fa.fa-trash.fa-lg{"data-placement" => "right", "data-toggle" => "tooltip", :title => ""}
+
 .panel.panel-default
   .table-responsive
     %table.table.table-striped
       %tbody
         %tr
-          %td Organization
-          %td Name
-          %td Description
+          %th Organization
+          %th Name
+          %th Description
         %tr
           %td= link_to @role.organization.name, organization_path(@role.organization)
           %td= @role.name

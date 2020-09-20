@@ -13,12 +13,12 @@
     %table.table.table-striped
       %tbody
         %tr
-          %td Organization
-          %td Type
-          %td Date
-          %td Time
-          %td Available Slots
-          %td Required Role
+          %th Organization
+          %th Type
+          %th Date
+          %th Time
+          %th Available Slots
+          %th Required Role
         %tr
           %td= link_to @shift.organization.name, organization_path(@shift.organization)
           %td= link_to @shift.shift_type.name, shift_type_path(@shift.shift_type)
@@ -40,7 +40,7 @@
     %table.table.table-striped
       %tbody
         %tr
-          %td Name
+          %th Name
         - @shift.users.each do |user|
           %tr
             %td= link_to user.full_name, user_path(user)

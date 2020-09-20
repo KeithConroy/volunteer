@@ -9,13 +9,13 @@
     %table.table.table-striped
       %tbody
         %tr
-          %td Organization
-          %td Name
-          %td Description
-          %td Required Role
-        - @types.each do |type|
+          %th Name
+          %th Description
+          %th Required Role
+          %th
+          %th
+        - @shift_types.each do |type|
           %tr
-            %td= link_to type.organization.name, organization_path(type.organization)
             %td= link_to type.name, shift_type_path(type)
             %td= type.description
             %td
@@ -23,3 +23,9 @@
                 = link_to type.role.name, role_path(type.role)
               - else
                 N/A
+            %td
+              = link_to edit_shift_type_path(type), class: 'header-icon-right' do
+                %i.fa.fa-pencil.fa-lg{"data-placement" => "right", "data-toggle" => "tooltip", :title => ""}
+            %td
+              = link_to shift_type_path(type), method: :delete, data: { confirm: "Are you sure you want to remove the #{type.name} shift type?" }, class: 'header-icon-right' do
+                %i.fa.fa-trash.fa-lg{"data-placement" => "right", "data-toggle" => "tooltip", :title => ""}

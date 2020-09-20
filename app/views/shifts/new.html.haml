@@ -5,7 +5,6 @@
 = bootstrap_form_for @shift, layout: :horizontal, control_col: "col-sm-9" do |f|
   = f.select(:shift_type_id, @types)
   = link_to "Create New Shift Type", new_shift_type_path
-  = f.select(:address_id, @addresses)
   = f.datetime_field :starts_at, label: 'Start'
   = f.datetime_field :ends_at, label: 'End'
   = f.number_field :slots, label: 'Volunteers Needed'

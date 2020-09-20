@@ -2,9 +2,10 @@
 
 %h2.page-header Create a new shift type
 
-= bootstrap_form_for @type, layout: :horizontal, control_col: "col-sm-9" do |f|
+= bootstrap_form_for @shift_type, layout: :horizontal, control_col: "col-sm-9" do |f|
   = f.hidden_field :organization_id, value: 1
   = f.text_field :name
   = f.text_area :description
+  = f.select(:address_id, @addresses)
   = f.select(:role_id, @roles)
   = f.submit

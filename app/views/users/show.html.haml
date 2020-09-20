@@ -10,10 +10,10 @@
       %table.table.table-striped
         %tbody
           %tr
-            %td Organization
-            %td Name
-            %td Date
-            %td Time
+            %th Organization
+            %th Name
+            %th Date
+            %th Time
           - @user.shifts.scheduled.each do |shift|
             %tr
               %td= link_to shift.organization.name, organization_path(shift.organization)
@@ -31,10 +31,10 @@
       %table.table.table-striped
         %tbody
           %tr
-            %td Organization
-            %td Name
-            %td Date
-            %td Time
+            %th Organization
+            %th Name
+            %th Date
+            %th Time
           - @user.shifts.completed.each do |shift|
             %tr
               %td= link_to shift.organization.name, organization_path(shift.organization)

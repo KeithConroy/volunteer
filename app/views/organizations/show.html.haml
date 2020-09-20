@@ -2,13 +2,87 @@
 
 %h2.page-header= @organization.name
 
+%h3
+  Details
+  %small= link_to "Edit", edit_organization_path(@organization)
+
 .panel.panel-default
   .table-responsive
     %table.table.table-striped
       %tbody
         %tr
-          %td Name
-          %td Description
+          %th Name
+          %th Description
+          %th Url
+          %th Requires Approval
         %tr
           %td= @organization.name
           %td= @organization.description
+          %td= @organization.url
+          %td= @organization.requires_approval
+
+%h3
+  Roles
+  %small= link_to 'Create New Role', new_role_path
+
+.panel.panel-default
+  .table-responsive
+    %table.table.table-striped
+      %tbody
+        %tr
+          %th Name
+          %th Description
+        - @organization.roles.each do |role|
+          %tr
+            %td= link_to role.name, role_path(role)
+            %td= role.description
+
+%h3
+  Shift Types
+  %small= link_to 'Create New Shift Type', new_shift_type_path
+
+.panel.panel-default
+  .table-responsive
+    %table.table.table-striped
+      %tbody
+        %tr
+          %th Name
+          %th Description
+          %th Address
+          %th Required Role
+        - @organization.shift_types.each do |type|
+          %tr
+            %td= link_to type.name, shift_type_path(type)
+            %td= type.description
+            %td= type.address.line_1
+            %td
+              - if type.role
+                = link_to type.role.name, role_path(type.role)
+              - else
+                N/A
+
+%h3
+  Shifts
+  %small= link_to 'Create New Shift', new_shift_path
+
+.panel.panel-default
+  .table-responsive
+    %table.table.table-striped
+      %tbody
+        %tr
+          %th Type
+          %th Date
+          %th Time
+          %th Available Slots
+          %th Required Role
+        - @organization.shifts.each do |shift|
+          %tr
+            %td= link_to shift.shift_type.name, shift_type_path(shift.shift_type)
+            %td= shift.formatted_date
+            %td= shift.formatted_time_range
+            %td= shift.formatted_available_slots
+            %td
+              - if shift.role
+                = link_to shift.role.name, role_path(shift.role)
+              - else
+                N/A
