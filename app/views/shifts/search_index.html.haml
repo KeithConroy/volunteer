@@ -1,8 +1,6 @@
-- content_for :title, 'Shifts'
+- content_for :title, 'Find Shifts'
 
-%h2.page-header Shifts
-
-%p= link_to 'Create New Shift', new_shift_path
+%h2.page-header Find Shifts
 
 .panel.panel-default
   .table-responsive
@@ -15,6 +13,7 @@
           %th Time
           %th Available Slots
           %th Required Role
+          %td
         - @shifts.each do |shift|
           %tr
             %td= link_to shift.organization.name, organization_path(shift.organization)
@@ -27,3 +26,10 @@
                 = link_to shift.role.name, role_path(shift.role)
               - else
                 N/A
+            %td
+              - if shift.users.include?(User.first)
+                = button_to '✔', {}, {disabled: true, class: 'btn btn-success disabled'}
+              - elsif shift.remaining_slots.positive?
+                = button_to 'Sign Up', sign_up_shift_path(shift), {class: 'btn btn-primary', data: { confirm: "Are you sure you want to sign up for #{shift.name} on #{shift.formatted_date}?" }}
+              - else
+                = button_to 'Full', {}, {disabled: true, class: 'btn btn-primary'}

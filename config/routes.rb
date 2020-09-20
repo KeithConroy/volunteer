@@ -6,11 +6,20 @@ Rails.application.routes.draw do
     member do
       post :sign_up
     end
+
+    collection do
+      get :search_index
+    end
   end
 
   resources :shift_types
   resources :roles
-  resources :users
+  resources :users do
+    collection do
+      post :assign_role
+      post :remove_role
+    end
+  end
   resources :organizations
 
 end

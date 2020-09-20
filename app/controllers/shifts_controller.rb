@@ -3,6 +3,10 @@ class ShiftsController < ApplicationController
   before_action :find_organization
   before_action :find_selections, only: [:new, :edit]
 
+  def search_index
+    @shifts = Shift.all.order(:starts_at)
+  end
+
   def index
     @shifts = Shift.all.order(:starts_at)
   end

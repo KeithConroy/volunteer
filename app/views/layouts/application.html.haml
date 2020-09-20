@@ -39,6 +39,7 @@
                 %li= link_to "Create An Organization", new_organization_path
               %li= link_to "Organizations", organizations_path
               %li= link_to "Shifts", shifts_path
+              %li= link_to "Find Shifts", search_index_shifts_path
               %li= link_to "Users", users_path
               %li.dropdown
                 %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
@@ -48,6 +49,12 @@
                   %li= link_to 'Profile', user_path(User.find(1))
                   %li Settings
                   / %li= link_to(t('sessions.log_out'), destroy_user_session_path, :method => :delete)
+
+    - flash.each do |key, value|
+      .alert{class: "alert-#{key}", style: 'width: 80%; margin: auto; margin-bottom: 20px;' }
+        %button.close{ :data => { :dismiss => "alert" } } x
+        %strong
+          = value
 
     - if controller.controller_name == 'home'
       = yield

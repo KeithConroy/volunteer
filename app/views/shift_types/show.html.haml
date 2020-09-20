@@ -9,13 +9,11 @@
     %table.table.table-striped
       %tbody
         %tr
-          %th Organization
           %th Name
           %th Description
           %th Address
           %th Required Role
         %tr
-          %td= link_to @shift_type.organization.name, organization_path(@shift_type.organization)
           %td= @shift_type.name
           %td= @shift_type.description
           %td= @shift_type.address.line_1

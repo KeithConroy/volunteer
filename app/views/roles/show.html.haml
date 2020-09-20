@@ -12,10 +12,8 @@
     %table.table.table-striped
       %tbody
         %tr
-          %th Organization
           %th Name
           %th Description
         %tr
-          %td= link_to @role.organization.name, organization_path(@role.organization)
           %td= @role.name
           %td= @role.description

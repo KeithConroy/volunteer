@@ -1,10 +1,9 @@
 class ShiftTypesController < ApplicationController
   before_action :find_shift_type, only: [:show, :edit, :update, :destroy]
-  before_action :find_organization
   before_action :find_selections, only: [:new, :edit]
 
   def index
-    @shift_types = ShiftType.where(organization_id: @current_user.admin_organization&.id)
+    @shift_types = ShiftType.for_current_organization
   end
 
   def show
@@ -14,6 +13,8 @@ class ShiftTypesController < ApplicationController
   end
 
   def update
+    puts '*'*88
+    puts params
     if @shift_type.update_attributes(shift_type_params)
       flash[:info] = "Shift Type updated"
       redirect_back(fallback_location: root_path)
@@ -47,16 +48,12 @@ class ShiftTypesController < ApplicationController
     @shift_type = ShiftType.find(params[:id])
   end
 
-  def find_organization
-    @organization = Organization.find(1)
-  end
-
   def find_selections
-    @addresses = @organization.addresses.pluck(:line_1, :id)
-    @roles = @organization.roles.pluck(:name, :id)
+    @addresses = Address.for_current_organization.pluck(:line_1, :id)
+    @roles = Role.for_current_organization.pluck(:name, :id)
   end
 
   def shift_type_params
-    params.require(:shift_type).permit(:name, :description, :organization_id, :address_id)
+    params.require(:shift_type).permit(:name, :description, :organization_id, :address_id, :role_id)
   end
 end

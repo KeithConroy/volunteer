@@ -11,13 +11,15 @@
         %tr
           %th Name
           %th Description
+          %th Address
           %th Required Role
           %th
           %th
         - @shift_types.each do |type|
           %tr
-            %td= link_to type.name, shift_type_path(type)
+            %td= type.name
             %td= type.description
+            %td= type.address.line_1
             %td
               - if type.role
                 = link_to type.role.name, role_path(type.role)

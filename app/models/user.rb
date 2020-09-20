@@ -13,4 +13,9 @@ class User < ApplicationRecord
     # AdminUser.where(user_id: id).first&.organization
     Organization.first
   end
+
+  def has_role?(role_id)
+    user_roles.where(role_id: role_id).present?
+  end
+
 end
