@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :find_user, only: [:show, :assign_role, :remove_role, :my_organizations]
+  before_action :find_user, except: [:index]
   before_action :find_role, only: [:assign_role, :remove_role]
 
   def index
@@ -26,6 +26,10 @@ class UsersController < ApplicationController
 
   def my_organizations
     @user_organizations = @user.user_organizations.order(:is_approved)
+  end
+
+  def my_shifts
+    @user_shifts = @user.user_shifts.order(:is_approved)
   end
 
   private

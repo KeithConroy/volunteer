@@ -42,6 +42,7 @@
               %li= link_to "Organizations", organizations_path
               %li= link_to "My Organizations", my_organizations_user_path(@current_user)
               %li= link_to "Find Shifts", search_index_shifts_path
+              %li= link_to "My Shifts", my_shifts_user_path(@current_user)
               %li.dropdown
                 %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
                   %i.fa.fa-user.fa-lg>

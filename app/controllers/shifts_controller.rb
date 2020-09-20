@@ -4,22 +4,23 @@ class ShiftsController < ApplicationController
   before_action :find_selections, only: [:new, :edit]
 
   def search_index
-    shifts = if params[:organization_id]
+    org_ids = if params[:organization_id]
       unless @current_user.has_access?(params[:organization_id])
         flash[:info] = 'Page not found'
         redirect_back(fallback_location: root_path)
       end
 
-      shift_type_ids = ShiftType.where(
-        organization_id: params[:organization_id],
-        role_id: [@current_user.user_roles.pluck(:role_id)]
-      ).pluck(:id)
-      Shift.where(id: shift_type_ids)
+      params[:organization_id]
     else
-      Shift.all
+      @current_user.user_organizations.approved.pluck(:organization_id)
     end
 
-    @shifts = shifts.order(:starts_at)
+    shift_type_ids = ShiftType.where(
+      organization_id: org_ids,
+      role_id: [@current_user.user_roles.pluck(:role_id)] + [nil]
+    ).pluck(:id)
+
+    @shifts = Shift.where(id: shift_type_ids).order(:starts_at)
   end
 
   def index

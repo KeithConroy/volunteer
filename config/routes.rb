@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :users do
     member do
       get :my_organizations
+      get :my_shifts
     end
 
     collection do

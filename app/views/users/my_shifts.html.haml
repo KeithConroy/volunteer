@@ -1,0 +1,50 @@
+- content_for :title, 'My Shifts'
+
+%h2.page-header My Shifts
+
+%h3 Scheduled Shifts
+
+- if @user.shifts.scheduled.any?
+  .panel.panel-default
+    .table-responsive
+      %table.table.table-striped
+        %tbody
+          %tr
+            %th Organization
+            %th Name
+            %th Date
+            %th Time
+          - @user.shifts.scheduled.each do |shift|
+            %tr
+              %td= link_to shift.organization.name, organization_path(shift.organization)
+              %td= link_to shift.name, shift_path(shift)
+              %td= shift.formatted_date
+              %td= shift.formatted_time_range
+- else
+  %p You don't have any upcoming shifts
+
+- if @user.shifts.completed.any?
+  %h3 Completed Shifts
+
+  %p= "You've volunteered #{@user.hours} hours!"
+  - @user.hours_by_shift_type.each do |name, hours|
+    %p= "#{name}: #{pluralize(hours, 'hour')}"
+
+  - @user.hours_by_organization.each do |name, hours|
+    %p= "#{name}: #{pluralize(hours, 'hour')}"
+
+  .panel.panel-default
+    .table-responsive
+      %table.table.table-striped
+        %tbody
+          %tr
+            %th Organization
+            %th Name
+            %th Date
+            %th Time
+          - @user.shifts.completed.each do |shift|
+            %tr
+              %td= link_to shift.organization.name, organization_path(shift.organization)
+              %td= link_to shift.name, shift_path(shift)
+              %td= shift.formatted_date
+              %td= shift.formatted_time_range

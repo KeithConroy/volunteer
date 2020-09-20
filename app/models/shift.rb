@@ -27,4 +27,8 @@ class Shift < ApplicationRecord
   def formatted_filled_slots
     "#{user_shifts.count}/#{slots}"
   end
+
+  def hours
+    ((ends_at - starts_at) / 1.hour).round
+  end
 end
