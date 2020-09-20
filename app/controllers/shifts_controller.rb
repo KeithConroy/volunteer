@@ -5,6 +5,11 @@ class ShiftsController < ApplicationController
 
   def search_index
     shifts = if params[:organization_id]
+      unless @current_user.has_access?(params[:organization_id])
+        flash[:info] = 'Page not found'
+        redirect_back(fallback_location: root_path)
+      end
+
       shift_type_ids = ShiftType.where(
         organization_id: params[:organization_id],
         role_id: [@current_user.user_roles.pluck(:role_id)]
