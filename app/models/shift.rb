@@ -8,9 +8,7 @@ class Shift < ApplicationRecord
   scope :scheduled, -> { where("starts_at > ?", DateTime.now) }
   scope :completed, -> { where("starts_at < ?", DateTime.now) }
 
-  def remaining_slots
-    slots - user_shifts.count
-  end
+  after_commit :set_remaining_spots
 
   def formatted_date
     starts_at.strftime("%a %b %d, %Y")
@@ -20,15 +18,21 @@ class Shift < ApplicationRecord
     "#{starts_at.strftime("%-I:%M %p")} - #{ends_at.strftime("%-I:%M %p")}"
   end
 
-  def formatted_available_slots
-    "#{remaining_slots}/#{slots}"
+  def formatted_available_spots
+    "#{remaining_spots}/#{spots}"
   end
 
-  def formatted_filled_slots
-    "#{user_shifts.count}/#{slots}"
+  def formatted_filled_spots
+    "#{user_shifts.count}/#{spots}"
   end
 
   def hours
     ((ends_at - starts_at) / 1.hour).round
+  end
+
+  private
+
+  def set_remaining_spots
+    self.remaining_spots = self.spots
   end
 end

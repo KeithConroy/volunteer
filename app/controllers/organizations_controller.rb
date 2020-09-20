@@ -37,12 +37,16 @@ class OrganizationsController < ApplicationController
   end
 
   def request_access
-    user_org = UserOrganization.create(organization_id: @organization.id, user_id: params[:user_id])
+    user_org = UserOrganization.create(
+      organization_id: @organization.id,
+      user_id: params[:user_id],
+      status: :pending
+    )
 
     if @organization.requires_approval
       flash[:info] = "Request has been submitted"
     else
-      user_org.update(is_approved: true)
+      user_org.update(status: :approved)
       flash[:info] = "Access Granted"
     end
 

@@ -25,11 +25,11 @@ class UsersController < ApplicationController
   end
 
   def my_organizations
-    @user_organizations = @user.user_organizations.order(:is_approved)
+    @user_organizations = @user.user_organizations.order(:status)
   end
 
   def my_shifts
-    @user_shifts = @user.user_shifts.order(:is_approved)
+    @user_shifts = @user.user_shifts.order(:status)
   end
 
   private

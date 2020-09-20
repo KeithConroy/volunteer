@@ -30,10 +30,10 @@ class User < ApplicationRecord
   end
 
   def hours_by_shift_type
-    shifts.group_by(&:shift_type_id).map{|k,v| [ShiftType.find(k).name ,v.map(&:hours).sum]}.to_h
+    shifts.completed.group_by(&:shift_type_id).map{|k,v| [ShiftType.find(k).name ,v.map(&:hours).sum]}.to_h
   end
 
   def hours_by_organization
-    shifts.joins(:shift_type).group_by(&:organization).map{|k,v| [k.name ,v.map(&:hours).sum]}.to_h
+    shifts.completed.joins(:shift_type).group_by(&:organization).map{|k,v| [k.name ,v.map(&:hours).sum]}.to_h
   end
 end

@@ -48,3 +48,6 @@
               %td= link_to shift.name, shift_path(shift)
               %td= shift.formatted_date
               %td= shift.formatted_time_range
+
+  = pie_chart @user.hours_by_shift_type
+  = pie_chart @user.hours_by_organization

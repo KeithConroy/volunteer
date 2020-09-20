@@ -20,11 +20,11 @@ class ShiftsController < ApplicationController
       role_id: [@current_user.user_roles.pluck(:role_id)] + [nil]
     ).pluck(:id)
 
-    @shifts = Shift.where(id: shift_type_ids).order(:starts_at)
+    @shifts = Shift.scheduled.where(id: shift_type_ids).order(:starts_at)
   end
 
   def index
-    @shifts = Shift.all.order(:starts_at)
+    @shifts = Shift.scheduled.all.order(:starts_at)
   end
 
   def show
@@ -57,7 +57,7 @@ class ShiftsController < ApplicationController
   end
 
   def sign_up
-    unless @shift.remaining_slots.positive?
+    unless @shift.remaining_spots.positive?
       flash[:error] = 'Shift is full'
       redirect_back(fallback_location: root_path)
     end
@@ -90,6 +90,6 @@ class ShiftsController < ApplicationController
   end
 
   def shift_params
-    params.require(:shift).permit(:shift_type_id, :slots, :starts_at, :ends_at)
+    params.require(:shift).permit(:shift_type_id, :spots, :starts_at, :ends_at)
   end
 end

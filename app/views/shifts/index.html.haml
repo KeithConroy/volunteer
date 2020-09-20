@@ -13,7 +13,7 @@
           %th Name
           %th Date
           %th Time
-          %th Available Slots
+          %th Available Spots
           %th Required Role
         - @shifts.each do |shift|
           %tr
@@ -21,7 +21,7 @@
             %td= link_to shift.name, shift_path(shift)
             %td= shift.formatted_date
             %td= shift.formatted_time_range
-            %td= shift.formatted_available_slots
+            %td= shift.formatted_available_spots
             %td
               - if shift.role
                 = link_to shift.role.name, role_path(shift.role)
