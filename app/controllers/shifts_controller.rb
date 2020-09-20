@@ -1,6 +1,7 @@
 class ShiftsController < ApplicationController
   before_action :find_shift, only: [:show, :sign_up, :edit, :update]
   before_action :find_organization
+  before_action :find_selections, only: [:new, :edit]
 
   def index
     @shifts = Shift.all.order(:starts_at)
@@ -10,8 +11,6 @@ class ShiftsController < ApplicationController
   end
 
   def edit
-    @types = @organization.shift_types.pluck(:name, :id)
-    @addresses = @organization.addresses.pluck(:line_1, :id)
   end
 
   def update
@@ -25,8 +24,6 @@ class ShiftsController < ApplicationController
 
   def new
     @shift = Shift.new
-    @types = @organization.shift_types.pluck(:name, :id)
-    @addresses = @organization.addresses.pluck(:line_1, :id)
   end
 
   def create
@@ -65,6 +62,11 @@ class ShiftsController < ApplicationController
 
   def find_organization
     @organization = Organization.find(1)
+  end
+
+  def find_selections
+    @types = @organization.shift_types.pluck(:name, :id)
+    @addresses = @organization.addresses.pluck(:line_1, :id)
   end
 
   def shift_params

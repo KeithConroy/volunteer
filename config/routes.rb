@@ -7,9 +7,10 @@ Rails.application.routes.draw do
       post :sign_up
     end
   end
+
   resources :shift_types
+  resources :roles
   resources :users
   resources :organizations
-
 
 end

@@ -1,0 +1,9 @@
+- content_for :title, "Create Organization"
+
+%h2.page-header Create a new organization
+
+= bootstrap_form_for @organization, layout: :horizontal, control_col: "col-sm-9" do |f|
+  = f.text_field :name
+  = f.text_area :description
+  = f.url_field :url, label: "Website"
+  = f.submit

@@ -4,7 +4,7 @@ class Shift < ApplicationRecord
   has_many :user_shifts
   has_many :users, through: :user_shifts
 
-  delegate :name, :organization, to: :shift_type
+  delegate :name, :organization, :role, to: :shift_type
 
   scope :scheduled, -> { where("starts_at > ?", DateTime.now) }
   scope :completed, -> { where("starts_at < ?", DateTime.now) }

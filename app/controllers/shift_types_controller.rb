@@ -1,5 +1,7 @@
 class ShiftTypesController < ApplicationController
   before_action :find_shift_type, only: [:show, :edit, :update]
+  before_action :find_organization
+  before_action :find_selections, only: [:new, :edit]
 
   def index
     @types = ShiftType.all
@@ -38,6 +40,14 @@ class ShiftTypesController < ApplicationController
 
   def find_shift_type
     @type = ShiftType.find(params[:id])
+  end
+
+  def find_organization
+    @organization = Organization.find(1)
+  end
+
+  def find_selections
+    @roles = @organization.roles.pluck(:name, :id)
   end
 
   def shift_type_params

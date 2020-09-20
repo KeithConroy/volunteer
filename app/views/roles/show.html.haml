@@ -1,0 +1,18 @@
+- content_for :title, @role.name
+
+%h2.page-header= @role.name
+
+%p= link_to "Edit", edit_role_path(@role)
+
+.panel.panel-default
+  .table-responsive
+    %table.table.table-striped
+      %tbody
+        %tr
+          %td Organization
+          %td Name
+          %td Description
+        %tr
+          %td= link_to @role.organization.name, organization_path(@role.organization)
+          %td= @role.name
+          %td= @role.description

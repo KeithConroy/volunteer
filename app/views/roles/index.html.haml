@@ -1,0 +1,19 @@
+- content_for :title, 'Roles'
+
+%h2.page-header Roles
+
+%p= link_to "Create New Role", new_role_path
+
+.panel.panel-default
+  .table-responsive
+    %table.table.table-striped
+      %tbody
+        %tr
+          %td Organization
+          %td Name
+          %td Description
+        - @roles.each do |role|
+          %tr
+            %td= link_to role.organization.name, organization_path(role.organization)
+            %td= link_to role.name, role_path(role)
+            %td= role.description

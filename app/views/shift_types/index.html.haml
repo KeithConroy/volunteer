@@ -12,8 +12,14 @@
           %td Organization
           %td Name
           %td Description
+          %td Required Role
         - @types.each do |type|
           %tr
             %td= link_to type.organization.name, organization_path(type.organization)
             %td= link_to type.name, shift_type_path(type)
             %td= type.description
+            %td
+              - if type.role
+                = link_to type.role.name, role_path(type.role)
+              - else
+                N/A

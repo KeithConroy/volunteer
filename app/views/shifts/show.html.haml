@@ -14,16 +14,22 @@
       %tbody
         %tr
           %td Organization
-          %td Name
+          %td Type
           %td Date
           %td Time
           %td Available Slots
+          %td Required Role
         %tr
           %td= link_to @shift.organization.name, organization_path(@shift.organization)
-          %td= @shift.shift_type.name
+          %td= link_to @shift.shift_type.name, shift_type_path(@shift.shift_type)
           %td= @shift.formatted_date
           %td= @shift.formatted_time_range
           %td= @shift.formatted_available_slots
+          %td
+            - if @shift.role
+              = link_to @shift.role.name, role_path(@shift.role)
+            - else
+              N/A
 
 %h3
   = 'Volunteers'

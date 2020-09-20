@@ -14,6 +14,7 @@
           %td Date
           %td Time
           %td Available Slots
+          %td Required Role
           %td
         - @shifts.each do |shift|
           %tr
@@ -22,6 +23,11 @@
             %td= shift.formatted_date
             %td= shift.formatted_time_range
             %td= shift.formatted_available_slots
+            %td
+              - if shift.role
+                = link_to shift.role.name, role_path(shift.role)
+              - else
+                N/A
             %td
               - if shift.users.include?(User.first)
                 = button_to '✔', {}, {disabled: true, class: 'btn btn-success disabled'}

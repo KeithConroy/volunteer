@@ -16,10 +16,25 @@ org = Organization.create(
   description: '',
   url: 'www.google.com'
 )
+role_1 = Role.create(
+  organization_id: org.id,
+  name: 'Green',
+  description: ''
+)
+role_2 = Role.create(
+  organization_id: org.id,
+  name: 'Blue',
+  description: ''
+)
 type = ShiftType.create(
   organization_id: org.id,
   name: 'Animal Care AM',
   description: 'Feed/Clean'
+)
+type_2 = ShiftType.create(
+  organization_id: org.id,
+  name: 'Animal Care PM',
+  description: 'Feed Dinner'
 )
 address = Address.create(
   line_1: '123 Main Street',
@@ -29,14 +44,27 @@ address = Address.create(
   organization_id: org.id
 )
 shift = Shift.create(
-  shift_type_id: 1,
+  shift_type_id: type.id,
   starts_at: DateTime.now,
   ends_at: DateTime.now + 1.hour,
   slots: 2,
-  address_id: address.id
+  address_id: address.id,
+  role_id: role_1.id
+)
+shift_2 = Shift.create(
+  shift_type_id: type_2.id,
+  starts_at: DateTime.now,
+  ends_at: DateTime.now + 1.hour,
+  slots: 2,
+  address_id: address.id,
+  role_id: role_2.id
 )
 UserShift.create(
   user_id: user.id,
   shift_id: shift.id
+)
+UserRole.create(
+  user_id: user.id,
+  role_id: role_1.id
 )
 
