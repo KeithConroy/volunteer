@@ -1,0 +1,20 @@
+- content_for :title, 'My Organizations'
+
+%h2.page-header My Organizations
+
+.panel.panel-default
+  .table-responsive
+    %table.table.table-striped
+      %tbody
+        %tr
+          %th Name
+          %th Status
+          %th
+        - @user_organizations.each do |user_org|
+          %tr
+            %td= link_to user_org.organization.name, organization_path(user_org.organization)
+            %td= user_org.is_approved ? 'Approved' : 'Pending'
+            %td
+              - if user_org.is_approved
+                = link_to 'Find Shifts', search_index_shifts_path(organization_id: user_org.organization_id)
+

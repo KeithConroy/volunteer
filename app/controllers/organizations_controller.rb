@@ -1,5 +1,5 @@
 class OrganizationsController < ApplicationController
-  before_action :find_organization, only: [:show, :edit, :update]
+  before_action :find_organization, only: [:show, :edit, :update, :request_access]
 
   def index
     @organizations = Organization.all
@@ -34,6 +34,19 @@ class OrganizationsController < ApplicationController
     else
 
     end
+  end
+
+  def request_access
+    user_org = UserOrganization.create(organization_id: @organization.id, user_id: params[:user_id])
+
+    if @organization.requires_approval
+      flash[:info] = "Request has been submitted"
+    else
+      user_org.update(is_approved: true)
+      flash[:info] = "Access Granted"
+    end
+
+    redirect_back(fallback_location: root_path)
   end
 
   private

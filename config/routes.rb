@@ -15,11 +15,19 @@ Rails.application.routes.draw do
   resources :shift_types
   resources :roles
   resources :users do
+    member do
+      get :my_organizations
+    end
+
     collection do
       post :assign_role
       post :remove_role
     end
   end
-  resources :organizations
+  resources :organizations do
+    member do
+      post :request_access
+    end
+  end
 
 end

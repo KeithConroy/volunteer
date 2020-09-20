@@ -9,21 +9,23 @@
         %tr
           %th Organization
           %th Name
+          %th Description
           %th Date
           %th Time
           %th Available Slots
           %th Required Role
-          %td
+          %th
         - @shifts.each do |shift|
           %tr
             %td= link_to shift.organization.name, organization_path(shift.organization)
-            %td= link_to shift.name, shift_path(shift)
+            %td= shift.name
+            %td= shift.description
             %td= shift.formatted_date
             %td= shift.formatted_time_range
             %td= shift.formatted_available_slots
             %td
               - if shift.role
-                = link_to shift.role.name, role_path(shift.role)
+                = shift.role.name
               - else
                 N/A
             %td

@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :find_user, only: [:show, :assign_role, :remove_role]
+  before_action :find_user, only: [:show, :assign_role, :remove_role, :my_organizations]
   before_action :find_role, only: [:assign_role, :remove_role]
 
   def index
@@ -22,6 +22,10 @@ class UsersController < ApplicationController
     # notify user
     flash[:info] = "#{@role.name} role removed from #{@user.full_name}"
     redirect_back(fallback_location: root_path)
+  end
+
+  def my_organizations
+    @user_organizations = @user.user_organizations.order(:is_approved)
   end
 
   private

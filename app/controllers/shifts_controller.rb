@@ -4,7 +4,17 @@ class ShiftsController < ApplicationController
   before_action :find_selections, only: [:new, :edit]
 
   def search_index
-    @shifts = Shift.all.order(:starts_at)
+    shifts = if params[:organization_id]
+      shift_type_ids = ShiftType.where(
+        organization_id: params[:organization_id],
+        role_id: [@current_user.user_roles.pluck(:role_id)]
+      ).pluck(:id)
+      Shift.where(id: shift_type_ids)
+    else
+      Shift.all
+    end
+
+    @shifts = shifts.order(:starts_at)
   end
 
   def index

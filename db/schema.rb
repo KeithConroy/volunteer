@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_20_182606) do
+ActiveRecord::Schema.define(version: 2020_09_20_203000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,6 +74,25 @@ ActiveRecord::Schema.define(version: 2020_09_20_182606) do
     t.index ["shift_type_id"], name: "index_shifts_on_shift_type_id"
   end
 
+  create_table "user_organization_requests", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "organization_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["organization_id"], name: "index_user_organization_requests_on_organization_id"
+    t.index ["user_id"], name: "index_user_organization_requests_on_user_id"
+  end
+
+  create_table "user_organizations", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "organization_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "is_approved"
+    t.index ["organization_id"], name: "index_user_organizations_on_organization_id"
+    t.index ["user_id"], name: "index_user_organizations_on_user_id"
+  end
+
   create_table "user_roles", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "role_id", null: false
@@ -105,6 +124,10 @@ ActiveRecord::Schema.define(version: 2020_09_20_182606) do
   add_foreign_key "shift_types", "organizations"
   add_foreign_key "shifts", "addresses"
   add_foreign_key "shifts", "shift_types"
+  add_foreign_key "user_organization_requests", "organizations"
+  add_foreign_key "user_organization_requests", "users"
+  add_foreign_key "user_organizations", "organizations"
+  add_foreign_key "user_organizations", "users"
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"
   add_foreign_key "user_shifts", "shifts"
