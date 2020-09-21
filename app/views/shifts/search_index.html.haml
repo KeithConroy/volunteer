@@ -18,7 +18,6 @@
           %th Organization
           %th Name
           %th Date
-          %th Time
           %th Available Spots
           / %th Required Role
           %th
@@ -30,8 +29,11 @@
               %p
                 %small
                   %i= shift.description
-            %td= shift.formatted_date
-            %td= shift.formatted_time_range
+            %td
+              = shift.formatted_date
+              %p
+                %small
+                  %i= shift.formatted_time_range
             %td= shift.formatted_available_spots
             / %td
             /   - if shift.role
