@@ -1,0 +1,28 @@
+:css
+  body {
+    background-color: #E9EAED;
+    height: 100%;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    color: #5a5a5a;
+    font-family: 'Open Sans', sans-serif;
+   }
+
+  #main {
+    background-color: #ffffff;
+    padding: 2% 5%;
+    width: 80%;
+    margin: auto;
+    border-left: 7px solid #D2D2D2;
+    border-right: 7px solid #D2D2D2;
+    border-bottom-left-radius: 25px;
+    border-top-right-radius: 25px;
+  }
+
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+  %body
+    %div{class: 'container', id: 'main'}
+      = yield

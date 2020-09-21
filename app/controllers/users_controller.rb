@@ -15,7 +15,8 @@ class UsersController < ApplicationController
 
   def assign_role
     UserRole.create(user_id: @user.id, role_id: @role.id)
-    # notify user
+    UserMailer.role_assigned(@user, @role).deliver_later
+
     flash[:info] = "#{@role.name} role assigned to #{@user.full_name}"
     redirect_back(fallback_location: root_path)
   end

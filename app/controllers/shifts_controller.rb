@@ -85,12 +85,15 @@ class ShiftsController < ApplicationController
       shift: @shift,
       user: @current_user
     )
-    # notify user
+    UserMailer.shift_confirmation(@current_user, @shift).deliver_later
+
     redirect_back(fallback_location: root_path)
   end
 
   def user_cancel
     @shift.user_shifts.where(user_id: @current_user.id).destroy_all
+    UserMailer.shift_cancellation(@current_user, @shift).deliver_later
+
     flash[:info] = 'Shift cancelled'
     redirect_back(fallback_location: root_path)
   end
