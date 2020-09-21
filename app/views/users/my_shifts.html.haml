@@ -2,7 +2,7 @@
 
 %h2.page-header My Shifts
 
-%h3 Scheduled Shifts
+%h3 Scheduled
 
 - if @scheduled_shifts.any?
   .panel.panel-default
@@ -25,7 +25,7 @@
                     %i= shift.description
               %td= shift.formatted_date
               %td= shift.formatted_time_range
-              %td= button_to 'Cancel', cancel_shift_path(shift), {class: 'btn btn-danger', data: { confirm: "Are you sure you want to cancel your #{shift.name} shift?" }}
+              %td= button_to 'Cancel', user_cancel_shift_path(shift), {class: 'btn btn-danger', data: { confirm: "Are you sure you want to cancel your #{shift.name} shift?" }}
 - else
   %p You don't have any upcoming shifts
 
@@ -39,7 +39,7 @@
   - @user.hours_by_organization.each do |name, hours|
     %p= "#{name}: #{pluralize(hours, 'hour')}"
 
-  %h3 Completed Shifts
+  %h3 Completed
 
   .panel.panel-default
     .table-responsive

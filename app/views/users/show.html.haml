@@ -24,13 +24,11 @@
       %table.table.table-striped
         %tbody
           %tr
-            %th Organization
             %th Name
             %th Date
             %th Time
           - @user.shifts.scheduled.each do |shift|
             %tr
-              %td= link_to shift.organization.name, organization_path(shift.organization)
               %td= link_to shift.name, shift_path(shift)
               %td= shift.formatted_date
               %td= shift.formatted_time_range
@@ -45,13 +43,11 @@
       %table.table.table-striped
         %tbody
           %tr
-            %th Organization
             %th Name
             %th Date
             %th Time
           - @user.shifts.completed.each do |shift|
             %tr
-              %td= link_to shift.organization.name, organization_path(shift.organization)
               %td= link_to shift.name, shift_path(shift)
               %td= shift.formatted_date
               %td= shift.formatted_time_range

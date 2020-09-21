@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   resources :shifts do
     member do
       post :sign_up
-      post :cancel
+      post :user_cancel
+      post :admin_cancel
     end
 
     collection do

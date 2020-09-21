@@ -1,5 +1,5 @@
 class ShiftsController < ApplicationController
-  before_action :find_shift, only: [:show, :sign_up, :edit, :update, :cancel]
+  before_action :find_shift, except: [:search_index, :index, :new]
   before_action :find_organization
   before_action :find_selections, only: [:new, :edit]
 
@@ -75,10 +75,22 @@ class ShiftsController < ApplicationController
     redirect_back(fallback_location: root_path)
   end
 
-  def cancel
+  def user_cancel
     @shift.user_shifts.where(user_id: @current_user.id).destroy_all
     flash[:info] = 'Shift cancelled'
     redirect_back(fallback_location: root_path)
+  end
+
+  def admin_cancel
+    had_volunteers = false
+    @shift.user_shifts.each do |user_shift|
+      had_volunteers = true
+      # notify user
+      user_shift.destroy
+    end
+    @shift.destroy
+    flash[:info] = "Shift has been cancelled#{', volunteers have been notified' if had_volunteers}"
+    redirect_to(action: 'index')
   end
 
   private
