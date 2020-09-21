@@ -18,7 +18,8 @@
                   %i= shift.formatted_time_range
             %td
               = shift.formatted_available_spots
-              %p
-                %small= "Required Role: #{shift.role.present? ? shift.role.name : 'N/A'}"
+              - if shift.role.present?
+                %p
+                  %small= "Required Role: #{shift.role.name}"
             - if can_cancel
               %td= button_to 'Cancel', admin_cancel_shift_path(shift), {class: 'btn btn-danger', data: { confirm: "Are you sure you want to cancel this #{shift.name} shift?  If volunteers have already signed up, they will be notified by email." }}

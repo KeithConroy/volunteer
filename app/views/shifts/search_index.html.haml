@@ -42,9 +42,9 @@
             /     N/A
             %td
               - if shift.users.include?(@current_user)
-                = button_to '✔', {}, {disabled: true, class: 'btn btn-success disabled'}
+                = button_to 'Signed Up', {}, {disabled: true, class: 'btn btn-success disabled'}
                 = button_to 'Cancel', user_cancel_shift_path(shift), {class: 'btn btn-danger', data: { confirm: "Are you sure you want to cancel your #{shift.name} shift?" }}
               - elsif shift.remaining_spots.positive?
-                = button_to 'Sign Up', sign_up_shift_path(shift), {class: 'btn btn-primary', data: { confirm: "Are you sure you want to sign up for #{shift.name} on #{shift.formatted_date}?" }}
+                = button_to 'Sign Up', sign_up_shift_path(shift), {class: 'btn btn-primary', data: { confirm: "Are you sure you want to sign up for the #{shift.name} shift on #{shift.formatted_date} at #{shift.organization.name}?" }}
               - else
                 = button_to 'Full', {}, {disabled: true, class: 'btn btn-primary'}

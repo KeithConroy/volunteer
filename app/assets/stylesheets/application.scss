@@ -14,13 +14,13 @@
  *= require_self
  */
 
- body {
-   background-color: #E9EAED;
-   height: 100%;
-   padding-top: 75px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-   padding-bottom: 25px;
-   color: #5a5a5a;
-   font-family: 'Open Sans', sans-serif;
+body {
+  background-color: #E9EAED;
+  height: 100%;
+  padding-top: 75px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+  padding-bottom: 25px;
+  color: #5a5a5a;
+  font-family: 'Open Sans', sans-serif;
  }
 
 #main {
@@ -48,14 +48,7 @@ $dropDown       : true;
   border-color: $bgHighlight;
   border: 0;
   .navbar-brand {
-    color: $colDefault;
-    -webkit-transition-duration: 1s; /* Safari */
-      transition-duration: 1s;
-    &:hover, &:focus {
-      color: white;
-      transform: scale(1.1);
-      -webkit-transition-duration: 1s; /* Safari */
-        transition-duration: 1s;}}
+    color: $colDefault; }
   .navbar-text {
     color: $colDefault; }
   .navbar-nav {
