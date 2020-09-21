@@ -4,12 +4,16 @@ class ShiftsController < ApplicationController
   before_action :find_selections, only: [:new, :edit]
 
   def search_index
+    @organization = nil
+    @available_only = nil
+
     org_ids = if params[:organization_id]
       unless @current_user.has_access?(params[:organization_id])
         flash[:info] = 'Page not found'
         redirect_back(fallback_location: root_path)
       end
 
+      @organization = Organization.find(params[:organization_id])
       params[:organization_id]
     else
       @current_user.user_organizations.approved.pluck(:organization_id)
@@ -20,7 +24,15 @@ class ShiftsController < ApplicationController
       role_id: [@current_user.user_roles.pluck(:role_id)] + [nil]
     ).pluck(:id)
 
-    @shifts = Shift.scheduled.where(id: shift_type_ids).order(:starts_at)
+    shifts = Shift.scheduled.where(shift_type_id: shift_type_ids)
+    if params[:available_only]
+      @available_only = true
+      shifts = shifts.available
+    else
+
+    end
+
+    @shifts = shifts.order(:starts_at)
   end
 
   def index

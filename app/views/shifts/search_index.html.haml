@@ -2,6 +2,14 @@
 
 %h2.page-header Find Shifts
 
+- if @available_only
+  %p= link_to 'Show all', search_index_shifts_path(organization_id: @organization&.id)
+- else
+  %p= link_to 'Only show available', search_index_shifts_path(available_only: true, organization_id: @organization&.id)
+
+- if @organization.present?
+  %p= "Only showing shifts for #{@organization.name}"
+
 .panel.panel-default
   .table-responsive
     %table.table.table-striped
@@ -31,8 +39,9 @@
             /   - else
             /     N/A
             %td
-              - if shift.users.include?(User.first)
+              - if shift.users.include?(@current_user)
                 = button_to '✔', {}, {disabled: true, class: 'btn btn-success disabled'}
+                = button_to 'Cancel', user_cancel_shift_path(shift), {class: 'btn btn-danger', data: { confirm: "Are you sure you want to cancel your #{shift.name} shift?" }}
               - elsif shift.remaining_spots.positive?
                 = button_to 'Sign Up', sign_up_shift_path(shift), {class: 'btn btn-primary', data: { confirm: "Are you sure you want to sign up for #{shift.name} on #{shift.formatted_date}?" }}
               - else

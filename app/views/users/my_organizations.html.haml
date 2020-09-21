@@ -15,7 +15,7 @@
         - @user_organizations.each do |user_org|
           %tr
             %td= link_to user_org.organization.name, organization_path(user_org.organization)
-            %td= user_org.status
+            %td= user_org.status.capitalize
             %td
               - if user_org.approved?
                 = link_to 'Find Shifts', search_index_shifts_path(organization_id: user_org.organization_id)
