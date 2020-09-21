@@ -31,6 +31,7 @@ Rails.application.routes.draw do
     member do
       post :request_access
       post :grant_access
+      post :deny_access
       post :ban_user
     end
   end

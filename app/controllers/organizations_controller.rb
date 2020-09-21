@@ -64,6 +64,17 @@ class OrganizationsController < ApplicationController
     redirect_back(fallback_location: root_path)
   end
 
+  def deny_access
+    user_org = UserOrganization.where(
+      organization_id: @organization.id,
+      user_id: params[:user_id],
+    ).first
+
+    user_org.destroy
+    flash[:info] = "Access Denied"
+    redirect_back(fallback_location: root_path)
+  end
+
   def ban_user
     user_org = UserOrganization.where(
       organization_id: @organization.id,
@@ -71,6 +82,19 @@ class OrganizationsController < ApplicationController
     ).first
 
     user_org.update(status: :banned)
+
+    UserRole.where(
+      user_id: params[:user_id],
+      role_id: @organization.roles.pluck(:id)
+    ).destroy_all
+
+    shift_ids = Shift.scheduled.where(shift_type_id: @organization.shift_types.pluck(:id)).pluck(:id)
+
+    UserShift.where(
+      user_id: params[:user_id],
+      shift_id: shift_ids
+    ).destroy_all
+
     flash[:info] = "User Banned"
     redirect_back(fallback_location: root_path)
   end

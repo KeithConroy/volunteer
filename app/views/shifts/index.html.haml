@@ -6,22 +6,48 @@
 
 %p Shifts are instances of a shift type.  They are specific to a certain day and time.  Here you can specify how many volunteers will be needed.
 
-.panel.panel-default
-  .table-responsive
-    %table.table.table-striped
-      %tbody
-        %tr
-          %th Name
-          %th Date
-          %th Time
-          %th Available Spots
-          %th Required Role
-          %th
-        - @shifts.each do |shift|
+%h3 Scheduled
+- if @scheduled_shifts.any?
+  .panel.panel-default
+    .table-responsive
+      %table.table.table-striped
+        %tbody
           %tr
-            %td= shift.name
-            %td= shift.formatted_date
-            %td= shift.formatted_time_range
-            %td= shift.formatted_available_spots
-            %td= shift.role.present? ? shift.role.name : 'N/A'
-            %td= button_to 'Cancel', admin_cancel_shift_path(shift), {class: 'btn btn-danger', data: { confirm: "Are you sure you want to cancel this #{shift.name} shift?" }}
+            %th Name
+            %th Date
+            %th Time
+            %th Available Spots
+            %th Required Role
+            %th
+          - @scheduled_shifts.each do |shift|
+            %tr
+              %td= link_to shift.name, shift_path(shift)
+              %td= shift.formatted_date
+              %td= shift.formatted_time_range
+              %td= shift.formatted_available_spots
+              %td= shift.role.present? ? shift.role.name : 'N/A'
+              %td= button_to 'Cancel', admin_cancel_shift_path(shift), {class: 'btn btn-danger', data: { confirm: "Are you sure you want to cancel this #{shift.name} shift?" }}
+- else
+  %p No scheduled shifts
+
+%h3 Completed
+- if @completed_shifts.any?
+  .panel.panel-default
+    .table-responsive
+      %table.table.table-striped
+        %tbody
+          %tr
+            %th Name
+            %th Date
+            %th Time
+            %th Available Spots
+            %th Required Role
+          - @completed_shifts.each do |shift|
+            %tr
+              %td= link_to shift.name, shift_path(shift)
+              %td= shift.formatted_date
+              %td= shift.formatted_time_range
+              %td= shift.formatted_available_spots
+              %td= shift.role.present? ? shift.role.name : 'N/A'
+- else
+  %p No completed shifts

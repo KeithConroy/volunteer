@@ -7,6 +7,7 @@ class Shift < ApplicationRecord
 
   scope :scheduled, -> { where("starts_at > ?", DateTime.now) }
   scope :completed, -> { where("starts_at < ?", DateTime.now) }
+  scope :for_current_organization, -> { joins(:shift_type).where(shift_types: {organization_id: Thread.current[:organization_id]}) }
 
   before_create :set_remaining_spots
 

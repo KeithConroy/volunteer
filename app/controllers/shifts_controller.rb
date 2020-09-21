@@ -24,7 +24,9 @@ class ShiftsController < ApplicationController
   end
 
   def index
-    @shifts = Shift.scheduled.all.order(:starts_at)
+    shifts = Shift.for_current_organization.order(:starts_at)
+    @scheduled_shifts = shifts.scheduled
+    @completed_shifts = shifts.completed
   end
 
   def show
