@@ -2,7 +2,9 @@
 
 %h2.page-header= @shift_type.name
 
-%p= link_to "Edit", edit_shift_type_path(@shift_type)
+%h3
+  Details
+  %small= link_to "Edit", edit_shift_type_path(@shift_type)
 
 .panel.panel-default
   .table-responsive
@@ -19,6 +21,35 @@
           %td= @shift_type.address.line_1
           %td
             - if @shift_type.role
-              = link_to @shift_type.role.name, role_path(@shift_type.role)
+              = @shift_type.role.name
             - else
               N/A
+%h3 Stats
+
+.panel.panel-default
+  .table-responsive
+    %table.table.table-striped
+      %tbody
+        %tr
+          %th Completed Shifts
+          %td= @shift_type.shifts.completed.count
+        %tr
+          %th Scheduled Shifts
+          %td= @shift_type.shifts.scheduled.count
+        %tr
+          %th Fill Percentage
+          %td= @shift_type.fill_percentage
+
+%h3 Top Volunteers
+
+.panel.panel-default
+  .table-responsive
+    %table.table.table-striped
+      %tbody
+        %tr
+          %th Name
+          %th Shift Count
+        - @shift_type.top_volunteers.each do |user, shift_count|
+          %tr
+            %td= link_to user.full_name, user_path(user)
+            %td= shift_count
