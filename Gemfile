@@ -41,6 +41,7 @@ gem 'bootstrap_form'
 gem 'acts_as_paranoid', '~> 0.7.0'
 gem "chartkick"
 gem 'pry', '~> 0.13.1'
+gem 'whenever'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
