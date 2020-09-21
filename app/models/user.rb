@@ -8,6 +8,8 @@ class User < ApplicationRecord
   has_many :user_organizations
   has_many :organizations, through: :user_organizations
 
+  scope :for_current_organization, -> { joins(:user_organizations).where(user_organizations: {organization_id: Thread.current[:organization_id]}) }
+
   def full_name
     "#{first_name} #{last_name}"
   end
@@ -35,5 +37,9 @@ class User < ApplicationRecord
 
   def hours_by_organization
     shifts.completed.joins(:shift_type).group_by(&:organization).map{|k,v| [k.name ,v.map(&:hours).sum]}.to_h
+  end
+
+  def current_user_org
+    user_organizations.for_current_organization.first
   end
 end

@@ -1,5 +1,5 @@
 class OrganizationsController < ApplicationController
-  before_action :find_organization, only: [:show, :edit, :update, :request_access]
+  before_action :find_organization, except: [:index, :create]
 
   def index
     @organizations = Organization.all
@@ -50,6 +50,28 @@ class OrganizationsController < ApplicationController
       flash[:info] = "Access Granted"
     end
 
+    redirect_back(fallback_location: root_path)
+  end
+
+  def grant_access
+    user_org = UserOrganization.where(
+      organization_id: @organization.id,
+      user_id: params[:user_id],
+    ).first
+
+    user_org.update(status: :approved)
+    flash[:info] = "Access Granted"
+    redirect_back(fallback_location: root_path)
+  end
+
+  def ban_user
+    user_org = UserOrganization.where(
+      organization_id: @organization.id,
+      user_id: params[:user_id],
+    ).first
+
+    user_org.update(status: :banned)
+    flash[:info] = "User Banned"
     redirect_back(fallback_location: root_path)
   end
 

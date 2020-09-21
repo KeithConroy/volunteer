@@ -9,7 +9,6 @@
         %tr
           %th Organization
           %th Name
-          %th Description
           %th Date
           %th Time
           %th Available Spots
@@ -18,8 +17,11 @@
         - @shifts.each do |shift|
           %tr
             %td= link_to shift.organization.name, organization_path(shift.organization)
-            %td= shift.name
-            %td= shift.description
+            %td
+              = shift.name
+              %p
+                %small
+                  %i= shift.description
             %td= shift.formatted_date
             %td= shift.formatted_time_range
             %td= shift.formatted_available_spots

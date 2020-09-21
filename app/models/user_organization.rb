@@ -6,4 +6,6 @@ class UserOrganization < ApplicationRecord
 
   enum status: STATUSES
 
+  scope :for_current_organization, -> { where(organization_id: Thread.current[:organization_id]) }
+
 end

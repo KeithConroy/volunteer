@@ -3,7 +3,10 @@ class UsersController < ApplicationController
   before_action :find_role, only: [:assign_role, :remove_role]
 
   def index
-    @users = User.all
+    users = User.for_current_organization
+    user_orgs = UserOrganization.for_current_organization.where(user_id: users.pluck(:id))
+    @pending_users = users.where(id: user_orgs.where(status: :pending).pluck(:user_id))
+    @users = users - @pending_users
   end
 
   def show
@@ -29,7 +32,8 @@ class UsersController < ApplicationController
   end
 
   def my_shifts
-    @user_shifts = @user.user_shifts.order(:status)
+    @scheduled_shifts = @user.shifts.scheduled
+    @completed_shifts = @user.shifts.completed
   end
 
   private

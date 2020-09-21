@@ -9,7 +9,6 @@
     %table.table.table-striped
       %tbody
         %tr
-          %th Organization
           %th Name
           %th Date
           %th Time
@@ -17,13 +16,8 @@
           %th Required Role
         - @shifts.each do |shift|
           %tr
-            %td= link_to shift.organization.name, organization_path(shift.organization)
-            %td= link_to shift.name, shift_path(shift)
+            %td= shift.name
             %td= shift.formatted_date
             %td= shift.formatted_time_range
             %td= shift.formatted_available_spots
-            %td
-              - if shift.role
-                = link_to shift.role.name, role_path(shift.role)
-              - else
-                N/A
+            %td= shift.role.present? ? shift.role.name : 'N/A'

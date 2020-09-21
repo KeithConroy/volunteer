@@ -4,7 +4,7 @@
 
 %h3 Scheduled Shifts
 
-- if @user.shifts.scheduled.any?
+- if @scheduled_shifts.any?
   .panel.panel-default
     .table-responsive
       %table.table.table-striped
@@ -14,17 +14,23 @@
             %th Name
             %th Date
             %th Time
-          - @user.shifts.scheduled.each do |shift|
+            %th
+          - @scheduled_shifts.each do |shift|
             %tr
               %td= link_to shift.organization.name, organization_path(shift.organization)
-              %td= link_to shift.name, shift_path(shift)
+              %td
+                = shift.name
+                %p
+                  %small
+                    %i= shift.description
               %td= shift.formatted_date
               %td= shift.formatted_time_range
+              %td= button_to 'Cancel', cancel_shift_path(shift), {class: 'btn btn-danger', data: { confirm: "Are you sure you want to cancel your #{shift.name} shift?" }}
 - else
   %p You don't have any upcoming shifts
 
-- if @user.shifts.completed.any?
-  %h3 Completed Shifts
+- if @completed_shifts.any?
+  %h3 Summary
 
   %p= "You've volunteered #{@user.hours} hours!"
   - @user.hours_by_shift_type.each do |name, hours|
@@ -33,6 +39,8 @@
   - @user.hours_by_organization.each do |name, hours|
     %p= "#{name}: #{pluralize(hours, 'hour')}"
 
+  %h3 Completed Shifts
+
   .panel.panel-default
     .table-responsive
       %table.table.table-striped
@@ -42,10 +50,10 @@
             %th Name
             %th Date
             %th Time
-          - @user.shifts.completed.each do |shift|
+          - @completed_shifts.each do |shift|
             %tr
               %td= link_to shift.organization.name, organization_path(shift.organization)
-              %td= link_to shift.name, shift_path(shift)
+              %td= shift.name
               %td= shift.formatted_date
               %td= shift.formatted_time_range
 

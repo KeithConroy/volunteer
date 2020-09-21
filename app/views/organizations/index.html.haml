@@ -9,15 +9,13 @@
         %tr
           %th Name
           %th Description
-          %th Url
-          %th Requires Approval
+          %th Website
           %th
         - @organizations.each do |org|
           %tr
             %td= link_to org.name, organization_path(org)
             %td= org.description
-            %td= org.url
-            %td= org.requires_approval
+            %td= link_to org.url, "http://#{org.url}"
             %td
               - if @current_user.has_access?(org.id)
                 = button_to 'Access Granted', {}, {disabled: true, class: 'btn btn-success'}

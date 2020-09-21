@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :shifts do
     member do
       post :sign_up
+      post :cancel
     end
 
     collection do
@@ -28,6 +29,8 @@ Rails.application.routes.draw do
   resources :organizations do
     member do
       post :request_access
+      post :grant_access
+      post :ban_user
     end
   end
 

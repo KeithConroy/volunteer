@@ -20,11 +20,7 @@
             %td= type.name
             %td= type.description
             %td= type.address.line_1
-            %td
-              - if type.role
-                = link_to type.role.name, role_path(type.role)
-              - else
-                N/A
+            %td= type.role.present? ? type.role.name : 'N/A'
             %td
               = link_to edit_shift_type_path(type), class: 'header-icon-right' do
                 %i.fa.fa-pencil.fa-lg{"data-placement" => "right", "data-toggle" => "tooltip", :title => ""}

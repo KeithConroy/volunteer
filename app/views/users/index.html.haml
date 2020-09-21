@@ -1,6 +1,23 @@
-- content_for :title, 'Users'
+- content_for :title, 'Volunteers'
 
-%h2.page-header Users
+%h2.page-header Volunteers
+
+- if @pending_users.any?
+  %h3 Pending Approval
+
+  .panel.panel-default
+    .table-responsive
+      %table.table.table-striped
+        %tbody
+          %tr
+            %th Name
+            %th Status
+            %th
+          - @pending_users.each do |user|
+            %tr
+              %td= link_to user.full_name, user_path(user)
+              %td= user.current_user_org.status.capitalize
+              %td= button_to 'Grant Access', grant_access_organization_path(user.current_user_org.organization), {class: 'btn btn-primary', params: {user_id: user.id}, data: { confirm: "Are you sure you want to grant access to #{user.full_name}?" }}
 
 .panel.panel-default
   .table-responsive
@@ -8,6 +25,12 @@
       %tbody
         %tr
           %th Name
+          %th Status
+          %th
         - @users.each do |user|
           %tr
             %td= link_to user.full_name, user_path(user)
+            %td= user.current_user_org.status.capitalize
+            %td
+              - if user.current_user_org.approved?
+                = button_to 'Ban', ban_user_organization_path(user.current_user_org.organization), {class: 'btn btn-danger', params: {user_id: user.id}, data: { confirm: "Are you sure you want to ban #{user.full_name}?" }}
