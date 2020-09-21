@@ -2,52 +2,18 @@
 
 %h2.page-header Shifts
 
-%p= link_to 'Create New Shift', new_shift_path
+%p= link_to 'Create a new shift', new_shift_path
 
 %p Shifts are instances of a shift type.  They are specific to a certain day and time.  Here you can specify how many volunteers will be needed.
 
 %h3 Scheduled
 - if @scheduled_shifts.any?
-  .panel.panel-default
-    .table-responsive
-      %table.table.table-striped
-        %tbody
-          %tr
-            %th Name
-            %th Date
-            %th Time
-            %th Available Spots
-            %th Required Role
-            %th
-          - @scheduled_shifts.each do |shift|
-            %tr
-              %td= link_to shift.name, shift_path(shift)
-              %td= shift.formatted_date
-              %td= shift.formatted_time_range
-              %td= shift.formatted_available_spots
-              %td= shift.role.present? ? shift.role.name : 'N/A'
-              %td= button_to 'Cancel', admin_cancel_shift_path(shift), {class: 'btn btn-danger', data: { confirm: "Are you sure you want to cancel this #{shift.name} shift?" }}
+  = render partial: 'admin_table', locals: { shifts: @scheduled_shifts, can_cancel: true }
 - else
   %p No scheduled shifts
 
 %h3 Completed
 - if @completed_shifts.any?
-  .panel.panel-default
-    .table-responsive
-      %table.table.table-striped
-        %tbody
-          %tr
-            %th Name
-            %th Date
-            %th Time
-            %th Available Spots
-            %th Required Role
-          - @completed_shifts.each do |shift|
-            %tr
-              %td= link_to shift.name, shift_path(shift)
-              %td= shift.formatted_date
-              %td= shift.formatted_time_range
-              %td= shift.formatted_available_spots
-              %td= shift.role.present? ? shift.role.name : 'N/A'
+  = render partial: 'admin_table', locals: { shifts: @completed_shifts, can_cancel: false }
 - else
   %p No completed shifts

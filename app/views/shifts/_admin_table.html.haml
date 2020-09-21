@@ -1,0 +1,21 @@
+.panel.panel-default
+  .table-responsive
+    %table.table.table-striped
+      %tbody
+        %tr
+          %th Name
+          %th Date
+          %th Time
+          %th Available Spots
+          %th Required Role
+          - if can_cancel
+            %th
+        - shifts.each do |shift|
+          %tr
+            %td= link_to shift.name, shift_path(shift)
+            %td= shift.formatted_date
+            %td= shift.formatted_time_range
+            %td= shift.formatted_available_spots
+            %td= shift.role.present? ? shift.role.name : 'N/A'
+            - if can_cancel
+              %td= button_to 'Cancel', admin_cancel_shift_path(shift), {class: 'btn btn-danger', data: { confirm: "Are you sure you want to cancel this #{shift.name} shift?  If volunteers have already signed up, they will be notified by email." }}
