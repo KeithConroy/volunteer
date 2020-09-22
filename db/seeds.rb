@@ -9,13 +9,13 @@
 user = User.create(
   first_name: 'Keith',
   last_name: 'Conroy',
-  email: 'kconroyjr@gmail.com'
+  email: 'keith@mail.com'
 )
 4.times do |i|
   User.create(
     first_name: 'User',
     last_name: "Test#{i}",
-    email: "user#{i}@gmail.com"
+    email: "user#{i}@mail.com"
   )
 end
 
