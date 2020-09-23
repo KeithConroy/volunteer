@@ -1,2 +1,0 @@
-class UserOrganizationRequest < ApplicationRecord
-end

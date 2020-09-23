@@ -13,8 +13,6 @@ class ShiftTypesController < ApplicationController
   end
 
   def update
-    puts '*'*88
-    puts params
     if @shift_type.update_attributes(shift_type_params)
       flash[:info] = "Shift Type updated"
       redirect_back(fallback_location: root_path)

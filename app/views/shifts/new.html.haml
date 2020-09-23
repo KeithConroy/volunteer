@@ -3,6 +3,7 @@
 %h2.page-header Create a new shift
 
 = bootstrap_form_for @shift, layout: :horizontal, control_col: "col-sm-9" do |f|
+  = f.hidden_field :organization_id, value: @organization.id
   = f.select(:shift_type_id, @types)
   = link_to "Create New Shift Type", new_shift_type_path
   = f.datetime_field :starts_at, label: 'Start'

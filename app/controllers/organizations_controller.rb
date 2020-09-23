@@ -1,5 +1,5 @@
 class OrganizationsController < ApplicationController
-  before_action :find_organization, except: [:index, :create]
+  before_action :find_organization, except: [:new, :index, :create]
 
   def index
     @organizations = Organization.all
@@ -26,8 +26,7 @@ class OrganizationsController < ApplicationController
 
   def create
     @organization = Organization.new(organization_params)
-    # create admin
-    @current_user
+    OrganizationAdmin.create(user: @current_user, organization: @organization)
 
     if @organization.save
       redirect_to @organization
@@ -88,7 +87,7 @@ class OrganizationsController < ApplicationController
       role_id: @organization.roles.pluck(:id)
     ).destroy_all
 
-    shift_ids = Shift.scheduled.where(shift_type_id: @organization.shift_types.pluck(:id)).pluck(:id)
+    shift_ids = Shift.scheduled.where(organization_id: @organization.id).pluck(:id)
 
     UserShift.where(
       user_id: params[:user_id],

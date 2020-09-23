@@ -3,7 +3,7 @@
 %h2.page-header Create a new role
 
 = bootstrap_form_for @role, layout: :horizontal, control_col: "col-sm-9" do |f|
-  = f.hidden_field :organization_id, value: 1
+  = f.hidden_field :organization_id, value: @organization.id
   = f.text_field :name
   = f.text_area :description
   = f.submit

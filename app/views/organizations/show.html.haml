@@ -22,6 +22,19 @@
           %td= @organization.requires_approval
 
 %h3
+  Admins
+
+.panel.panel-default
+  .table-responsive
+    %table.table.table-striped
+      %tbody
+        %tr
+          %th Name
+        - @organization.admins.each do |admin|
+          %tr
+            %td= admin.full_name
+
+%h3
   Roles
   %small= link_to 'Create a new role', new_role_path
 
