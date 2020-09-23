@@ -17,9 +17,9 @@ class ShiftType < ApplicationRecord
   end
 
   def top_volunteers
-    shifts.joins(:user_shifts)
-      .group_by(&:users)
-      .map{|k,v| [k.first, v.count]}
+    UserShift.where(shift_id: shifts.pluck(:id))
+      .group_by(&:user)
+      .map{|k,v| [k, v.count]}
       .sort_by {|a| a[1]}
       .first(10)
       .to_h

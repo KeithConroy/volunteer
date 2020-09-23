@@ -14,7 +14,6 @@ class UserShift < ApplicationRecord
     shift.save
   end
 
-
   def increase_remaining_spots
     shift.remaining_spots += 1
     shift.save

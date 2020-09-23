@@ -121,8 +121,8 @@ user = User.create(
 
   shift = org.shifts.create(
     shift_type_id: type.id,
-    starts_at: DateTime.now + 6.hours,
-    ends_at: DateTime.now + 7.hours,
+    starts_at: DateTime.now.beginning_of_hour + 6.hours,
+    ends_at: DateTime.now.beginning_of_hour + 7.hours,
     spots: 2,
   )
   shift.user_shifts.create(user_id: users[0].id)
@@ -130,8 +130,8 @@ user = User.create(
 
   completed_shift = org.shifts.create(
     shift_type_id: type.id,
-    starts_at: DateTime.now - 2.days,
-    ends_at: DateTime.now - 2.days + 1.hour,
+    starts_at: DateTime.now.beginning_of_hour - 2.days,
+    ends_at: DateTime.now.beginning_of_hour - 2.days + 1.hour,
     spots: 2,
   )
   completed_shift.user_shifts.create(user_id: users[0].id)
@@ -139,16 +139,16 @@ user = User.create(
 
   org.shifts.create(
     shift_type_id: type_2.id,
-    starts_at: DateTime.now,
-    ends_at: DateTime.now + 1.hour,
+    starts_at: DateTime.now.beginning_of_hour,
+    ends_at: DateTime.now.beginning_of_hour + 1.hour,
     spots: 2,
   )
 
   3.times do |i|
     org.shifts.create(
       shift_type_id: type.id,
-      starts_at: DateTime.now + i.days,
-      ends_at: DateTime.now + i.days + 1.hour,
+      starts_at: DateTime.now.beginning_of_hour + i.days,
+      ends_at: DateTime.now.beginning_of_hour + i.days + 1.hour,
       spots: 2,
     )
   end
