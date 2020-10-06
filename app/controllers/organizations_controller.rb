@@ -1,6 +1,10 @@
 class OrganizationsController < ApplicationController
   before_action :find_organization, except: [:new, :index, :create]
 
+  def manage
+
+  end
+
   def index
     @organizations = Organization.all
   end

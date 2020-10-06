@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       post :grant_access
       post :deny_access
       post :ban_user
+      get :manage
     end
   end
 
