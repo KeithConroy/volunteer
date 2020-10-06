@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     end
 
     collection do
-      get :search_index
+      get :search
     end
   end
 

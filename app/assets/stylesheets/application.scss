@@ -26,12 +26,14 @@ body {
 #main {
   background-color: #ffffff;
   min-height: 100%;
-  padding: 0 5% 5% 5%;
-  margin-bottom: 25px;
+  padding: 1% 5%;
+  /*margin-bottom: 25px;*/
   border-left: 7px solid #D2D2D2;
   border-right: 7px solid #D2D2D2;
   border-bottom-left-radius: 25px;
   border-top-right-radius: 25px;
+  width: 95%;
+  margin: auto;
 }
 
 .page-header {
@@ -166,55 +168,6 @@ footer {
   border-bottom: 1px solid #eee;
 }
 
-.placeholders {
-  margin-bottom: 30px;
-  text-align: center;
-}
-.placeholders h4 {
-  margin-bottom: 0;
-}
-.placeholder {
-  margin-bottom: 20px;
-}
-.placeholder img {
-  display: inline-block;
-  border-radius: 50%;
-}
-
-.form-signin {
-  max-width: 330px;
-  padding: 15px;
-  margin: 0 auto;
-}
-.form-signin .form-signin-heading,
-.form-signin .checkbox {
-  margin-bottom: 10px;
-}
-.form-signin .checkbox {
-  font-weight: normal;
-}
-.form-signin .form-control {
-  position: relative;
-  height: auto;
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-  padding: 10px;
-  font-size: 16px;
-}
-.form-signin .form-control:focus {
-  z-index: 2;
-}
-.form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
 .select{
   font-size: 20px;
 }
@@ -227,4 +180,8 @@ footer {
 
 ul .nav {
   margin: 20px 0;
+}
+
+select {
+  width: 100%;
 }

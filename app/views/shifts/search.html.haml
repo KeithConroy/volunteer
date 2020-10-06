@@ -1,0 +1,58 @@
+- content_for :title, 'Find Shifts'
+
+%h2.page-header Find Shifts
+
+.filter{style: 'display: inline-block; width: 20%; vertical-align: top; margin-right: 1%;'}
+  = bootstrap_form_tag url: search_shifts_path, :method => "get" do
+    = label_tag "Organizations"
+    = select_tag :organization_ids, options_for_select(@my_organizations, @organization_ids), multiple: true
+    = label_tag "Shift Types"
+    = select_tag :shift_type_ids, options_for_select(@my_organization_shift_types, @shift_type_ids), multiple: true
+    = label_tag "Days"
+    = select_tag :day_ids, options_for_select(@days, @day_ids), multiple: true
+    = label_tag "Only show available"
+    = check_box_tag :available_only, true, @available_only
+    = label_tag "Hide my shifts"
+    = check_box_tag :hide_my_shifts, true, @hide_my_shifts
+    = submit_tag "Update Search", class: 'btn btn-primary'
+
+  %p= link_to 'Reset', search_shifts_path
+
+%div{style: 'display: inline-block; width: 75%; vertical-align: top; float: right;'}
+  .panel.panel-default
+    .table-responsive
+      %table.table.table-striped
+        %tbody
+          %tr
+            %th Organization
+            %th Name
+            %th Date
+            %th Available Spots
+            / %th Required Role
+            %th
+          - @shifts.each do |shift|
+            %tr
+              %td= link_to shift.organization.name, organization_path(shift.organization)
+              %td
+                = shift.name
+                %p
+                  %small
+                    %i= shift.description
+              %td
+                = shift.formatted_date
+                %p
+                  %small
+                    %i= shift.formatted_time_range
+              %td= shift.formatted_available_spots
+              / %td
+              /   - if shift.role
+              /     = shift.role.name
+              /   - else
+              /     N/A
+              %td
+                - if shift.users.include?(@current_user)
+                  = button_to 'Signed Up', {}, {disabled: true, class: 'btn btn-success disabled'}
+                - elsif shift.remaining_spots.positive?
+                  = button_to 'Sign Up', sign_up_shift_path(shift), {class: 'btn btn-primary', data: { confirm: "Are you sure you want to sign up for the #{shift.name} shift on #{shift.formatted_date} at #{shift.organization.name}?" }}
+                - else
+                  = button_to 'Full', {}, {disabled: true, class: 'btn btn-primary'}

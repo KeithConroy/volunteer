@@ -44,7 +44,7 @@
               - else
                 %li= link_to "Create An Organization", new_organization_path
               %li= link_to "Organizations", organizations_path
-              %li= link_to "Find Shifts", search_index_shifts_path
+              %li= link_to "Find Shifts", search_shifts_path
               %li.dropdown
                 %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
                   %i.fa.fa-user.fa-lg>
@@ -63,5 +63,5 @@
     - if controller.controller_name == 'home'
       = yield
     - else
-      %div{class: 'container', id: 'main'}
+      %div{id: 'main'}
         = yield

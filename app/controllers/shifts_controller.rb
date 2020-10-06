@@ -1,38 +1,68 @@
 class ShiftsController < ApplicationController
-  before_action :find_shift, except: [:search_index, :index, :new]
+  before_action :find_shift, except: [:search, :index, :new]
   before_action :find_organization
   before_action :find_selections, only: [:new, :edit]
 
-  def search_index
-    @organization = nil
-    @available_only = nil
+  def search
+    # params[:organization_ids]
+    # params[:shift_type_ids]
+    # params[:available_only]
+    # params[:day_ids]
 
-    org_ids = if params[:organization_id]
-      unless @current_user.has_access?(params[:organization_id])
-        flash[:info] = 'Page not found'
-        redirect_back(fallback_location: root_path)
+    @days = [['Any', -1], ['Sunday', 0],['Monday', 1], ['Tuesday', 2], ['Wednesday', 3], ['Thursday', 4], ['Friday', 5], ['Saturday', 6]]
+    @my_organizations = [["All", 0]]
+    @my_organization_shift_types = [["All", 0]]
+    @current_user.organizations.map do |org|
+      @my_organizations << [org.name, org.id]
+      org.shift_types.each do |type|
+        @my_organization_shift_types << [type.name, type.id]
       end
+    end
 
-      @organization = Organization.find(params[:organization_id])
-      params[:organization_id]
+    org_ids = if params[:organization_ids].present? && params[:organization_ids][0].to_i.positive?
+      @my_organization_shift_types = [["All", nil]]
+      @current_user.organizations.where(id: params[:organization_ids]).map do |org|
+        org.shift_types.each do |type|
+          @my_organization_shift_types << [type.name, type.id]
+        end
+      end
+      @current_user.user_organizations.approved.where(organization_id: params[:organization_ids]).pluck(:organization_id)
     else
       @current_user.user_organizations.approved.pluck(:organization_id)
     end
 
-    shift_type_ids = ShiftType.where(
-      organization_id: org_ids,
-      role_id: [@current_user.user_roles.pluck(:role_id)] + [nil]
-    ).pluck(:id)
-
-    shifts = Shift.scheduled.where(shift_type_id: shift_type_ids)
-    if params[:available_only]
-      @available_only = true
-      shifts = shifts.available
+    if params[:shift_type_ids].present? && params[:shift_type_ids][0].to_i.positive?
+      shift_type_ids = ShiftType.where(
+        organization_id: org_ids,
+        id: params[:shift_type_ids],
+        role_id: [@current_user.user_roles.pluck(:role_id)] + [nil]
+      ).pluck(:id)
     else
-
+      shift_type_ids = ShiftType.where(
+        organization_id: org_ids,
+        role_id: [@current_user.user_roles.pluck(:role_id)] + [nil]
+      ).pluck(:id)
     end
 
-    @shifts = shifts.order(:starts_at)
+    @shifts = Shift.scheduled.where(shift_type_id: shift_type_ids).order(:starts_at)
+
+    if params[:available_only]
+      @shifts = @shifts.available
+    end
+
+    if params[:day_ids].present? && params[:day_ids][0].to_i >= 0
+      @shifts = @shifts.select{|s| params[:day_ids].include?(s.starts_at.wday.to_s) }
+    end
+
+    if params[:hide_my_shifts]
+      @shifts = @shifts.reject{|s| s.users.include?(@current_user) }
+    end
+
+    @organization_ids = params[:organization_ids] || 0
+    @shift_type_ids = params[:shift_type_ids] || 0
+    @day_ids = params[:day_ids] || -1
+    @available_only = params[:available_only] || false
+    @hide_my_shifts = params[:hide_my_shifts] || false
   end
 
   def index

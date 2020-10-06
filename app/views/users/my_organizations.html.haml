@@ -18,5 +18,5 @@
             %td= user_org.status.capitalize
             %td
               - if user_org.approved?
-                = link_to 'Find Shifts', search_index_shifts_path(organization_id: user_org.organization_id)
+                = link_to 'Find Shifts', search_shifts_path(organization_ids: [user_org.organization_id])
 
