@@ -4,7 +4,7 @@
 
 %h3
   Details
-  %small= link_to "Edit", edit_organization_path(@organization)
+  %small{style: 'float: right;'}= link_to "Edit", edit_organization_path(@organization)
 
 .panel.panel-default
   .table-responsive
@@ -36,7 +36,7 @@
 
 %h3
   Roles
-  %small= link_to 'Create a new role', new_role_path
+  %small{style: 'float: right;'}= link_to 'Create a new role', new_role_path
 
 .panel.panel-default
   .table-responsive
@@ -52,7 +52,7 @@
 
 %h3
   Shift Types
-  %small= link_to 'Create a new shift type', new_shift_type_path
+  %small{style: 'float: right;'}= link_to 'Create a new shift type', new_shift_type_path
 
 .panel.panel-default
   .table-responsive
@@ -86,6 +86,6 @@
 
 %h3
   Shifts
-  %small= link_to 'Create a new shift', new_shift_path
+  %small{style: 'float: right;'}= link_to 'Create a new shift', new_shift_path
 
 = render partial: 'shifts/admin_table', locals: { shifts: @organization.shifts, can_cancel: false }
