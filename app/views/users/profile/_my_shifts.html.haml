@@ -1,0 +1,46 @@
+%h3 Scheduled
+
+- if @scheduled_shifts.any?
+  .panel.panel-default
+    .table-responsive
+      %table.table.table-striped
+        %tbody
+          %tr
+            %th Organization
+            %th Name
+            %th Date
+            %th Time
+            %th
+          - @scheduled_shifts.each do |shift|
+            %tr
+              %td= link_to shift.organization.name, organization_path(shift.organization)
+              %td
+                = shift.name
+                %p
+                  %small
+                    %i= shift.description
+              %td= shift.formatted_date
+              %td= shift.formatted_time_range
+              %td= button_to 'Cancel', user_cancel_shift_path(shift), {class: 'btn btn-danger', data: { confirm: "Are you sure you want to cancel your #{shift.name} shift?" }}
+- else
+  %p You don't have any upcoming shifts
+
+- if @completed_shifts.any?
+  %h3 Completed
+
+  .panel.panel-default
+    .table-responsive
+      %table.table.table-striped
+        %tbody
+          %tr
+            %th Organization
+            %th Name
+            %th Date
+            %th Time
+          - @completed_shifts.each do |shift|
+            %tr
+              %td= link_to shift.organization.name, organization_path(shift.organization)
+              %td= shift.name
+              %td= shift.formatted_date
+              %td= shift.formatted_time_range
+

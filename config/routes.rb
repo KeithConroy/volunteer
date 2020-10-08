@@ -20,6 +20,8 @@ Rails.application.routes.draw do
     member do
       get :my_organizations
       get :my_shifts
+      get :profile
+      get :change_tab
     end
 
     collection do
@@ -34,6 +36,11 @@ Rails.application.routes.draw do
       post :deny_access
       post :ban_user
       get :manage
+      get :change_tab
+    end
+
+    collection do
+      get :search
     end
   end
 

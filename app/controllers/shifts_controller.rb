@@ -66,9 +66,18 @@ class ShiftsController < ApplicationController
   end
 
   def index
-    shifts = Shift.for_current_organization.order(:starts_at)
-    @scheduled_shifts = shifts.scheduled
-    @completed_shifts = shifts.completed
+    @shifts = Shift.for_current_organization.order(:starts_at)
+    @shift_types = [["All", 0]]
+
+    @organization.shift_types.each do |type|
+      @shift_types << [type.name, type.id]
+    end
+
+    if params[:shift_type_ids] && params[:shift_type_ids][0].to_i.positive?
+      @shifts = @shifts.where(shift_type_id: params[:shift_type_ids])
+    end
+
+    @shift_type_ids = params[:shift_type_ids] || 0
   end
 
   def show

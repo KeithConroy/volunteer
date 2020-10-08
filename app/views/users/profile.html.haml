@@ -1,0 +1,52 @@
+- content_for :title, 'Profile'
+
+%h2.page-header Profile
+
+/ .side-bar
+/   %ul
+/     %li
+/       %a.tab-link{data: {tab: 'my_shifts'}} My Shifts
+/     %li
+/       %a.tab-link{data: {tab: 'stats'}} Stats
+/     %li
+/       %a.tab-link{data: {tab: 'my_organizations'}} My Organizations
+/     %li
+/       %a.tab-link{data: {tab: 'settings'}} Settings
+
+/ .side-bar-right
+/   .tab-content
+/     = render 'users/profile/my_shifts'
+
+/ :javascript
+/   $(document).on('turbolinks:load', function() {
+/     $('.tab-link').on('click', tabChange);
+/   });
+
+/   var tabChange = function(){
+/     var tab = $(this).data('tab');
+/     $.get('change_tab', { tab: tab }).success(function(payload) {
+/       $('.tab-content').html($(payload));
+/     });
+/   };
+
+.side-bar
+  .nav.flex-column.nav-pills{id:"tab", role:"tablist", 'aria-orientation' => "vertical"}
+    %a.nav-link.active{id:"my-shifts-tab", 'data-toggle' => "pill", href:"#my-shifts", role:"tab", 'aria-controls' => "my-shifts", 'aria-selected' => "true"}
+      My Shifts
+    %a.nav-link{id:"stats-tab", 'data-toggle' => "pill", href:"#stats", role:"tab", 'aria-controls' => "stats", 'aria-selected' => "false"}
+      Stats
+    %a.nav-link{id:"my-organizations-tab", 'data-toggle' => "pill", href:"#my-organizations", role:"tab", 'aria-controls' => "my-organizations", 'aria-selected' => "false"}
+      My Organizations
+    %a.nav-link{id:"settings-tab", 'data-toggle' => "pill", href:"#settings", role:"tab", 'aria-controls' => "settings", 'aria-selected' => "false"}
+      Settings
+
+.side-bar-right
+  .tab-content{id:"tabContent"}
+    .tab-pane.active{id:"my-shifts", role:"tabpanel", 'aria-labelledby' => "my-shifts-tab"}
+      = render 'users/profile/my_shifts'
+    .tab-pane{id:"stats", role:"tabpanel", 'aria-labelledby' => "stats-tab"}
+      = render 'users/profile/stats'
+    .tab-pane{id:"my-organizations", role:"tabpanel", 'aria-labelledby' => "my-organizations-tab"}
+      = render 'users/profile/my_organizations'
+    .tab-pane{id:"settings", role:"tabpanel", 'aria-labelledby' => "settings-tab"}
+      / = render 'users/profile/settings'

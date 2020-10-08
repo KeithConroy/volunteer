@@ -1,0 +1,18 @@
+%h3
+  Details
+  %small{style: 'float: right;'}= link_to "Edit", edit_organization_path(@organization)
+
+.panel.panel-default
+  .table-responsive
+    %table.table.table-striped
+      %tbody
+        %tr
+          %th Name
+          %th Description
+          %th Url
+          %th Requires Approval
+        %tr
+          %td= @organization.name
+          %td= @organization.description
+          %td= @organization.url
+          %td= @organization.requires_approval

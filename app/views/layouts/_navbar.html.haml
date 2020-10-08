@@ -1,0 +1,72 @@
+%nav.navbar.fixed-top.navbar-expand-lg
+  %a.navbar-brand{href: "/"} Volunteerable
+  %button.navbar-toggler{type:"button", 'data-toggle'=>"collapse", 'data-target'=>"#navbarSupportedContent", 'aria-controls'=>"navbarSupportedContent", 'aria-expanded'=>"false", 'aria-label'=>"Toggle navigation"}
+    %span.navbar-toggler-icon
+
+
+  %div.collapse.navbar-collapse{id:"navbarSupportedContent"}
+    %ul.navbar-nav.mr-auto
+
+    %ul.navbar-nav
+      - if controller.controller_name == 'home'
+      - else
+        - if @current_user.admin_organization.present?
+          %li.nav-item
+            %a.nav-link{href: manage_organization_path(@current_user.admin_organization)}
+              = "Manage #{@current_user.admin_organization.name}"
+        - else
+          %li.nav-item
+            %a.nav-link{href: new_organization_path} Create An Organization
+        %li.nav-item
+          %a.nav-link{href: search_organizations_path} Find Organizations
+
+      %li.nav-item
+        %a.nav-link{href:search_shifts_path} Find Shifts
+
+      %li.nav-item.dropdown
+        %a.nav-link.dropdown-toggle{href:"#", id:"navbarDropdown", role:"button", 'data-toggle'=>"dropdown", 'aria-haspopup'=>"true", 'aria-expanded'=>"false"}
+          #{@current_user.full_name}
+
+        %div.dropdown-menu{'aria-labelledby'=>"navbarDropdown"}
+          %a.dropdown-item{href: profile_user_path(@current_user)} Profile
+          %div.dropdown-divider
+          %a.dropdown-item{href: profile_user_path(@current_user)} Sign Out
+
+
+      %li.nav-item
+        %a.nav-link.disabled{href:"#", tabindex:"-1", 'aria-disabled'=>"trueDisabled"}
+
+
+
+/ %nav.navbar.navbar-fixed-top.navbar-custom
+/   .container
+/     .navbar-header
+/       %button.navbar-toggle.collapsed{"aria-controls" => "navbar", "aria-expanded" => "false", "data-target" => "#navbar", "data-toggle" => "collapse", :type => "button"}
+/         %span.sr-only Toggle navigation
+/         %span.icon-bar
+/         %span.icon-bar
+/         %span.icon-bar
+/       %a.home.navbar-brand{:href => "/"}
+/         Volunteerable
+
+/     #navbar.navbar-collapse.collapse
+/       %ul.nav.navbar-nav.navbar-right
+/         - if controller.controller_name == 'home'
+/           %li
+/             %a{:href => "#faq"}= "Sign Up"
+/           %li
+/             %a{:href => "#faq"}= "Log In"
+/         - else
+/           - if @current_user.admin_organization.present?
+/             %li= link_to "Manage #{@current_user.admin_organization.name}", manage_organization_path(@current_user.admin_organization)
+/           - else
+/             %li= link_to "Create An Organization", new_organization_path
+/           %li= link_to "Find Organizations", search_organizations_path
+/           %li= link_to "Find Shifts", search_shifts_path
+/           %li.dropdown
+/             %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+/               %i.fa.fa-user.fa-lg>
+/                 #{@current_user.full_name}
+/             %ul.dropdown-menu{:role => "menu"}
+/               %li= link_to 'Profile', profile_user_path(@current_user)
+/               %li= link_to 'Sign Out', profile_user_path(@current_user)

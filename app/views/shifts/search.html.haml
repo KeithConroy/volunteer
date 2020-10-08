@@ -4,7 +4,7 @@
   Find Shifts
   %small{style: 'float: right;'}= link_to "View My Shifts", my_shifts_user_path(@current_user)
 
-.filter{style: 'display: inline-block; width: 20%; vertical-align: top; margin-right: 1%;'}
+.side-bar
   = bootstrap_form_tag url: search_shifts_path, :method => "get" do
     = label_tag "Organizations"
     = select_tag :organization_ids, options_for_select(@my_organizations, @organization_ids), multiple: true
@@ -12,16 +12,21 @@
     = select_tag :shift_type_ids, options_for_select(@my_organization_shift_types, @shift_type_ids), multiple: true
     = label_tag "Days"
     = select_tag :day_ids, options_for_select(@days, @day_ids), multiple: true
-    = label_tag "Only show available"
+    = label_tag "Only show available shifts"
     = check_box_tag :available_only, true, @available_only
-    = label_tag "Hide my shifts"
-    = check_box_tag :hide_my_shifts, true, @hide_my_shifts
+    - unless @current_user.shifts.scheduled.empty?
+      = label_tag "Hide my shifts"
+      = check_box_tag :hide_my_shifts, true, @hide_my_shifts
     = submit_tag "Update Search", class: 'btn btn-primary'
 
   %p= link_to 'Reset', search_shifts_path
 
-%div{style: 'display: inline-block; width: 75%; vertical-align: top; float: right;'}
-  - if @shifts.present?
+.side-bar-right
+  - if @current_user.user_organizations.empty?
+    %p
+      You do not have access to any organizations, you can search for organizations and request access
+      = link_to 'here', search_organizations_path
+  - elsif @shifts.present?
     .panel.panel-default
       .table-responsive
         %table.table.table-striped

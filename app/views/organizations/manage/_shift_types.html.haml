@@ -1,0 +1,19 @@
+%h3
+  Shift Types
+  %small{style: 'float: right;'}= link_to 'Create a new shift type', new_shift_type_path
+
+.panel.panel-default
+  .table-responsive
+    %table.table.table-striped
+      %tbody
+        %tr
+          %th Name
+          %th Description
+          %th Address
+          %th Required Role
+        - @organization.shift_types.each do |type|
+          %tr
+            %td= link_to type.name, shift_type_path(type)
+            %td= type.description
+            %td= type.address.line_1
+            %td= type.role.present? ? type.role.name : 'N/A'

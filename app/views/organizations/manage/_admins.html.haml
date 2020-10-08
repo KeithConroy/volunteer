@@ -1,0 +1,13 @@
+%h3
+  Admins
+  %small{style: 'float: right;'}= link_to "Invite someone to become an admin", edit_organization_path(@organization)
+
+.panel.panel-default
+  .table-responsive
+    %table.table.table-striped
+      %tbody
+        %tr
+          %th Name
+        - @organization.admins.each do |admin|
+          %tr
+            %td= admin.full_name

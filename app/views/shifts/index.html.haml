@@ -6,14 +6,21 @@
 
 %p Shifts are instances of a shift type.  They are specific to a certain day and time.  Here you can specify how many volunteers will be needed.
 
-%h3 Scheduled
-- if @scheduled_shifts.any?
-  = render partial: 'admin_table', locals: { shifts: @scheduled_shifts, can_cancel: true }
-- else
-  %p No scheduled shifts
+.side-bar
+  = bootstrap_form_tag url: shifts_path, :method => "get" do
+    = label_tag "Shift Types"
+    = select_tag :shift_type_ids, options_for_select(@shift_types, @shift_type_ids), multiple: true
+    = submit_tag "Update Search", class: 'btn btn-primary'
 
-%h3 Completed
-- if @completed_shifts.any?
-  = render partial: 'admin_table', locals: { shifts: @completed_shifts, can_cancel: false }
-- else
-  %p No completed shifts
+.side-bar-right
+  %h3 Scheduled
+  - if @shifts.scheduled.any?
+    = render partial: 'admin_table', locals: { shifts: @shifts.scheduled, can_cancel: true }
+  - else
+    %p No scheduled shifts
+
+  %h3 Completed
+  - if @shifts.completed.any?
+    = render partial: 'admin_table', locals: { shifts: @shifts.completed, can_cancel: false }
+  - else
+    %p No completed shifts

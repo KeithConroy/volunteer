@@ -1,0 +1,53 @@
+%h3 Volunteers
+
+- if @pending_users.any?
+  %h3 Pending Approval
+
+  .panel.panel-default
+    .table-responsive
+      %table.table.table-striped
+        %tbody
+          %tr
+            %th Name
+            %th Status
+            %th
+            %th
+            %th
+          - @pending_users.each do |user|
+            %tr
+              %td= link_to user.full_name, user_path(user)
+              %td= user.current_user_org.status.capitalize
+              %td= button_to 'Grant Access', grant_access_organization_path(user.current_user_org.organization), {class: 'btn btn-success', params: {user_id: user.id}, data: { confirm: "Are you sure you want to grant access to #{user.full_name}?" }}
+              %td= button_to 'Deny Access', deny_access_organization_path(user.current_user_org.organization), {class: 'btn btn-danger', params: {user_id: user.id}, data: { confirm: "Are you sure you want to deny access to #{user.full_name}?" }}
+              %td= button_to 'Ban User', ban_user_organization_path(user.current_user_org.organization), {class: 'btn btn-danger', params: {user_id: user.id}, data: { confirm: "Are you sure you want to ban #{user.full_name}?" }}
+
+%h3
+  Top Volunteers
+
+.panel.panel-default
+  .table-responsive
+    %table.table.table-striped
+      %tbody
+        %tr
+          %th Name
+          %th Shift Count
+        - @organization.top_volunteers.each do |user, shift_count|
+          %tr
+            %td= link_to user.full_name, user_path(user)
+            %td= shift_count
+
+.panel.panel-default
+  .table-responsive
+    %table.table.table-striped
+      %tbody
+        %tr
+          %th Name
+          %th Status
+          %th
+        - @users.each do |user|
+          %tr
+            %td= link_to user.full_name, user_path(user)
+            %td= user.current_user_org.status.capitalize
+            %td
+              - if user.current_user_org.approved?
+                = button_to 'Ban User', ban_user_organization_path(user.current_user_org.organization), {class: 'btn btn-danger', params: {user_id: user.id}, data: { confirm: "Are you sure you want to ban #{user.full_name}?" }}

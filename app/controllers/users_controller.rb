@@ -37,6 +37,28 @@ class UsersController < ApplicationController
     @completed_shifts = @user.shifts.completed
   end
 
+  def profile
+    @user_organizations = @user.user_organizations.order(:status)
+    @scheduled_shifts = @user.shifts.scheduled
+    @completed_shifts = @user.shifts.completed
+  end
+
+  # def change_tab
+  #   case params[:tab]
+  #   when 'my_organizations'
+  #     @user_organizations = @user.user_organizations.order(:status)
+  #     render :'users/profile/_my_organizations', layout: false
+  #   when 'my_shifts'
+  #     @scheduled_shifts = @user.shifts.scheduled
+  #     @completed_shifts = @user.shifts.completed
+  #     render :'users/profile/_my_shifts', layout: false
+  #   when 'stats'
+  #     render :'users/profile/_stats', layout: false
+  #   when 'settings'
+  #     render :'users/profile/_settings', layout: false
+  #   end
+  # end
+
   private
 
   def find_user
