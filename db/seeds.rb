@@ -121,8 +121,9 @@ user = User.create!(
 
   shift = org.shifts.create!(
     shift_type_id: type.id,
-    starts_at: DateTime.now.beginning_of_hour + 6.hours,
-    ends_at: DateTime.now.beginning_of_hour + 7.hours,
+    date: Date.today,
+    start_time: Time.now.beginning_of_hour + 6.hours,
+    end_time: Time.now.beginning_of_hour + 7.hours,
     spots: 2,
   )
   shift.user_shifts.create!(user_id: users[0].id)
@@ -130,8 +131,9 @@ user = User.create!(
 
   completed_shift = org.shifts.create!(
     shift_type_id: type.id,
-    starts_at: DateTime.now.beginning_of_hour - 2.days,
-    ends_at: DateTime.now.beginning_of_hour - 2.days + 1.hour,
+    date: Date.today - 2.days,
+    start_time: Time.now.beginning_of_hour,
+    end_time: Time.now.beginning_of_hour + 1.hour,
     spots: 2,
   )
   completed_shift.user_shifts.create!(user_id: users[0].id)
@@ -139,28 +141,31 @@ user = User.create!(
 
   org.shifts.create!(
     shift_type_id: type_2.id,
-    starts_at: DateTime.now.beginning_of_hour,
-    ends_at: DateTime.now.beginning_of_hour + 1.hour,
+    date: Date.today,
+    start_time: Time.now.beginning_of_hour,
+    end_time: Time.now.beginning_of_hour + 1.hour,
     spots: 2,
   )
 
   3.times do |i|
     org.shifts.create!(
       shift_type_id: type.id,
-      starts_at: DateTime.now.beginning_of_hour + i.days,
-      ends_at: DateTime.now.beginning_of_hour + i.days + 1.hour,
+      date: Date.today + i.days,
+      start_time: Time.now.beginning_of_hour,
+      end_time: Time.now.beginning_of_hour + 1.hour,
       spots: 2,
     )
   end
 
   org.schedules.create!(
-    shift_type_id: shift_type_2.id,
+    shift_type_id: type_2.id,
     start_date: Date.today,
-    end_date: Date.today + 7.days,
-    frequency: 'daily',#'weekly',
-    frequency_data: 'MWF',
+    end_date: Date.today + 14.days,
+    frequency: :daily,
+    # frequency_data: 'MWF',
     start_time: Time.now.beginning_of_hour,
     end_time: Time.now.beginning_of_hour + 4.hours,
     spots: 3,
+    days_out: 7,
   )
 end

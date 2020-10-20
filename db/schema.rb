@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_20_000929) do
+ActiveRecord::Schema.define(version: 2020_10_20_172242) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,10 +64,11 @@ ActiveRecord::Schema.define(version: 2020_10_20_000929) do
     t.time "start_time"
     t.time "end_time"
     t.bigint "organization_id"
-    t.string "frequency"
+    t.integer "frequency"
     t.string "frequency_data"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "days_out"
     t.index ["organization_id"], name: "index_schedules_on_organization_id"
     t.index ["shift_type_id"], name: "index_schedules_on_shift_type_id"
   end
@@ -91,13 +92,14 @@ ActiveRecord::Schema.define(version: 2020_10_20_000929) do
     t.bigint "shift_type_id", null: false
     t.integer "spots"
     t.bigint "address_id"
-    t.datetime "starts_at"
-    t.datetime "ends_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "remaining_spots"
     t.bigint "organization_id"
     t.bigint "schedule_id"
+    t.time "start_time"
+    t.time "end_time"
+    t.date "date"
     t.index ["address_id"], name: "index_shifts_on_address_id"
     t.index ["organization_id"], name: "index_shifts_on_organization_id"
     t.index ["schedule_id"], name: "index_shifts_on_schedule_id"

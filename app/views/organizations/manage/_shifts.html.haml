@@ -2,4 +2,4 @@
   Shifts
   %small{style: 'float: right;'}= link_to 'Create a new shift', new_shift_path
 
-= render partial: 'shifts/admin_table', locals: { shifts: @organization.shifts, can_cancel: true }
+= render partial: 'shifts/admin_table', locals: { shifts: @organization.shifts.scheduled, can_cancel: true }

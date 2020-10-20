@@ -34,6 +34,8 @@ class SchedulesController < ApplicationController
 
   def find_selections
     @types = @organization.shift_types.pluck(:name, :id)
+    @frequencies = Schedule::FREQUENCIES
+    @days_out = [['One Week', 7], ['One Month', 30], ['Three Months', 90]]
   end
 
   def schedule_params
@@ -46,7 +48,8 @@ class SchedulesController < ApplicationController
       :start_time,
       :end_time,
       :frequency,
-      :frequency_data
+      :frequency_data,
+      :days_out,
     )
   end
 

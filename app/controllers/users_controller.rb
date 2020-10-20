@@ -39,8 +39,8 @@ class UsersController < ApplicationController
 
   def profile
     @user_organizations = @user.user_organizations.order(:status)
-    @scheduled_shifts = @user.shifts.scheduled
-    @completed_shifts = @user.shifts.completed
+    @scheduled_shifts = @user.shifts.scheduled.order(:date, :start_time)
+    @completed_shifts = @user.shifts.completed.order(:date, :start_time)
   end
 
   # def change_tab

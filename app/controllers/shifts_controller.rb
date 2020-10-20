@@ -43,14 +43,14 @@ class ShiftsController < ApplicationController
       ).pluck(:id)
     end
 
-    @shifts = Shift.scheduled.where(shift_type_id: shift_type_ids).order(:starts_at)
+    @shifts = Shift.scheduled.where(shift_type_id: shift_type_ids).order(:date)
 
     if params[:available_only]
       @shifts = @shifts.available
     end
 
     if params[:day_ids].present? && params[:day_ids][0].to_i >= 0
-      @shifts = @shifts.select{|s| params[:day_ids].include?(s.starts_at.wday.to_s) }
+      @shifts = @shifts.select{|s| params[:day_ids].include?(s.date.wday.to_s) }
     end
 
     if params[:hide_my_shifts]
@@ -65,7 +65,7 @@ class ShiftsController < ApplicationController
   end
 
   def index
-    @shifts = Shift.for_current_organization.order(:starts_at)
+    @shifts = Shift.for_current_organization.order(:date)
     @shift_types = [["All", 0]]
 
     @organization.shift_types.each do |type|
@@ -154,6 +154,6 @@ class ShiftsController < ApplicationController
   end
 
   def shift_params
-    params.require(:shift).permit(:organization_id, :shift_type_id, :spots, :starts_at, :ends_at)
+    params.require(:shift).permit(:organization_id, :shift_type_id, :spots, :date, :start_time, :end_time)
   end
 end

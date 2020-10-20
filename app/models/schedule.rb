@@ -9,6 +9,10 @@ class Schedule < ApplicationRecord
 
   after_create :create_shifts
 
+  FREQUENCIES = [:daily, :weekly]
+
+  enum frequency: FREQUENCIES
+
   def formatted_dates
     "#{start_date.strftime("%a %b %d, %Y")} - #{end_date.strftime("%a %b %d, %Y")}"
   end
@@ -17,25 +21,48 @@ class Schedule < ApplicationRecord
     "#{start_time.strftime("%-I:%M %p")} - #{end_time.strftime("%-I:%M %p")}"
   end
 
+  def formatted_frequency
+    string = case frequency.to_sym
+    when :daily
+      'Daily'
+    when :weekly
+      "Every #{}"
+    end
+
+    # if end_date.present?
+    #   string += " until #{end_date.strftime("%a %b %d, %Y")}"
+    # end
+
+    string
+  end
+
+  def create_shift(date)
+    shifts.create!(
+      organization_id: organization_id,
+      shift_type_id: shift_type_id,
+      spots: spots,
+      date: date,
+      start_time: start_time,
+      end_time: end_time,
+    )
+  end
+
   private
 
   def create_shifts
     puts 'creating shifts'
-    case frequency
-    when 'daily'
+
+    stop_date = [Date.today + days_out.days, end_date].min
+
+    case frequency.to_sym
+    when :daily
       d = start_date
       while true
-        shifts.create(
-          organization_id: organization_id,
-          shift_type_id: shift_type_id,
-          spots: spots,
-          starts_at: make_datetime(d, start_time),
-          ends_at: make_datetime(d, end_time),
-        )
-        return if d == end_date
+        create_shift(d)
+        return if d == stop_date
         d += 1.day
       end
-    when 'weekly'
+    when :weekly
     end
   end
 

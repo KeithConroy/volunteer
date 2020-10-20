@@ -1,7 +1,7 @@
 class ShiftReminderJob < ApplicationJob
 
   def perform
-    upcoming_shifts = Shift.where(starts_at: (DateTime.now + 1.day)..(DateTime.now + 2.days))
+    upcoming_shifts = Shift.where(date: (Date.today + 1.day)..(Date.today + 2.days))
 
     upcoming_shifts.each do |shift|
       shift.users.each do |user|

@@ -4,7 +4,8 @@
 
 = bootstrap_form_for @shift, layout: :horizontal, control_col: "col-sm-9" do |f|
   = f.select(:shift_type_id, @types)
-  = f.datetime_field :starts_at, label: 'Start'
-  = f.datetime_field :ends_at, label: 'End'
+  = f.date_field :date
+  = f.time_field :start_time
+  = f.time_field :end_time
   = f.number_field :spots, label: 'Volunteers Needed'
   = f.submit

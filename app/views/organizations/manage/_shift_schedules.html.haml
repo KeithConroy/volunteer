@@ -11,13 +11,13 @@
           %th Dates
           %th Time
           %th Frequency
-          %th Frequency Data
           %th Spots
+          %th Days Out
         - @organization.schedules.each do |schedule|
           %tr
             %td= link_to schedule.name, schedule_path(schedule)
             %td= schedule.formatted_dates
             %td= schedule.formatted_time_range
-            %td= schedule.frequency
-            %td= schedule.frequency_data
+            %td= schedule.formatted_frequency
             %td= schedule.spots
+            %td= schedule.days_out

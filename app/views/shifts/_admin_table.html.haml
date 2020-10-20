@@ -9,7 +9,7 @@
           %th Schedule
           - if can_cancel
             %th
-        - shifts.each do |shift|
+        - shifts.order(:date, :start_time).each do |shift|
           %tr
             %td= link_to shift.name, shift_path(shift)
             %td
@@ -22,6 +22,6 @@
               - if shift.role.present?
                 %p
                   %small= "Required Role: #{shift.role.name}"
-            %td= shift.schedule_id
+            %td= shift.schedule&.formatted_frequency
             - if can_cancel
               %td= button_to 'Cancel', admin_cancel_shift_path(shift), {class: 'btn btn-danger', data: { confirm: "Are you sure you want to cancel this #{shift.name} shift?  If volunteers have already signed up, they will be notified by email." }}
