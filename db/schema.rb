@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_23_222600) do
+ActiveRecord::Schema.define(version: 2020_10_20_000929) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,22 @@ ActiveRecord::Schema.define(version: 2020_09_23_222600) do
     t.index ["organization_id"], name: "index_roles_on_organization_id"
   end
 
+  create_table "schedules", force: :cascade do |t|
+    t.bigint "shift_type_id"
+    t.integer "spots"
+    t.date "start_date"
+    t.date "end_date"
+    t.time "start_time"
+    t.time "end_time"
+    t.bigint "organization_id"
+    t.string "frequency"
+    t.string "frequency_data"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["organization_id"], name: "index_schedules_on_organization_id"
+    t.index ["shift_type_id"], name: "index_schedules_on_shift_type_id"
+  end
+
   create_table "shift_types", force: :cascade do |t|
     t.bigint "organization_id", null: false
     t.string "name"
@@ -81,8 +97,10 @@ ActiveRecord::Schema.define(version: 2020_09_23_222600) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "remaining_spots"
     t.bigint "organization_id"
+    t.bigint "schedule_id"
     t.index ["address_id"], name: "index_shifts_on_address_id"
     t.index ["organization_id"], name: "index_shifts_on_organization_id"
+    t.index ["schedule_id"], name: "index_shifts_on_schedule_id"
     t.index ["shift_type_id"], name: "index_shifts_on_shift_type_id"
   end
 
@@ -127,6 +145,8 @@ ActiveRecord::Schema.define(version: 2020_09_23_222600) do
   add_foreign_key "organization_admins", "organizations"
   add_foreign_key "organization_admins", "users"
   add_foreign_key "roles", "organizations"
+  add_foreign_key "schedules", "organizations"
+  add_foreign_key "schedules", "shift_types"
   add_foreign_key "shift_types", "organizations"
   add_foreign_key "shifts", "addresses"
   add_foreign_key "shifts", "shift_types"

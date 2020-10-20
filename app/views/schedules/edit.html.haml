@@ -1,0 +1,15 @@
+- content_for :title, "Edit Schedule"
+
+%h2.page-header Edit schedule
+
+= bootstrap_form_for @schedule, layout: :horizontal, control_col: "col-sm-9" do |f|
+  = f.hidden_field :organization_id, value: @organization.id
+  = f.select(:shift_type_id, @types)
+  = f.select(:frequency, [['Daily', 'daily'],['Weekly', 'weekly']])
+  = link_to "Create New Shift Type", new_shift_type_path
+  = f.date_field :start_date
+  = f.date_field :end_date
+  = f.time_field :start_time
+  = f.time_field :end_time
+  = f.number_field :spots, label: 'Volunteers Needed'
+  = f.submit

@@ -43,6 +43,8 @@
       Roles
     %a.nav-link{id:"shift-types-tab", 'data-toggle' => "pill", href:"#shift-types", role:"tab", 'aria-controls' => "shift-types", 'aria-selected' => "false"}
       Shift Types
+    %a.nav-link{id:"shift-schedules-tab", 'data-toggle' => "pill", href:"#shift-schedules", role:"tab", 'aria-controls' => "shift-schedules", 'aria-selected' => "false"}
+      Shift Schedules
     %a.nav-link{id:"shifts-tab", 'data-toggle' => "pill", href:"#shifts", role:"tab", 'aria-controls' => "shifts", 'aria-selected' => "false"}
       Shifts
     %a.nav-link{id:"volunteers-tab", 'data-toggle' => "pill", href:"#volunteers", role:"tab", 'aria-controls' => "volunteers", 'aria-selected' => "false"}
@@ -60,5 +62,7 @@
       = render 'organizations/manage/shifts'
     .tab-pane{id:"shift-types", role:"tabpanel", 'aria-labelledby' => "shift-types-tab"}
       = render 'organizations/manage/shift_types'
+    .tab-pane{id:"shift-schedules", role:"tabpanel", 'aria-labelledby' => "shift-schedules-tab"}
+      = render 'organizations/manage/shift_schedules'
     .tab-pane{id:"volunteers", role:"tabpanel", 'aria-labelledby' => "volunteers-types-tab"}
       = render 'organizations/manage/volunteers'

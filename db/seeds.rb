@@ -39,78 +39,78 @@ data = [
   }
 ]
 
-user = User.create(
+user = User.create!(
   first_name: 'Keith',
   last_name: 'Conroy',
   email: 'keith@mail.com'
 )
 
 2.times do |org_num|
-  org = Organization.create(
+  org = Organization.create!(
     name: data[org_num][:org_name],
     description: '',
     url: 'www.google.com'
   )
-  OrganizationAdmin.create(
+  OrganizationAdmin.create!(
     organization_id: org.id,
     user_id: user.id
   )
   users = []
   2.times do |i|
-    users << User.create(
+    users << User.create!(
       first_name: 'User',
       last_name: "Test#{org_num}#{i}",
       email: "user#{org_num}#{i}@mail.com"
     )
   end
 
-  org.user_organizations.create(
+  org.user_organizations.create!(
     user_id: user.id,
     status: :approved
   )
-  org.user_organizations.create(
+  org.user_organizations.create!(
     user_id: users[0].id,
     status: :approved
   )
-  org.user_organizations.create(
+  org.user_organizations.create!(
     user_id: users[1].id,
     status: :pending
   )
 
-  address = org.addresses.create(
+  address = org.addresses.create!(
     line_1: '123 Main Street',
     city: 'Gotham',
     state: 'CA',
     zip_code: '12345',
   )
 
-  type = org.shift_types.create(
+  type = org.shift_types.create!(
     name: data[org_num][:shift_type_1][:name],
     address_id: address.id,
     description: data[org_num][:shift_type_1][:description],
   )
 
-  type_2 = org.shift_types.create(
+  type_2 = org.shift_types.create!(
     name: data[org_num][:shift_type_2][:name],
     address_id: address.id,
     description: data[org_num][:shift_type_2][:description],
   )
 
   if org_num == 0
-    role_1 = org.roles.create(
+    role_1 = org.roles.create!(
       name: data[org_num][:role_1][:name],
       description: data[org_num][:role_1][:description]
     )
-    UserRole.create(
+    UserRole.create!(
       user_id: user.id,
       role_id: role_1.id
     )
-    UserRole.create(
+    UserRole.create!(
       user_id: users[0].id,
       role_id: role_1.id
     )
 
-    role_2 = org.roles.create(
+    role_2 = org.roles.create!(
       name: data[org_num][:role_2][:name],
       description: data[org_num][:role_2][:description]
     )
@@ -119,25 +119,25 @@ user = User.create(
     type_2.update(role_id: role_2.id)
   end
 
-  shift = org.shifts.create(
+  shift = org.shifts.create!(
     shift_type_id: type.id,
     starts_at: DateTime.now.beginning_of_hour + 6.hours,
     ends_at: DateTime.now.beginning_of_hour + 7.hours,
     spots: 2,
   )
-  shift.user_shifts.create(user_id: users[0].id)
-  shift.user_shifts.create(user_id: user.id)
+  shift.user_shifts.create!(user_id: users[0].id)
+  shift.user_shifts.create!(user_id: user.id)
 
-  completed_shift = org.shifts.create(
+  completed_shift = org.shifts.create!(
     shift_type_id: type.id,
     starts_at: DateTime.now.beginning_of_hour - 2.days,
     ends_at: DateTime.now.beginning_of_hour - 2.days + 1.hour,
     spots: 2,
   )
-  completed_shift.user_shifts.create(user_id: users[0].id)
-  completed_shift.user_shifts.create(user_id: user.id)
+  completed_shift.user_shifts.create!(user_id: users[0].id)
+  completed_shift.user_shifts.create!(user_id: user.id)
 
-  org.shifts.create(
+  org.shifts.create!(
     shift_type_id: type_2.id,
     starts_at: DateTime.now.beginning_of_hour,
     ends_at: DateTime.now.beginning_of_hour + 1.hour,
@@ -145,11 +145,22 @@ user = User.create(
   )
 
   3.times do |i|
-    org.shifts.create(
+    org.shifts.create!(
       shift_type_id: type.id,
       starts_at: DateTime.now.beginning_of_hour + i.days,
       ends_at: DateTime.now.beginning_of_hour + i.days + 1.hour,
       spots: 2,
     )
   end
+
+  org.schedules.create!(
+    shift_type_id: shift_type_2.id,
+    start_date: Date.today,
+    end_date: Date.today + 7.days,
+    frequency: 'daily',#'weekly',
+    frequency_data: 'MWF',
+    start_time: Time.now.beginning_of_hour,
+    end_time: Time.now.beginning_of_hour + 4.hours,
+    spots: 3,
+  )
 end

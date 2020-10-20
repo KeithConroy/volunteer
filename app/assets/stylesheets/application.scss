@@ -35,6 +35,7 @@ body {
   border-top-right-radius: 25px;
   width: 95%;
   margin: auto;
+  display: table;
 }
 
 .side-bar {
@@ -58,6 +59,10 @@ body {
 
 .btn {
   font-size: 14px;
+}
+
+.sign-up-btn {
+  width: 100px;
 }
 
 $bgDefault      : #0096b5;

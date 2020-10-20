@@ -1,6 +1,7 @@
 class Shift < ApplicationRecord
   belongs_to :organization
   belongs_to :shift_type
+  belongs_to :schedule, optional: true
   has_many :user_shifts
   has_many :users, through: :user_shifts
 

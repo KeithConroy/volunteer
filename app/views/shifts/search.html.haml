@@ -59,10 +59,10 @@
                 /     N/A
                 %td
                   - if shift.users.include?(@current_user)
-                    = button_to 'Signed Up', {}, {disabled: true, class: 'btn btn-success disabled'}
+                    = button_to 'Signed Up', {}, {disabled: true, class: 'btn btn-success disabled sign-up-btn'}
                   - elsif shift.remaining_spots.positive?
-                    = button_to 'Sign Up', sign_up_shift_path(shift), {class: 'btn btn-primary', data: { confirm: "Are you sure you want to sign up for the #{shift.name} shift on #{shift.formatted_date} at #{shift.organization.name}?" }}
+                    = button_to 'Sign Up', sign_up_shift_path(shift), {class: 'btn btn-primary sign-up-btn', data: { confirm: "Are you sure you want to sign up for the #{shift.name} shift on #{shift.formatted_date} at #{shift.organization.name}?" }}
                   - else
-                    = button_to 'Full', {}, {disabled: true, class: 'btn btn-primary'}
+                    = button_to 'Full', {}, {disabled: true, class: 'btn btn-primary sign-up-btn'}
   - else
     %p No shifts available

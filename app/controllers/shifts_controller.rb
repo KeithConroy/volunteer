@@ -1,6 +1,5 @@
 class ShiftsController < ApplicationController
   before_action :find_shift, except: [:search, :index, :new]
-  before_action :find_organization
   before_action :find_selections, only: [:new, :edit]
 
   def search
@@ -100,13 +99,8 @@ class ShiftsController < ApplicationController
   end
 
   def create
-    case params[:frequency]
-    when 'recurring'
-      # create multiple
-    else
-      @shift = Shift.create!(shift_params)
-      redirect_to @shift
-    end
+    @shift = Shift.create!(shift_params)
+    redirect_to @shift
   end
 
   def sign_up
@@ -155,15 +149,11 @@ class ShiftsController < ApplicationController
     @shift = Shift.find(params[:id])
   end
 
-  def find_organization
-    @organization = Organization.find(1)
-  end
-
   def find_selections
     @types = @organization.shift_types.pluck(:name, :id)
   end
 
   def shift_params
-    params.require(:shift).permit(:shift_type_id, :spots, :starts_at, :ends_at)
+    params.require(:shift).permit(:organization_id, :shift_type_id, :spots, :starts_at, :ends_at)
   end
 end

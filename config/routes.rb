@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   end
 
   resources :shift_types
+  resources :schedules
   resources :roles
   resources :users do
     member do
