@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     authenticated :user do
-      root :to => 'organizations#index', as: :authenticated_root, via: :get
+      root :to => 'home#landing', as: :authenticated_root, via: :get
     end
     unauthenticated :user do
       root :to => 'home#index', as: :unauthenticated_root

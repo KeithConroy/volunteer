@@ -105,13 +105,15 @@ class ShiftsController < ApplicationController
 
   def sign_up
     unless @shift.remaining_spots.positive?
-      flash[:error] = 'Shift is full'
-      redirect_back(fallback_location: root_path)
+      flash[:danger] = 'Shift is full'
+      redirect_back(fallback_location: authenticated_root_path)
+      return
     end
 
     if @shift.users.include?(current_user)
-      flash[:error] = 'You have already signed up for this shift'
-      redirect_back(fallback_location: root_path)
+      flash[:danger] = 'You have already signed up for this shift'
+      redirect_back(fallback_location: authenticated_root_path)
+      return
     end
 
     UserShift.create(
@@ -120,7 +122,7 @@ class ShiftsController < ApplicationController
     )
     UserMailer.shift_confirmation(current_user, @shift).deliver_later
 
-    redirect_back(fallback_location: root_path)
+    redirect_back(fallback_location: authenticated_root_path)
   end
 
   def user_cancel
@@ -128,7 +130,7 @@ class ShiftsController < ApplicationController
     UserMailer.shift_cancellation(current_user, @shift).deliver_later
 
     flash[:info] = 'Shift cancelled'
-    redirect_back(fallback_location: root_path)
+    redirect_back(fallback_location: authenticated_root_path)
   end
 
   def admin_cancel

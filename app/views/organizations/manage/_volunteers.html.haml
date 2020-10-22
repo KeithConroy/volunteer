@@ -1,5 +1,3 @@
-%h3 Volunteers
-
 - if @pending_users.any?
   %h3 Pending Approval
 
@@ -21,20 +19,7 @@
               %td= button_to 'Deny Access', deny_access_organization_path(user.current_user_org.organization), {class: 'btn btn-danger', params: {user_id: user.id}, data: { confirm: "Are you sure you want to deny access to #{user.full_name}?" }}
               %td= button_to 'Ban User', ban_user_organization_path(user.current_user_org.organization), {class: 'btn btn-danger', params: {user_id: user.id}, data: { confirm: "Are you sure you want to ban #{user.full_name}?" }}
 
-%h3
-  Top Volunteers
-
-.panel.panel-default
-  .table-responsive
-    %table.table.table-striped
-      %tbody
-        %tr
-          %th Name
-          %th Shift Count
-        - @organization.top_volunteers.each do |user, shift_count|
-          %tr
-            %td= link_to user.full_name, user_path(user)
-            %td= shift_count
+%h3 Volunteers
 
 .panel.panel-default
   .table-responsive

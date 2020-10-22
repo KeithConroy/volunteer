@@ -17,7 +17,7 @@
 body {
   background-color: #E9EAED;
   height: 100%;
-  padding-top: 75px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+  padding-top: 50px;
   padding-bottom: 25px;
   color: #5a5a5a;
   font-family: 'Open Sans', sans-serif;
@@ -35,6 +35,7 @@ body {
   border-top-right-radius: 25px;
   width: 95%;
   margin: auto;
+  margin-top: 25px;
   display: table;
 }
 

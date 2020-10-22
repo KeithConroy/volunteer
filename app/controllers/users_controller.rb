@@ -18,14 +18,14 @@ class UsersController < ApplicationController
     UserMailer.role_assigned(@user, @role).deliver_later
 
     flash[:info] = "#{@role.name} role assigned to #{@user.full_name}"
-    redirect_back(fallback_location: root_path)
+    redirect_back(fallback_location: authenticated_root_path)
   end
 
   def remove_role
     UserRole.where(user_id: @user.id, role_id: @role.id).first.destroy
     # notify user
     flash[:info] = "#{@role.name} role removed from #{@user.full_name}"
-    redirect_back(fallback_location: root_path)
+    redirect_back(fallback_location: authenticated_root_path)
   end
 
   def my_organizations

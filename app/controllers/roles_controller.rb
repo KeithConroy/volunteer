@@ -14,7 +14,7 @@ class RolesController < ApplicationController
   def update
     if @role.update_attributes(role_params)
       flash[:info] = "Role updated"
-      redirect_back(fallback_location: root_path)
+      redirect_back(fallback_location: authenticated_root_path)
     else
       # render json: @role.errors.full_messages, status: 400
     end
@@ -30,7 +30,7 @@ class RolesController < ApplicationController
     if @role.save!
       redirect_to @role
     else
-      redirect_back(fallback_location: root_path)
+      redirect_back(fallback_location: authenticated_root_path)
     end
   end
 

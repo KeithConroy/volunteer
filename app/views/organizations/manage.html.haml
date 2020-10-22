@@ -49,6 +49,8 @@
       Shifts
     %a.nav-link{id:"volunteers-tab", 'data-toggle' => "pill", href:"#volunteers", role:"tab", 'aria-controls' => "volunteers", 'aria-selected' => "false"}
       Volunteers
+      - if @pending_users.any?
+        %span.badge.badge-info= @pending_users.count
 
 .side-bar-right
   .tab-content{id:"tabContent"}

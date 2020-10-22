@@ -15,7 +15,7 @@ class ShiftTypesController < ApplicationController
   def update
     if @shift_type.update_attributes(shift_type_params)
       flash[:info] = "Shift Type updated"
-      redirect_back(fallback_location: root_path)
+      redirect_back(fallback_location: authenticated_root_path)
     else
       # render json: @shift_type.errors.full_messages, status: 400
     end
@@ -31,7 +31,7 @@ class ShiftTypesController < ApplicationController
     if @shift_type.save!
       redirect_to @shift_type
     else
-      redirect_back(fallback_location: root_path)
+      redirect_back(fallback_location: authenticated_root_path)
     end
   end
 
