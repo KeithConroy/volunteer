@@ -4,7 +4,7 @@
 
 %h3 Roles
 
-- @current_user.admin_organization.roles.each do |role|
+- current_user.admin_organization.roles.each do |role|
   - if @user.has_role?(role.id)
     = bootstrap_form_tag url: remove_role_users_path, :method => "post" do
       = hidden_field_tag :role_id, role.id

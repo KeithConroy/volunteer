@@ -3,12 +3,8 @@
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title= content_for?(:title) ? yield(:title) : "Volunteerable"
-    / <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
     %link{:href => "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css", integrity:"sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z", :rel => "stylesheet", crossorigin:"anonymous"}/
-    / %link{:href => "//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css", :rel => "stylesheet"}/
-    / Optional theme
-    / %link{:href => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css", :rel => "stylesheet"}/
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
 
@@ -19,38 +15,6 @@
     = csrf_meta_tags
   %body{"data-action" => "#{controller.action_name}", "data-controller" => "#{controller.controller_name}"}
     = render 'layouts/navbar'
-    / %nav.navbar.navbar-fixed-top.navbar-custom
-    /   .container
-    /     .navbar-header
-    /       %button.navbar-toggle.collapsed{"aria-controls" => "navbar", "aria-expanded" => "false", "data-target" => "#navbar", "data-toggle" => "collapse", :type => "button"}
-    /         %span.sr-only Toggle navigation
-    /         %span.icon-bar
-    /         %span.icon-bar
-    /         %span.icon-bar
-    /       %a.home.navbar-brand{:href => "/"}
-    /         Volunteerable
-
-    /     #navbar.navbar-collapse.collapse
-    /       %ul.nav.navbar-nav.navbar-right
-    /         - if controller.controller_name == 'home'
-    /           %li
-    /             %a{:href => "#faq"}= "Sign Up"
-    /           %li
-    /             %a{:href => "#faq"}= "Log In"
-    /         - else
-    /           - if @current_user.admin_organization.present?
-    /             %li= link_to "Manage #{@current_user.admin_organization.name}", manage_organization_path(@current_user.admin_organization)
-    /           - else
-    /             %li= link_to "Create An Organization", new_organization_path
-    /           %li= link_to "Find Organizations", search_organizations_path
-    /           %li= link_to "Find Shifts", search_shifts_path
-    /           %li.dropdown
-    /             %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
-    /               %i.fa.fa-user.fa-lg>
-    /                 #{@current_user.full_name}
-    /             %ul.dropdown-menu{:role => "menu"}
-    /               %li= link_to 'Profile', profile_user_path(@current_user)
-    /               %li= link_to 'Sign Out', profile_user_path(@current_user)
 
     - flash.each do |key, value|
       .alert{class: "alert-#{key}", style: 'width: 80%; margin: auto; margin-bottom: 20px;' }

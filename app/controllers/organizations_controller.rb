@@ -1,5 +1,6 @@
 class OrganizationsController < ApplicationController
   before_action :find_organization, except: [:new, :index, :create, :search]
+  before_action :authenticate_admin, except: [:new, :index, :create, :search, :request_access]
 
   def manage
     users = User.for_current_organization
@@ -31,7 +32,7 @@ class OrganizationsController < ApplicationController
 
   def search
     if params[:hide_my_organizations]
-      @organizations = Organization.where.not(id: @current_user.user_organizations.pluck(:organization_id))
+      @organizations = Organization.where.not(id: current_user.user_organizations.pluck(:organization_id))
     else
       @organizations = Organization.all
     end
@@ -66,7 +67,7 @@ class OrganizationsController < ApplicationController
 
   def create
     @organization = Organization.new(organization_params)
-    OrganizationAdmin.create(user: @current_user, organization: @organization)
+    OrganizationAdmin.create(user: current_user, organization: @organization)
 
     if @organization.save
       redirect_to @organization
@@ -89,7 +90,7 @@ class OrganizationsController < ApplicationController
       flash[:info] = "Access Granted"
     end
 
-    redirect_back(fallback_location: root_path)
+    redirect_back(fallback_location: authenticated_root_path)
   end
 
   def grant_access
@@ -100,7 +101,7 @@ class OrganizationsController < ApplicationController
 
     user_org.update(status: :approved)
     flash[:info] = "Access Granted"
-    redirect_back(fallback_location: root_path)
+    redirect_back(fallback_location: authenticated_root_path)
   end
 
   def deny_access
@@ -111,7 +112,7 @@ class OrganizationsController < ApplicationController
 
     user_org.destroy
     flash[:info] = "Access Denied"
-    redirect_back(fallback_location: root_path)
+    redirect_back(fallback_location: authenticated_root_path)
   end
 
   def ban_user
@@ -135,7 +136,7 @@ class OrganizationsController < ApplicationController
     ).destroy_all
 
     flash[:info] = "User Banned"
-    redirect_back(fallback_location: root_path)
+    redirect_back(fallback_location: authenticated_root_path)
   end
 
   private
@@ -146,6 +147,10 @@ class OrganizationsController < ApplicationController
 
   def organization_params
     params.require(:organization).permit(:name, :description, :url, :requires_approval)
+  end
+
+  def authenticate_admin
+    raise 'Unauthorized' unless @organization.organization_admins.where(user_id: current_user.id).present?
   end
 
 end

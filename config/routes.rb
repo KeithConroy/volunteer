@@ -1,6 +1,20 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root :to => 'home#index'
+
+  devise_for :users do
+    # get '/users/sign_out' => 'devise/sessions#destroy'
+    # get 'users/:id' => 'users#show'
+  end
+
+  devise_scope :user do
+    authenticated :user do
+      root :to => 'organizations#index', as: :authenticated_root, via: :get
+    end
+    unauthenticated :user do
+      root :to => 'home#index', as: :unauthenticated_root
+    end
+    # post '/users/sign_out' => 'devise/sessions#destroy'
+  end
 
   resources :shifts do
     member do

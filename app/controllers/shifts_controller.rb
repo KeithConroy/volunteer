@@ -11,7 +11,7 @@ class ShiftsController < ApplicationController
     @days = [['Any', -1], ['Sunday', 0],['Monday', 1], ['Tuesday', 2], ['Wednesday', 3], ['Thursday', 4], ['Friday', 5], ['Saturday', 6]]
     @my_organizations = [["All", 0]]
     @my_organization_shift_types = [["All", 0]]
-    @current_user.organizations.map do |org|
+    current_user.organizations.map do |org|
       @my_organizations << [org.name, org.id]
       org.shift_types.each do |type|
         @my_organization_shift_types << [type.name, type.id]
@@ -20,26 +20,26 @@ class ShiftsController < ApplicationController
 
     org_ids = if params[:organization_ids].present? && params[:organization_ids][0].to_i.positive?
       @my_organization_shift_types = [["All", nil]]
-      @current_user.organizations.where(id: params[:organization_ids]).map do |org|
+      current_user.organizations.where(id: params[:organization_ids]).map do |org|
         org.shift_types.each do |type|
           @my_organization_shift_types << [type.name, type.id]
         end
       end
-      @current_user.user_organizations.approved.where(organization_id: params[:organization_ids]).pluck(:organization_id)
+      current_user.user_organizations.approved.where(organization_id: params[:organization_ids]).pluck(:organization_id)
     else
-      @current_user.user_organizations.approved.pluck(:organization_id)
+      current_user.user_organizations.approved.pluck(:organization_id)
     end
 
     if params[:shift_type_ids].present? && params[:shift_type_ids][0].to_i.positive?
       shift_type_ids = ShiftType.where(
         organization_id: org_ids,
         id: params[:shift_type_ids],
-        role_id: [@current_user.user_roles.pluck(:role_id)] + [nil]
+        role_id: [current_user.user_roles.pluck(:role_id)] + [nil]
       ).pluck(:id)
     else
       shift_type_ids = ShiftType.where(
         organization_id: org_ids,
-        role_id: [@current_user.user_roles.pluck(:role_id)] + [nil]
+        role_id: [current_user.user_roles.pluck(:role_id)] + [nil]
       ).pluck(:id)
     end
 
@@ -54,7 +54,7 @@ class ShiftsController < ApplicationController
     end
 
     if params[:hide_my_shifts]
-      @shifts = @shifts.reject{|s| s.users.include?(@current_user) }
+      @shifts = @shifts.reject{|s| s.users.include?(current_user) }
     end
 
     @organization_ids = params[:organization_ids] || 0
@@ -109,23 +109,23 @@ class ShiftsController < ApplicationController
       redirect_back(fallback_location: root_path)
     end
 
-    if @shift.users.include?(@current_user)
+    if @shift.users.include?(current_user)
       flash[:error] = 'You have already signed up for this shift'
       redirect_back(fallback_location: root_path)
     end
 
     UserShift.create(
       shift: @shift,
-      user: @current_user
+      user: current_user
     )
-    UserMailer.shift_confirmation(@current_user, @shift).deliver_later
+    UserMailer.shift_confirmation(current_user, @shift).deliver_later
 
     redirect_back(fallback_location: root_path)
   end
 
   def user_cancel
-    @shift.user_shifts.where(user_id: @current_user.id).destroy_all
-    UserMailer.shift_cancellation(@current_user, @shift).deliver_later
+    @shift.user_shifts.where(user_id: current_user.id).destroy_all
+    UserMailer.shift_cancellation(current_user, @shift).deliver_later
 
     flash[:info] = 'Shift cancelled'
     redirect_back(fallback_location: root_path)

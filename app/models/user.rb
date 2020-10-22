@@ -1,4 +1,9 @@
 class User < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable,
+         :omniauthable
   has_many :user_shifts
   has_many :shifts, through: :user_shifts
 
@@ -8,12 +13,17 @@ class User < ApplicationRecord
   has_many :user_organizations
   has_many :organizations, through: :user_organizations
 
-  has_many :admin_organizations, through: :user_organizations, source: :organization, class_name: 'Organization'
+  has_many :organization_admins
+  has_many :admin_organizations, through: :organization_admins, source: :organization, class_name: 'Organization'
 
   scope :for_current_organization, -> { joins(:user_organizations).where(user_organizations: {organization_id: Thread.current[:organization_id]}) }
 
   def full_name
-    "#{first_name} #{last_name}"
+    if first_name
+      "#{first_name} #{last_name}"
+    else
+      email
+    end
   end
 
   def admin_organization

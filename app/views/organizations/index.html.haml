@@ -17,7 +17,7 @@
             %td= org.description
             %td= link_to org.url, "http://#{org.url}"
             %td
-              - if @current_user.has_access?(org.id)
+              - if current_user.has_access?(org.id)
                 = button_to 'Access Granted', {}, {disabled: true, class: 'btn btn-success'}
               - else
-                = button_to 'Request Access', request_access_organization_path(org), {class: 'btn btn-primary', params: {user_id: @current_user.id}, data: { confirm: "Are you sure you want to request access from #{org.name}?" }}
+                = button_to 'Request Access', request_access_organization_path(org), {class: 'btn btn-primary', params: {user_id: current_user.id}, data: { confirm: "Are you sure you want to request access from #{org.name}?" }}

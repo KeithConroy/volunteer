@@ -2,7 +2,7 @@
 
 %h2.page-header
   Find Shifts
-  %small{style: 'float: right;'}= link_to "View My Shifts", my_shifts_user_path(@current_user)
+  %small{style: 'float: right;'}= link_to "View My Shifts", my_shifts_user_path(current_user)
 
 .side-bar
   = bootstrap_form_tag url: search_shifts_path, :method => "get" do
@@ -14,7 +14,7 @@
     = select_tag :day_ids, options_for_select(@days, @day_ids), multiple: true
     = label_tag "Only show available shifts"
     = check_box_tag :available_only, true, @available_only
-    - unless @current_user.shifts.scheduled.empty?
+    - unless current_user.shifts.scheduled.empty?
       = label_tag "Hide my shifts"
       = check_box_tag :hide_my_shifts, true, @hide_my_shifts
     = submit_tag "Update Search", class: 'btn btn-primary'
@@ -22,7 +22,7 @@
   %p= link_to 'Reset', search_shifts_path
 
 .side-bar-right
-  - if @current_user.user_organizations.empty?
+  - if current_user.user_organizations.empty?
     %p
       You do not have access to any organizations, you can search for organizations and request access
       = link_to 'here', search_organizations_path
@@ -58,7 +58,7 @@
                 /   - else
                 /     N/A
                 %td
-                  - if shift.users.include?(@current_user)
+                  - if shift.users.include?(current_user)
                     = button_to 'Signed Up', {}, {disabled: true, class: 'btn btn-success disabled sign-up-btn'}
                   - elsif shift.remaining_spots.positive?
                     = button_to 'Sign Up', sign_up_shift_path(shift), {class: 'btn btn-primary sign-up-btn', data: { confirm: "Are you sure you want to sign up for the #{shift.name} shift on #{shift.formatted_date} at #{shift.organization.name}?" }}

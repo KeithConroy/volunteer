@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :find_user, except: [:index]
+  before_action :find_user, except: [:index, :sign_out]
   before_action :find_role, only: [:assign_role, :remove_role]
 
   def index

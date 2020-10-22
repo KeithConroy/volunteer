@@ -2,7 +2,7 @@ class RolesController < ApplicationController
   before_action :find_role, only: [:show, :edit, :update, :destroy]
 
   def index
-    @roles = Role.where(organization_id: @current_user.admin_organization&.id)
+    @roles = Role.where(organization_id: current_user.admin_organization&.id)
   end
 
   def show
