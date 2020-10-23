@@ -2,37 +2,6 @@
 
 %h2.page-header= @organization.name
 
-/ .side-bar
-/   %ul
-/     %li
-/       %a.tab-link{data: {tab: 'details'}} Details
-/     %li
-/       %a.tab-link{data: {tab: 'admins'}} Admins
-/     %li
-/       %a.tab-link{data: {tab: 'roles'}} Roles
-/     %li
-/       %a.tab-link{data: {tab: 'shift_types'}} Shift Types
-/     %li
-/       %a.tab-link{data: {tab: 'shifts'}} Shifts
-/     %li
-/       %a.tab-link{data: {tab: 'volunteers'}} Volunteers
-
-/ .side-bar-right
-/   .tab-content
-/     = render 'organizations/manage/details'
-
-/ :javascript
-/   $(document).on('turbolinks:load', function() {
-/     $('.tab-link').on('click', tabChange);
-/   });
-
-/   var tabChange = function(){
-/     var tab = $(this).data('tab');
-/     $.get('change_tab', { tab: tab }).success(function(payload) {
-/       $('.tab-content').html($(payload));
-/     });
-/   };
-
 .side-bar
   .nav.flex-column.nav-pills{id:"tab", role:"tablist", 'aria-orientation' => "vertical"}
     %a.nav-link.active{id:"details-tab", 'data-toggle' => "pill", href:"#details", role:"tab", 'aria-controls' => "details", 'aria-selected' => "true"}

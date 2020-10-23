@@ -42,7 +42,8 @@ data = [
 user = User.create!(
   first_name: 'Keith',
   last_name: 'Conroy',
-  email: 'keith@mail.com'
+  email: 'keith@mail.com',
+  password: 'password',
 )
 
 2.times do |org_num|
@@ -60,7 +61,8 @@ user = User.create!(
     users << User.create!(
       first_name: 'User',
       last_name: "Test#{org_num}#{i}",
-      email: "user#{org_num}#{i}@mail.com"
+      email: "user#{org_num}#{i}@mail.com",
+      password: "password#{org_num}#{i}",
     )
   end
 

@@ -4,13 +4,18 @@
   .table-responsive
     %table.table.table-striped
       %tbody
-        %tr
-          %th Name
-          %th Status
-          %th
+        / %tr
+        /   %th{style: 'width: 1px'}
+        /   %th
+        /   %th Status
+        /   %th
         - @user_organizations.each do |user_org|
+          - org = user_org.organization
           %tr
-            %td= link_to user_org.organization.name, organization_path(user_org.organization)
+            %td{style: 'width: 1px'}
+              -if org.logo.present?
+                = image_tag org.logo, style: "max-height: 60px; max-width: 60px;"
+            %td= link_to org.name, organization_path(org)
             %td= user_org.status.capitalize
             %td
               - if user_org.approved?

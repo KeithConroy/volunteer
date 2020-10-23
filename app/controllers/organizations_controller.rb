@@ -55,7 +55,7 @@ class OrganizationsController < ApplicationController
   def update
     if @organization.update_attributes(organization_params)
       flash[:info] = "Organization updated"
-      redirect_to @organization
+      redirect_to manage_organization_path(@organization)
     else
 
     end
@@ -139,6 +139,20 @@ class OrganizationsController < ApplicationController
     redirect_back(fallback_location: authenticated_root_path)
   end
 
+  def make_admin
+    user = User.find(params[:user_id])
+    @organization.organization_admins.create!(user_id: user.id)
+    flash[:info] = "Admin privileges granted to #{user.full_name}"
+    redirect_back(fallback_location: authenticated_root_path)
+  end
+
+  def revoke_admin
+    user = User.find(params[:user_id])
+    @organization.organization_admins.where(user_id: user.id).destroy_all
+    flash[:info] = "Admin privileges revoked for #{user.full_name}"
+    redirect_back(fallback_location: authenticated_root_path)
+  end
+
   private
 
   def find_organization
@@ -146,7 +160,7 @@ class OrganizationsController < ApplicationController
   end
 
   def organization_params
-    params.require(:organization).permit(:name, :description, :url, :requires_approval)
+    params.require(:organization).permit(:name, :description, :url, :requires_approval, :logo)
   end
 
   def authenticate_admin

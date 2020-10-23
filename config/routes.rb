@@ -50,6 +50,8 @@ Rails.application.routes.draw do
       post :grant_access
       post :deny_access
       post :ban_user
+      post :revoke_admin
+      post :make_admin
       get :manage
       get :change_tab
     end

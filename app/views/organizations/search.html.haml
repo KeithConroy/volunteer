@@ -20,13 +20,17 @@
     .table-responsive
       %table.table.table-striped
         %tbody
-          %tr
-            %th Name
-            %th Description
-            %th Website
-            %th
+          / %tr
+          /   %th Name
+          /   %th
+          /   %th Description
+          /   %th Website
+          /   %th
           - @organizations.each do |org|
             %tr
+              %td{style: 'width: 1px'}
+                - if org.logo.present?
+                  = image_tag org.logo, style: "max-height: 60px; max-width: 60px;"
               %td= link_to org.name, organization_path(org)
               %td= org.description
               %td= link_to org.url, "http://#{org.url}"

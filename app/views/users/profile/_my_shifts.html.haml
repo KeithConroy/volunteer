@@ -5,14 +5,17 @@
     .table-responsive
       %table.table.table-striped
         %tbody
-          %tr
-            %th Organization
-            %th Name
-            %th Date
-            %th Time
-            %th
+          / %tr
+          /   %th Organization
+          /   %th Name
+          /   %th Date
+          /   %th Time
+          /   %th
           - @scheduled_shifts.each do |shift|
             %tr
+              %td{style: 'width: 1px'}
+                -if shift.organization.logo.present?
+                  = image_tag shift.organization.logo, style: "max-height: 60px; max-width: 60px;"
               %td= link_to shift.organization.name, organization_path(shift.organization)
               %td
                 = shift.name
@@ -32,13 +35,16 @@
     .table-responsive
       %table.table.table-striped
         %tbody
-          %tr
-            %th Organization
-            %th Name
-            %th Date
-            %th Time
+          / %tr
+          /   %th Organization
+          /   %th Name
+          /   %th Date
+          /   %th Time
           - @completed_shifts.each do |shift|
             %tr
+              %td{style: 'width: 1px'}
+                -if shift.organization.logo.present?
+                  = image_tag shift.organization.logo, style: "max-height: 60px; max-width: 60px;"
               %td= link_to shift.organization.name, organization_path(shift.organization)
               %td= shift.name
               %td= shift.formatted_date

@@ -11,6 +11,8 @@ class Organization < ApplicationRecord
   has_many :organization_admins
   has_many :admins, through: :organization_admins, source: :user, class_name: 'User'
 
+  has_one_attached :logo
+
   def top_volunteers
     UserShift.where(shift_id: shifts.pluck(:id))
       .group_by(&:user)

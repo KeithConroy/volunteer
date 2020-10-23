@@ -8,6 +8,8 @@
       %tbody
         %tr
           %th Name
+          %th
         - @organization.admins.each do |admin|
           %tr
             %td= admin.full_name
+            %td= button_to 'Revoke admin privileges', revoke_admin_organization_path(@organization), {class: 'btn btn-danger', params: {user_id: admin.id}, data: { confirm: "Are you sure you want to revoke admin privileges for #{admin.full_name}?" }, style: 'float: right;'}

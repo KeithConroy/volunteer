@@ -11,8 +11,10 @@
           %th Description
           %th Url
           %th Requires Approval
+          %th Logo
         %tr
           %td= @organization.name
           %td= @organization.description
           %td= @organization.url
           %td= @organization.requires_approval
+          %td= image_tag @organization.logo, style: "max-height: 60px; max-width: 60px;"

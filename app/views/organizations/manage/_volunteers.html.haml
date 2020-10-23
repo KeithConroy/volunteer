@@ -29,10 +29,12 @@
           %th Name
           %th Status
           %th
+          %th
         - @users.each do |user|
           %tr
             %td= link_to user.full_name, user_path(user)
             %td= user.current_user_org.status.capitalize
+            %td= button_to 'Make admin', make_admin_organization_path(user.current_user_org.organization), {class: 'btn btn-primary', params: {user_id: user.id}, data: { confirm: "Are you sure you want to make #{user.full_name} an admin?" }}
             %td
               - if user.current_user_org.approved?
-                = button_to 'Ban User', ban_user_organization_path(user.current_user_org.organization), {class: 'btn btn-danger', params: {user_id: user.id}, data: { confirm: "Are you sure you want to ban #{user.full_name}?" }}
+                = button_to 'Ban User', ban_user_organization_path(user.current_user_org.organization), {class: 'btn btn-danger', params: {user_id: user.id}, data: { confirm: "Are you sure you want to ban #{user.full_name}?" }, style: 'float: right;'}
