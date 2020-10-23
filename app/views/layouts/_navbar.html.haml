@@ -12,15 +12,15 @@
         - if current_user.admin_organization.present?
           %li.nav-item
             %a.nav-link{href: manage_organization_path(current_user.admin_organization)}
-              = "Manage #{current_user.admin_organization.name}"
+              = current_user.admin_organization.name
         - else
           %li.nav-item
             %a.nav-link{href: new_organization_path} Create An Organization
         %li.nav-item
-          %a.nav-link{href: search_organizations_path} Find Organizations
+          %a.nav-link{href: search_organizations_path} Organizations
 
         %li.nav-item
-          %a.nav-link{href:search_shifts_path} Find Shifts
+          %a.nav-link{href:search_shifts_path} Shifts
 
         %li.nav-item.dropdown
           %a.nav-link.dropdown-toggle{href:"#", id:"navbarDropdown", role:"button", 'data-toggle'=>"dropdown", 'aria-haspopup'=>"true", 'aria-expanded'=>"false"}
