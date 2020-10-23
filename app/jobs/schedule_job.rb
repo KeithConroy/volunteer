@@ -1,7 +1,9 @@
-class ShiftScheduleJob < ApplicationJob
+class ScheduleJob < ApplicationJob
 
   def perform(schedule)
     date = Date.today + (schedule.days_out + 1).days
+
+    return if schedule.shifts.where(date: date).exists?
 
     if schedule.end_date.nil? || date <= schedule.end_date
       case schedule.frequency
