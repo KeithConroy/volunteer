@@ -6,6 +6,8 @@
   .nav.flex-column.nav-pills{id:"tab", role:"tablist", 'aria-orientation' => "vertical"}
     %a.nav-link.active{id:"details-tab", 'data-toggle' => "pill", href:"#details", role:"tab", 'aria-controls' => "details", 'aria-selected' => "true"}
       Details
+    %a.nav-link{id:"addresses-tab", 'data-toggle' => "pill", href:"#addresses", role:"tab", 'aria-controls' => "addresses", 'aria-selected' => "false"}
+      Addresses
     %a.nav-link{id:"admins-tab", 'data-toggle' => "pill", href:"#admins", role:"tab", 'aria-controls' => "admins", 'aria-selected' => "false"}
       Admins
     %a.nav-link{id:"roles-tab", 'data-toggle' => "pill", href:"#roles", role:"tab", 'aria-controls' => "roles", 'aria-selected' => "false"}
@@ -25,6 +27,8 @@
   .tab-content{id:"tabContent"}
     .tab-pane.active{id:"details", role:"tabpanel", 'aria-labelledby' => "details-tab"}
       = render 'organizations/manage/details'
+    .tab-pane{id:"addresses", role:"tabpanel", 'aria-labelledby' => "addresses-tab"}
+      = render 'organizations/manage/addresses'
     .tab-pane{id:"admins", role:"tabpanel", 'aria-labelledby' => "admins-tab"}
       = render 'organizations/manage/admins'
     .tab-pane{id:"roles", role:"tabpanel", 'aria-labelledby' => "roles-tab"}

@@ -17,6 +17,7 @@
     = render 'layouts/navbar'
 
     - flash.each do |key, value|
+      - key = 'info' if key == 'notice'
       .alert{class: "alert alert-#{key}", roll: 'alert', style: 'position: fixed; width: 80%; margin-top: 10px; margin-left: 10%;' }
         %button.close{ :data => { :dismiss => "alert" } } x
         %strong

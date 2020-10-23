@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   resources :shift_types
   resources :schedules
   resources :roles
+  resources :addresses
   resources :users do
     member do
       get :my_organizations

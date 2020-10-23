@@ -1,0 +1,37 @@
+class AddressesController < ApplicationController
+  before_action :find_address, except: [:new, :create]
+
+  def new
+    @address = Address.new
+  end
+
+  def create
+    @address = Address.new(address_params)
+
+    if @address.save
+      flash[:info] = 'Address saved'
+      redirect_to @address
+    else
+
+    end
+  end
+
+  def show
+  end
+
+  def edit
+  end
+
+  def update
+  end
+
+  private
+
+  def find_address
+    @address = Address.find(params[:id])
+  end
+
+  def address_params
+    params.require(:address).permit(:line_1, :line_2, :city, :state, :zip_code, :organization_id)
+  end
+end

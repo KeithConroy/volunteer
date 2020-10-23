@@ -7,4 +7,5 @@
   = f.text_area :description
   = f.url_field :url, label: "Website"
   = f.check_box :requires_approval, label: "Only approved users can sign up for shifts"
+  = f.file_field :logo, accept: 'image/png,image/jpeg'
   = f.submit

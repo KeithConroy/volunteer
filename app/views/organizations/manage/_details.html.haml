@@ -17,4 +17,6 @@
           %td= @organization.description
           %td= @organization.url
           %td= @organization.requires_approval
-          %td= image_tag @organization.logo, style: "max-height: 60px; max-width: 60px;"
+          %td
+            - if @organization.logo.present?
+              = image_tag @organization.logo, style: "max-height: 60px; max-width: 60px;"

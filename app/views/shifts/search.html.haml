@@ -38,7 +38,17 @@
             /   %th Available Spots
             /   / %th Required Role
             /   %th
+            - last_month = 0
             - @shifts.each do |shift|
+              - if last_month != shift.date.month
+                - last_month = shift.date.month
+                %tr
+                  %td{style: 'font-weight: bold'}= shift.date.strftime("%B")
+                  %td
+                  %td
+                  %td
+                  %td
+                  %td
               %tr
                 %td{style: 'width: 1px'}
                   -if shift.organization.logo.present?
