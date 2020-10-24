@@ -1,22 +1,28 @@
-%p Organizations which you have requested/been granted access to
+- if @user_organizations.empty?
+  %p
+    You do not have access to any organizations, you can search for organizations and request access
+    = link_to 'here', search_organizations_path
 
-.panel.panel-default
-  .table-responsive
-    %table.table.table-striped
-      %tbody
-        / %tr
-        /   %th{style: 'width: 1px'}
-        /   %th
-        /   %th Status
-        /   %th
-        - @user_organizations.each do |user_org|
-          - org = user_org.organization
-          %tr
-            %td{style: 'width: 1px'}
-              -if org.logo.present?
-                = image_tag org.logo, style: "max-height: 60px; max-width: 60px;"
-            %td= link_to org.name, organization_path(org)
-            %td= user_org.status.capitalize
-            %td
-              - if user_org.approved?
-                = link_to 'Find Shifts', search_shifts_path(organization_ids: [user_org.organization_id])
+- else
+  %p Organizations which you have requested/been granted access to
+
+  .panel.panel-default
+    .table-responsive
+      %table.table.table-striped
+        %tbody
+          / %tr
+          /   %th{style: 'width: 1px'}
+          /   %th
+          /   %th Status
+          /   %th
+          - @user_organizations.each do |user_org|
+            - org = user_org.organization
+            %tr
+              %td{style: 'width: 1px'}
+                -if org.logo.present?
+                  = image_tag org.logo, style: "max-height: 60px; max-width: 60px;"
+              %td= link_to org.name, organization_path(org)
+              %td= user_org.status.capitalize
+              %td
+                - if user_org.approved?
+                  = link_to 'Find Shifts', search_shifts_path(organization_ids: [user_org.organization_id])

@@ -26,7 +26,9 @@
               %td= shift.formatted_time_range
               %td= button_to 'Cancel', user_cancel_shift_path(shift), {class: 'btn btn-danger', data: { confirm: "Are you sure you want to cancel your #{shift.name} shift?" }}
 - else
-  %p You don't have any upcoming shifts
+  %p
+    You don't have any upcoming shifts, sign up
+    = link_to 'here', search_shifts_path
 
 - if @completed_shifts.any?
   %h3 Completed

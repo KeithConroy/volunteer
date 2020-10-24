@@ -2,6 +2,9 @@
 
 %h2.page-header= @user.full_name
 
+- if @user.avatar_url
+  = image_tag @user.avatar_url
+
 %h3 Roles
 
 - current_user.admin_organization.roles.each do |role|
@@ -51,4 +54,11 @@
               %td= link_to shift.name, shift_path(shift)
               %td= shift.formatted_date
               %td= shift.formatted_time_range
+
+%h3 Actions
+
+= button_to 'Make admin', make_admin_organization_path(@user.current_user_org.organization), {class: 'btn btn-primary', params: {user_id: @user.id}, data: { confirm: "Are you sure you want to make #{@user.full_name} an admin?" }}
+- if @user.current_user_org.approved?
+  = button_to 'Ban User', ban_user_organization_path(@user.current_user_org.organization), {class: 'btn btn-danger', params: {user_id: @user.id}, data: { confirm: "Are you sure you want to ban #{@user.full_name}?" }}
+
 

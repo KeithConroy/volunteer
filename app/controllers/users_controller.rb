@@ -28,15 +28,6 @@ class UsersController < ApplicationController
     redirect_back(fallback_location: authenticated_root_path)
   end
 
-  def my_organizations
-    @user_organizations = @user.user_organizations.order(:status)
-  end
-
-  def my_shifts
-    @scheduled_shifts = @user.shifts.scheduled
-    @completed_shifts = @user.shifts.completed
-  end
-
   def profile
     @user_organizations = @user.user_organizations.order(:status)
     @scheduled_shifts = @user.shifts.scheduled.order(:date, :start_time)

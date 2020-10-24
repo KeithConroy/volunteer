@@ -18,7 +18,7 @@
           %th
         - @organization.schedules.each do |schedule|
           %tr
-            %td= schedule.name
+            %td= link_to schedule.name, shift_type_path(schedule.shift_type)
             %td= schedule.formatted_dates
             %td= schedule.formatted_time_range
             %td= schedule.formatted_frequency

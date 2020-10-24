@@ -1,9 +1,12 @@
-%p= "You've volunteered #{@user.hours} hours!"
-- @user.hours_by_shift_type.each do |name, hours|
-  %p= "#{name}: #{pluralize(hours, 'hour')}"
+- if @user.hours.positive?
+  %p= "You've volunteered #{@user.hours} hours!"
+  - @user.hours_by_shift_type.each do |name, hours|
+    %p= "#{name}: #{pluralize(hours, 'hour')}"
 
-- @user.hours_by_organization.each do |name, hours|
-  %p= "#{name}: #{pluralize(hours, 'hour')}"
+  - @user.hours_by_organization.each do |name, hours|
+    %p= "#{name}: #{pluralize(hours, 'hour')}"
 
-= pie_chart @user.hours_by_shift_type
-= pie_chart @user.hours_by_organization
+  = pie_chart @user.hours_by_shift_type
+  = pie_chart @user.hours_by_organization
+- else
+  = link_to 'Search for volunteering shifts', search_shifts_path

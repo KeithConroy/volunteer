@@ -115,6 +115,9 @@ small {
   margin-bottom: 0px;
 }
 
+.avatar {
+  border-radius: 100%;
+}
 
 /*.navbar-nav, .nav-item, .nav-link, .navbar-collapse {
   height: 100%;
@@ -137,11 +140,11 @@ small {
   }
   .nav-link {
     color: $colDefault;
-    border-radius: 25px;
+    /*border-radius: 25px;*/
     margin-left: 15px;
     &:hover,  &:focus {
-      color: $bgDefault;
-      background-color: $colDefault;
+      color: #D2D2D2;
+      /*background-color: $colDefault;*/
     }
   }
   .dropdown-menu {

@@ -10,11 +10,11 @@ data = [
   {
     org_name: 'Serenity Animal Sanctuary',
     shift_type_1: {
-      name: 'Animal Care AM',
+      name: 'Monring Animal Care',
       description: 'Clean/Breakfast'
     },
     shift_type_2: {
-      name: 'Animal Care PM',
+      name: 'Afternoon Animal Care',
       description: 'Clean/Dinner'
     },
     role_1: {
@@ -30,11 +30,11 @@ data = [
     org_name: 'My Non Profit',
     shift_type_1: {
       name: 'Dog Walking',
-      description: ''
+      description: 'Walk around the block'
     },
     shift_type_2: {
       name: 'Cat Socializing',
-      description: ''
+      description: 'Play with kittens'
     },
   }
 ]

@@ -1,10 +1,7 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  devise_for :users do
-    # get '/users/sign_out' => 'devise/sessions#destroy'
-    # get 'users/:id' => 'users#show'
-  end
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
   devise_scope :user do
     authenticated :user do
@@ -34,8 +31,6 @@ Rails.application.routes.draw do
   resources :addresses
   resources :users do
     member do
-      get :my_organizations
-      get :my_shifts
       get :profile
       get :change_tab
     end

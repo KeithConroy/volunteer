@@ -13,14 +13,12 @@
     %table.table.table-striped
       %tbody
         %tr
-          %th Organization
           %th Type
           %th Date
           %th Time
           %th Available Spots
           %th Required Role
         %tr
-          %td= link_to @shift.organization.name, organization_path(@shift.organization)
           %td= link_to @shift.shift_type.name, shift_type_path(@shift.shift_type)
           %td= @shift.formatted_date
           %td= @shift.formatted_time_range
@@ -34,13 +32,19 @@
 %h3
   = 'Volunteers'
   %small= @shift.formatted_filled_spots
-
-.panel.panel-default
-  .table-responsive
-    %table.table.table-striped
-      %tbody
-        %tr
-          %th Name
-        - @shift.users.each do |user|
+- if @shift.users.any?
+  .panel.panel-default
+    .table-responsive
+      %table.table.table-striped
+        %tbody
           %tr
-            %td= link_to user.full_name, user_path(user)
+            %th{style: 'width: 1px;'}
+            %th Name
+          - @shift.users.each do |user|
+            %tr
+              %td
+                - if user.avatar_url
+                  = image_tag user.avatar_url, size: '40x40', class: 'avatar'
+              %td= link_to user.full_name, user_path(user)
+- else
+  No volunteers have signed up yet

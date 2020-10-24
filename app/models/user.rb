@@ -3,7 +3,8 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :omniauthable
+         :omniauthable, omniauth_providers: [:google_oauth2, :facebook]
+
   has_many :user_shifts
   has_many :shifts, through: :user_shifts
 
@@ -17,6 +18,24 @@ class User < ApplicationRecord
   has_many :admin_organizations, through: :organization_admins, source: :organization, class_name: 'Organization'
 
   scope :for_current_organization, -> { joins(:user_organizations).where(user_organizations: {organization_id: Thread.current[:organization_id]}) }
+
+  def self.from_omniauth(access_token)
+    data = access_token.info
+    user = User.where(email: data['email']).first
+
+    # Uncomment the section below if you want users to be created if they don't exist
+    unless user
+      user = User.create(
+        email: data['email'],
+        first_name: data['first_name'],
+        last_name: data['last_name'],
+        avatar_url: data['avatar_url'],
+        email: data['email'],
+        password: Devise.friendly_token[0,20]
+      )
+    end
+    user
+  end
 
   def full_name
     if first_name
