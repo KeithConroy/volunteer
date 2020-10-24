@@ -2,4 +2,6 @@
   Shifts
   %small{style: 'float: right;'}= link_to 'Create a new shift', new_shift_path
 
+%p Shifts are instances of a shift type.  They are specific to a certain day and time.  Here you can specify how many volunteers will be needed.
+
 = render partial: 'shifts/admin_table', locals: { shifts: @organization.shifts.scheduled, can_cancel: true }
