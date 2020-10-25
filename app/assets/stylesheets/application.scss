@@ -119,6 +119,25 @@ small {
   border-radius: 100%;
 }
 
+.oauth-btn {
+  max-width: 50%;
+}
+
+.oauth-btn-group {
+  margin-top: 25px;
+}
+
+.log-in {
+  /*width: 30%;*/
+  margin: auto;
+}
+
+.log-in-btn {
+  display: block;
+  width: 30%;
+  margin: auto;
+  margin-bottom: 25px;
+}
 /*.navbar-nav, .nav-item, .nav-link, .navbar-collapse {
   height: 100%;
 }
