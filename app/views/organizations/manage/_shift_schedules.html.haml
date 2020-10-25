@@ -9,7 +9,7 @@
     %table.table.table-striped
       %tbody
         %tr
-          %th Type
+          %th Shift Type
           %th Dates
           %th Time
           %th Frequency
@@ -18,7 +18,7 @@
           %th
         - @organization.schedules.each do |schedule|
           %tr
-            %td= link_to schedule.name, shift_type_path(schedule.shift_type)
+            %td= schedule.name
             %td= schedule.formatted_dates
             %td= schedule.formatted_time_range
             %td= schedule.formatted_frequency

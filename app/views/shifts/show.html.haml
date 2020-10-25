@@ -13,19 +13,19 @@
     %table.table.table-striped
       %tbody
         %tr
-          %th Type
+          %th Shift Type
           %th Date
           %th Time
           %th Available Spots
           %th Required Role
         %tr
-          %td= link_to @shift.shift_type.name, shift_type_path(@shift.shift_type)
+          %td= @shift.shift_type.name
           %td= @shift.formatted_date
           %td= @shift.formatted_time_range
           %td= @shift.formatted_available_spots
           %td
             - if @shift.role
-              = link_to @shift.role.name, role_path(@shift.role)
+              = @shift.role.name
             - else
               N/A
 

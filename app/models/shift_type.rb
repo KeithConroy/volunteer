@@ -13,7 +13,7 @@ class ShiftType < ApplicationRecord
     counts = shifts.completed.pluck(:remaining_spots, :spots)
     remaining, total = counts.transpose.map(&:sum)
     rate = (total - remaining) / total.to_f
-    "#{rate * 100}%"
+    "#{(rate * 100).round(2)}%"
   end
 
   def top_volunteers
