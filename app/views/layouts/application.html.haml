@@ -24,8 +24,6 @@
         %strong
           = value
 
-    - if controller.controller_name == 'home'
+    - id = controller.controller_name == 'home' ? 'home' : 'main'
+    %div{id: id}
       = yield
-    - else
-      %div{id: 'main'}
-        = yield
