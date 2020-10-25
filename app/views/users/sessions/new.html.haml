@@ -2,14 +2,26 @@
   #main {
     width: 50%;
     min-height: auto;
+    border-top: 1px solid #d2d2d2;
+    border-bottom: 1px solid #d2d2d2;
+  }
+  #hero {
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-shadow: none;
+    text-align: left;
+    font-size: 14px;
   }
 
-.log-in
-  %h2.page-header Log in
-  = bootstrap_form_for resource, as: resource_name, url: session_path(resource_name), layout: :horizontal do |f|
-    = f.email_field :email, autofocus: true, autocomplete: "email", placeholder: 'Email'
-    = f.password_field :password, autocomplete: "current-password", placeholder: 'Password'
-    - if devise_mapping.rememberable?
-      = f.check_box :remember_me
-      = f.submit "Log in", class: 'btn btn-primary log-in-btn'
-  = render "users/shared/links"
+#hero
+  #main
+    .log-in
+      %h2.page-header Log in
+      = bootstrap_form_for resource, as: resource_name, url: session_path(resource_name), layout: :horizontal do |f|
+        = f.email_field :email, autofocus: true, autocomplete: "email", placeholder: 'Email'
+        = f.password_field :password, autocomplete: "current-password", placeholder: 'Password'
+        - if devise_mapping.rememberable?
+          = f.check_box :remember_me
+          = f.submit "Log in", class: 'btn btn-primary log-in-btn'
+      = render "users/shared/links"

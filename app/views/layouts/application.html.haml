@@ -24,6 +24,5 @@
         %strong
           = value
 
-    - id = controller.controller_name == 'home' ? 'home' : 'main'
-    %div{id: id}
+    %div{id: current_user ? 'main' : 'home'}
       = yield
