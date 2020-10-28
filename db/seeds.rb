@@ -10,7 +10,7 @@ data = [
   {
     org_name: 'Serenity Animal Sanctuary',
     shift_type_1: {
-      name: 'Monring Animal Care',
+      name: 'Morning Animal Care',
       description: 'Clean/Breakfast'
     },
     shift_type_2: {

@@ -21,7 +21,7 @@
 
 %h3 Scheduled Shifts
 
-- if @user.shifts.scheduled.any?
+- if @user.shifts.for_current_organization.scheduled.any?
   .panel.panel-default
     .table-responsive
       %table.table.table-striped
@@ -30,7 +30,7 @@
             %th Name
             %th Date
             %th Time
-          - @user.shifts.scheduled.each do |shift|
+          - @user.shifts.for_current_organization.scheduled.each do |shift|
             %tr
               %td= link_to shift.name, shift_path(shift)
               %td= shift.formatted_date
@@ -38,7 +38,7 @@
 - else
   %p No upcoming shifts
 
-- if @user.shifts.completed.any?
+- if @user.shifts.for_current_organization.completed.any?
   %h3 Completed Shifts
 
   .panel.panel-default
@@ -49,7 +49,7 @@
             %th Name
             %th Date
             %th Time
-          - @user.shifts.completed.each do |shift|
+          - @user.shifts.for_current_organization.completed.each do |shift|
             %tr
               %td= link_to shift.name, shift_path(shift)
               %td= shift.formatted_date
