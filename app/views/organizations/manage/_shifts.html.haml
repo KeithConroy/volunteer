@@ -4,4 +4,7 @@
 
 %p Shifts are instances of a shift type.  They are specific to a certain day and time.  Here you can specify how many volunteers will be needed.
 
-= render partial: 'shifts/admin_table', locals: { shifts: @organization.shifts.scheduled, can_cancel: true }
+- if @organization.shifts.scheduled.any?
+  = render partial: 'shifts/admin_table', locals: { shifts: @organization.shifts.scheduled, can_cancel: true }
+- else
+  %p No scheduled shifts

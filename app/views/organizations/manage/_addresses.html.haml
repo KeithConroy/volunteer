@@ -2,14 +2,17 @@
   Addresses
   %small{style: 'float: right;'}= link_to "New Address", new_address_path
 
-.panel.panel-default
-  .table-responsive
-    %table.table.table-striped
-      %tbody
-        %tr
-          %th Name
-          %th
-        - @organization.addresses.each do |address|
+- if @organization.addresses.any?
+  .panel.panel-default
+    .table-responsive
+      %table.table.table-striped
+        %tbody
           %tr
-            %td= address.formatted
-            %td= link_to 'Edit', edit_address_path(address)
+            %th Name
+            %th
+          - @organization.addresses.each do |address|
+            %tr
+              %td= address.formatted
+              %td= link_to 'Edit', edit_address_path(address)
+- else
+  %p You have not added any addresses

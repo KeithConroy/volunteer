@@ -4,23 +4,25 @@
 
 %p Shift types describe the task volunteers will be completing.  You can specify a required role so that only those volunteers who have been given access will be able to sign up for these shifts.
 
-.panel.panel-default
-  .table-responsive
-    %table.table.table-striped
-      %tbody
-        %tr
-          %th Name
-          %th Description
-          %th Address
-          %th Required Role
-          %th Fill %
-          %th
-        - @organization.shift_types.each do |type|
+- if @organization.shift_types.any?
+  .panel.panel-default
+    .table-responsive
+      %table.table.table-striped
+        %tbody
           %tr
-            %td= type.name
-            %td= type.description
-            %td= type.address.line_1
-            %td= type.role.present? ? type.role.name : 'N/A'
-            %td= type.fill_percentage
-            %td= link_to 'Edit', edit_shift_type_path(type)
-
+            %th Name
+            %th Description
+            %th Address
+            %th Required Role
+            %th Fill %
+            %th
+          - @organization.shift_types.each do |type|
+            %tr
+              %td= type.name
+              %td= type.description
+              %td= type.address.line_1
+              %td= type.role.present? ? type.role.name : 'N/A'
+              %td= type.fill_percentage
+              %td= link_to 'Edit', edit_shift_type_path(type)
+- else
+  %p You have not created any shift types

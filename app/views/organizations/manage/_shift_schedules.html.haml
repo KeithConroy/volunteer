@@ -4,24 +4,27 @@
 
 %p Schedules specify the rules of a recurring shift
 
-.panel.panel-default
-  .table-responsive
-    %table.table.table-striped
-      %tbody
-        %tr
-          %th Shift Type
-          %th Dates
-          %th Time
-          %th Frequency
-          %th Spots
-          %th Days Out
-          %th
-        - @organization.schedules.each do |schedule|
+- if @organization.schedules.any?
+  .panel.panel-default
+    .table-responsive
+      %table.table.table-striped
+        %tbody
           %tr
-            %td= schedule.name
-            %td= schedule.formatted_dates
-            %td= schedule.formatted_time_range
-            %td= schedule.formatted_frequency
-            %td= schedule.spots
-            %td= schedule.days_out
-            %td= link_to 'Edit', edit_schedule_path(schedule)
+            %th Shift Type
+            %th Dates
+            %th Time
+            %th Frequency
+            %th Spots
+            %th Days Out
+            %th
+          - @organization.schedules.each do |schedule|
+            %tr
+              %td= schedule.name
+              %td= schedule.formatted_dates
+              %td= schedule.formatted_time_range
+              %td= schedule.formatted_frequency
+              %td= schedule.spots
+              %td= schedule.days_out
+              %td= link_to 'Edit', edit_schedule_path(schedule)
+- else
+  %p You have not created any schedules
