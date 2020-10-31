@@ -10,10 +10,14 @@ class ShiftType < ApplicationRecord
   scope :for_current_organization, -> { where(organization_id: Thread.current[:organization_id]) }
 
   def fill_percentage
-    counts = shifts.completed.pluck(:remaining_spots, :spots)
-    remaining, total = counts.transpose.map(&:sum)
-    rate = (total - remaining) / total.to_f
-    "#{(rate * 100).round(2)}%"
+    if shifts.completed.any?
+      counts = shifts.completed.pluck(:remaining_spots, :spots)
+      remaining, total = counts.transpose.map(&:sum)
+      rate = (total - remaining) / total.to_f
+      "#{(rate * 100).round(2)}%"
+    else
+      'N/A'
+    end
   end
 
   def top_volunteers
