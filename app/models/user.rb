@@ -30,7 +30,6 @@ class User < ApplicationRecord
         first_name: data['first_name'],
         last_name: data['last_name'],
         avatar_url: data['avatar_url'],
-        email: data['email'],
         password: Devise.friendly_token[0,20]
       )
     end
