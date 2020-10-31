@@ -22,7 +22,7 @@ body {
   color: #5a5a5a;
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
-  &::before {
+/*  &::before {
     content: ' ';
     position: fixed;
     width: 100%;
@@ -34,7 +34,7 @@ body {
     will-change: transform;
     z-index: -5;
     opacity: 0.5;
-  }
+  }*/
  }
 
 #main {
@@ -317,6 +317,7 @@ footer {
 .select{
   font-size: 20px;
 }
+
 .tooltip-class {
   text-decoration: none;
 }
