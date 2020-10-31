@@ -70,7 +70,7 @@ class OrganizationsController < ApplicationController
     OrganizationAdmin.create(user: current_user, organization: @organization)
 
     if @organization.save
-      redirect_to @organization
+      redirect_to manage_organization_path(@organization)
     else
 
     end

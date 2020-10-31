@@ -18,7 +18,6 @@
 //= require chartkick
 //= require Chart.bundle
 //= require jquery
-//= require jquery_ujs
 
 $(document).on('ready turbolinks:load', function() {
   setTimeout(function(){ $('.alert').hide(); }, 5000);
