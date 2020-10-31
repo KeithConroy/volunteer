@@ -9,3 +9,10 @@
   = f.check_box :requires_approval, label: "Only approved users can sign up for shifts"
   = f.file_field :logo, accept: 'image/png,image/jpeg'
   = f.submit
+
+:javascript
+  $(document).on('ready turbolinks:load', function() {
+    $('.custom-file-input').change(function(){
+      $('.custom-file-label').text(this.value);
+    });
+  });
