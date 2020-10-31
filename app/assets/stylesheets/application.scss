@@ -48,6 +48,7 @@ body {
   width: 95%;
   margin: 25px auto;
   display: table;
+  position: relative;
 }
 
 .side-bar {
@@ -330,4 +331,16 @@ ul .nav {
 select {
   width: 100%;
   border-radius: 5px;
+}
+
+.error-page {
+  top: 50%;
+  position: absolute;
+  transform: translateY(-50%);
+}
+
+.shrug {
+  width: 60%;
+  margin: auto;
+  display: block;
 }
