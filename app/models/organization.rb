@@ -22,4 +22,15 @@ class Organization < ApplicationRecord
       .to_h
   end
 
+  def approve_user(user)
+    user_org = user_organizations.where(user_id: user.id).first_or_initialize
+    user_org.update(status: :approved)
+  end
+
+  def make_admin(user)
+    organization_admins.create(
+      user: user
+    )
+  end
+
 end

@@ -122,6 +122,7 @@ class ShiftsController < ApplicationController
     )
     UserMailer.shift_confirmation(current_user, @shift).deliver_later
 
+    flash[:info] = "You have signed up for #{@shift.name} on #{@shift.formatted_date}"
     redirect_back(fallback_location: authenticated_root_path)
   end
 
