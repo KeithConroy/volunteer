@@ -142,7 +142,7 @@ class ShiftsController < ApplicationController
     end
     @shift.destroy
     flash[:info] = "Shift has been cancelled#{', volunteers have been notified' if had_volunteers}"
-    redirect_to(action: 'index')
+    redirect_to manage_organization_path(@organization)
   end
 
   private
