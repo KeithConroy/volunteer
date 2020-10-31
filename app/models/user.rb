@@ -5,35 +5,29 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2, :facebook]
 
-  has_many :user_shifts
+  has_many :user_shifts, dependent: :destroy
   has_many :shifts, through: :user_shifts
 
-  has_many :user_roles
+  has_many :user_roles, dependent: :destroy
   has_many :roles, through: :user_roles
 
-  has_many :user_organizations
+  has_many :user_organizations, dependent: :destroy
   has_many :organizations, through: :user_organizations
 
-  has_many :organization_admins
+  has_many :organization_admins, dependent: :destroy
   has_many :admin_organizations, through: :organization_admins, source: :organization, class_name: 'Organization'
 
   scope :for_current_organization, -> { joins(:user_organizations).where(user_organizations: {organization_id: Thread.current[:organization_id]}) }
 
   def self.from_omniauth(access_token)
     data = access_token.info
-    user = User.where(email: data['email']).first
 
-    # Uncomment the section below if you want users to be created if they don't exist
-    unless user
-      user = User.create(
-        email: data['email'],
-        first_name: data['first_name'],
-        last_name: data['last_name'],
-        avatar_url: data['avatar_url'],
-        password: Devise.friendly_token[0,20]
-      )
-    end
-    user
+    User.where(email: data['email']).first_or_create(
+      first_name: data['first_name'],
+      last_name: data['last_name'],
+      avatar_url: data['avatar_url'],
+      password: Devise.friendly_token[0,20]
+    )
   end
 
   def full_name
