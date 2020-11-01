@@ -78,6 +78,8 @@ class OrganizationsController < ApplicationController
     user = User.find(params[:user_id])
     @organization.approve_user(user)
 
+    UserMailer.access_granted(user, @organization).deliver_later
+
     flash[:info] = "Access Granted to #{user.full_name}"
     redirect_back(fallback_location: authenticated_root_path)
   end

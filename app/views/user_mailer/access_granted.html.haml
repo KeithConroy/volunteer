@@ -1,0 +1,5 @@
+%h2= "Hi #{@user.first_name}!"
+
+%p
+  = "You have been granted access to #{@organization.name}.  You can now sign up for shifts "
+  = link_to 'here', search_shifts_url(organization_ids: [@organization.id])

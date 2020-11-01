@@ -128,7 +128,6 @@ class ShiftsController < ApplicationController
 
   def user_cancel
     @shift.user_shifts.where(user_id: current_user.id).destroy_all
-    UserMailer.shift_cancellation(current_user, @shift).deliver_later
 
     flash[:info] = 'Shift cancelled'
     redirect_back(fallback_location: authenticated_root_path)
@@ -138,7 +137,7 @@ class ShiftsController < ApplicationController
     had_volunteers = false
     @shift.user_shifts.each do |user_shift|
       had_volunteers = true
-      # notify user
+      UserMailer.shift_cancellation(user_shift.user, user_shift.shift).deliver_later
       user_shift.destroy
     end
     @shift.destroy

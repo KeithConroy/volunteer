@@ -25,4 +25,10 @@ class UserMailer < ApplicationMailer
     mail(to: @user.email, subject: 'You have a new role')
   end
 
+  def access_granted(user, organization)
+    @user = user
+    @organization = organization
+    mail(to: @user.email, subject: 'You have a new organization')
+  end
+
 end

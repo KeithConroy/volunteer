@@ -17,4 +17,8 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.role_assigned(User.first, Role.first)
   end
 
+  def access_granted
+    UserMailer.access_granted(User.first, Organization.first)
+  end
+
 end
