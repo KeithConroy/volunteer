@@ -2,7 +2,7 @@
 
 %h2.page-header
   - if @organization.logo.present?
-    = image_tag @organization.logo, style: "max-height: 60px; max-width: 60px;"
+    = image_tag @organization.logo, class: 'table-logo'
   = @organization.name
   %small{style: 'float: right;'}
     - if current_user.has_access?(@organization.id)

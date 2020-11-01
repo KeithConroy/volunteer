@@ -11,15 +11,15 @@
       %table.table.table-striped
         %tbody
           / %tr
-          /   %th{style: 'width: 1px'}
+          /   %th.table-img-td
           /   %th
           /   %th
           - @user_organizations.each do |user_org|
             - org = user_org.organization
             %tr
-              %td{style: 'width: 1px'}
+              %td.table-img-td
                 - if org.logo.present?
-                  = image_tag org.logo, style: "max-height: 60px; max-width: 60px;"
+                  = image_tag org.logo, class: 'table-logo'
               %td= link_to org.name, organization_path(org)
               %td
                 - if user_org.approved?

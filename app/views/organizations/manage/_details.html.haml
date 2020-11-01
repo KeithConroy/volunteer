@@ -19,4 +19,4 @@
           %td= @organization.requires_approval
           %td
             - if @organization.logo.present?
-              = image_tag @organization.logo, style: "max-height: 60px; max-width: 60px;"
+              = image_tag @organization.logo, class: 'table-logo'
