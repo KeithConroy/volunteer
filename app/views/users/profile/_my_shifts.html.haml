@@ -1,55 +1,51 @@
-%h3 Scheduled
+.nav.nav-fill.nav-pills{id:"tab", role:"tablist", style: 'margin-bottom: 10px'}
+  %a.nav-link.active{id:"scheduled-tab", 'data-toggle' => "tab", href:"#scheduled", role:"tab", 'aria-controls' => "scheduled", 'aria-selected' => "true"}
+    Scheduled
+  %a.nav-link{id:"completed-tab", 'data-toggle' => "tab", href:"#completed", role:"tab", 'aria-controls' => "completed", 'aria-selected' => "false"}
+    Completed
 
-- if @scheduled_shifts.any?
-  .panel.panel-default
-    .table-responsive
-      %table.table.table-striped
-        %tbody
-          / %tr
-          /   %th Organization
-          /   %th Name
-          /   %th Date
-          /   %th Time
-          /   %th
-          - @scheduled_shifts.each do |shift|
-            %tr
-              %td{style: 'width: 1px'}
-                -if shift.organization.logo.present?
-                  = image_tag shift.organization.logo, style: "max-height: 60px; max-width: 60px;"
-              %td= link_to shift.organization.name, organization_path(shift.organization)
-              %td
-                = shift.name
-                %p
-                  %small
-                    %i= shift.description
-              %td= shift.formatted_date
-              %td= shift.formatted_time_range
-              %td= social_share_button_tag(shift.social_share_message, url: shift.organization.url)
-              %td= button_to 'Cancel', user_cancel_shift_path(shift), {class: 'btn btn-danger', data: { confirm: "Are you sure you want to cancel your #{shift.name} shift?" }}
-- else
-  %p
-    You don't have any upcoming shifts, sign up
-    = link_to 'here', search_shifts_path
+.tab-content{id:"tabContent"}
+  .tab-pane.active{id:"scheduled", role:"tabpanel", 'aria-labelledby' => "scheduled-tab"}
+    - if @scheduled_shifts.any?
+      .panel.panel-default
+        .table-responsive
+          %table.table.table-striped
+            %tbody
+              - @scheduled_shifts.each do |shift|
+                %tr
+                  %td{style: 'width: 1px'}
+                    -if shift.organization.logo.present?
+                      = image_tag shift.organization.logo, style: "max-height: 60px; max-width: 60px;"
+                  %td= link_to shift.organization.name, organization_path(shift.organization)
+                  %td
+                    = shift.name
+                    %p
+                      %small
+                        %i= shift.description
+                  %td= shift.formatted_date
+                  %td= shift.formatted_time_range
+                  %td= social_share_button_tag shift.social_share_message, url: shift.organization.url # organization_url(shift.name)
+                  %td= button_to 'Cancel', user_cancel_shift_path(shift), {class: 'btn btn-danger', data: { confirm: "Are you sure you want to cancel your #{shift.name} shift?" }}
+    - else
+      %p
+        You don't have any upcoming shifts, sign up
+        = link_to 'here', search_shifts_path
 
-- if @completed_shifts.any?
-  %h3 Completed
-
-  .panel.panel-default
-    .table-responsive
-      %table.table.table-striped
-        %tbody
-          / %tr
-          /   %th Organization
-          /   %th Name
-          /   %th Date
-          /   %th Time
-          - @completed_shifts.each do |shift|
-            %tr
-              %td{style: 'width: 1px'}
-                -if shift.organization.logo.present?
-                  = image_tag shift.organization.logo, style: "max-height: 60px; max-width: 60px;"
-              %td= link_to shift.organization.name, organization_path(shift.organization)
-              %td= shift.name
-              %td= shift.formatted_date
-              %td= shift.formatted_time_range
+  .tab-pane{id:"completed", role:"tabpanel", 'aria-labelledby' => "completed-tab"}
+    - if @completed_shifts.any?
+      .panel.panel-default
+        .table-responsive
+          %table.table.table-striped
+            %tbody
+              - @completed_shifts.each do |shift|
+                %tr
+                  %td{style: 'width: 1px'}
+                    -if shift.organization.logo.present?
+                      = image_tag shift.organization.logo, style: "max-height: 60px; max-width: 60px;"
+                  %td= link_to shift.organization.name, organization_path(shift.organization)
+                  %td= shift.name
+                  %td= shift.formatted_date
+                  %td= shift.formatted_time_range
+    - else
+      %p You have not completed any shifts
 
