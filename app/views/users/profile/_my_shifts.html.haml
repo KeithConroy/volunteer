@@ -22,8 +22,12 @@
                     %p
                       %small
                         %i= shift.description
-                  %td= shift.formatted_date
-                  %td= shift.formatted_time_range
+                        %td
+                  %td
+                    = shift.formatted_date
+                    %p
+                      %small
+                        %i= shift.formatted_time_range
                   %td= social_share_button_tag shift.social_share_message, url: shift.organization.url # organization_url(shift.name)
                   %td= button_to 'Cancel', user_cancel_shift_path(shift), {class: 'btn btn-danger', data: { confirm: "Are you sure you want to cancel your #{shift.name} shift?" }}
     - else
@@ -44,8 +48,11 @@
                       = image_tag shift.organization.logo, style: "max-height: 60px; max-width: 60px;"
                   %td= link_to shift.organization.name, organization_path(shift.organization)
                   %td= shift.name
-                  %td= shift.formatted_date
-                  %td= shift.formatted_time_range
+                  %td
+                    = shift.formatted_date
+                    %p
+                      %small
+                        %i= shift.formatted_time_range
     - else
       %p You have not completed any shifts
 
