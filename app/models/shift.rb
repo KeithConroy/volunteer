@@ -19,7 +19,7 @@ class Shift < ApplicationRecord
   end
 
   def formatted_time_range
-    "#{start_time.strftime("%-I:%M %p")} - #{end_time.strftime("%-I:%M %p")}"
+    "#{start_time.strftime("%-I:%M %p")} - #{end_time.strftime("%-I:%M %p")}".gsub(':00','')
   end
 
   def formatted_available_spots
