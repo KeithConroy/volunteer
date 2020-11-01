@@ -36,6 +36,6 @@
               %td= link_to org.url, "http://#{org.url}"
               %td
                 - if current_user.has_access?(org.id)
-                  = button_to 'Find Shifts', search_shifts_path(organization_ids: [org.id]), {class: 'btn btn-success'}
+                  = button_to 'Find Shifts', search_shifts_path(organization_ids: [org.id]), {class: 'btn btn-success table-btn'}
                 - else
-                  = button_to 'Request Access', request_access_organization_path(org), {class: 'btn btn-primary', params: {user_id: current_user.id}, data: { confirm: "Are you sure you want to request access from #{org.name}?" }}
+                  = button_to 'Request Access', request_access_organization_path(org), {class: 'btn btn-primary table-btn', params: {user_id: current_user.id}, data: { confirm: "Are you sure you want to request access from #{org.name}?" }}
