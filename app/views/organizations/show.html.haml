@@ -6,7 +6,7 @@
   = @organization.name
   %small{style: 'float: right;'}
     - if current_user.has_access?(@organization.id)
-      = button_to 'Find Shifts', search_shifts_path(organization_ids: [@organization.id]), {class: 'btn btn-success'}
+      = link_to 'Find Shifts', search_shifts_path(organization_ids: [@organization.id]), {class: 'btn btn-success'}
     - else
       = button_to 'Request Access', request_access_organization_path(@organization), {class: 'btn btn-primary', params: {user_id: current_user.id}, data: { confirm: "Are you sure you want to request access from #{@organization.name}?" }}
 
