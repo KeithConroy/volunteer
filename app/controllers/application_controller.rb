@@ -4,9 +4,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   def set_organization
-    if current_user
-      Thread.current[:organization_id] = current_user.admin_organization&.id
-    end
+    Thread.current[:organization_id] = current_user&.admin_organization&.id
   end
 
   protected

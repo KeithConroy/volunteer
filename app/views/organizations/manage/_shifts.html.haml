@@ -4,7 +4,20 @@
 
 %p Shifts are instances of a shift type.  They are specific to a certain day and time.  Here you can specify how many volunteers will be needed.
 
-- if @organization.shifts.scheduled.any?
-  = render partial: 'shifts/admin_table', locals: { shifts: @organization.shifts.scheduled, can_cancel: true }
-- else
-  %p No scheduled shifts
+.nav.nav-fill.nav-pills{id:"tab", role:"tablist", style: 'margin-bottom: 10px'}
+  %a.nav-link.active{id:"scheduled-tab", 'data-toggle' => "tab", href:"#scheduled", role:"tab", 'aria-controls' => "scheduled", 'aria-selected' => "true"}
+    Scheduled
+  %a.nav-link{id:"completed-tab", 'data-toggle' => "tab", href:"#completed", role:"tab", 'aria-controls' => "completed", 'aria-selected' => "false"}
+    Completed
+
+.tab-content{id:"tabContent"}
+  .tab-pane.active{id:"scheduled", role:"tabpanel", 'aria-labelledby' => "scheduled-tab"}
+    - if @organization.shifts.scheduled.any?
+      = render partial: 'shifts/admin_table', locals: { shifts: @organization.shifts.scheduled, can_cancel: true }
+    - else
+      %p No scheduled shifts
+  .tab-pane{id:"completed", role:"tabpanel", 'aria-labelledby' => "completed-tab"}
+    - if @organization.shifts.completed.any?
+      = render partial: 'shifts/admin_table', locals: { shifts: @organization.shifts.completed, can_cancel: false }
+    - else
+      %p No completed shifts
