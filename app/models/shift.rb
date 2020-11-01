@@ -19,7 +19,7 @@ class Shift < ApplicationRecord
   end
 
   def formatted_time_range
-    "#{start_time.strftime("%-I:%M %p")} - #{end_time.strftime("%-I:%M %p")}".gsub(':00','')
+    "#{start_time.strftime("%-I:%M%P")} - #{end_time.strftime("%-I:%M%P")}".gsub(':00','')
   end
 
   def formatted_available_spots
@@ -32,6 +32,10 @@ class Shift < ApplicationRecord
 
   def hours
     ((end_time - start_time) / 1.hour).round
+  end
+
+  def social_share_message
+    "I signed up to volunteer at #{organization.name}"
   end
 
   private

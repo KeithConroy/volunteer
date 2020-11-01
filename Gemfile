@@ -48,6 +48,7 @@ gem 'devise'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
+gem 'social-share-button'
 
 gem "aws-sdk-s3", require: false
 gem 'sidekiq'
