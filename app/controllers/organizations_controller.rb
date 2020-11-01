@@ -1,6 +1,6 @@
 class OrganizationsController < ApplicationController
   before_action :find_organization, except: [:new, :index, :create, :search]
-  before_action :authenticate_admin, except: [:new, :index, :create, :search, :request_access]
+  before_action :authorize_admin!, except: [:new, :index, :search, :request_access]
 
   def manage
     users = User.for_current_organization
@@ -143,8 +143,8 @@ class OrganizationsController < ApplicationController
     params.require(:organization).permit(:name, :description, :url, :requires_approval, :logo)
   end
 
-  def authenticate_admin
-    raise 'Unauthorized' unless @organization.organization_admins.where(user_id: current_user.id).present?
+  def requested_org_id
+    params[:id]
   end
 
 end

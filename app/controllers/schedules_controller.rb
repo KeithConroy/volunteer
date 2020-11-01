@@ -1,6 +1,7 @@
 class SchedulesController < ApplicationController
   before_action :find_schedule, except: [:index, :new]
   before_action :find_selections, only: [:new, :edit]
+  before_action :authorize_admin!, except: [:new]
 
   def index
   end
@@ -33,7 +34,7 @@ class SchedulesController < ApplicationController
   end
 
   def find_selections
-    @types = @organization.shift_types.pluck(:name, :id)
+    @types = current_user.admin_organization.shift_types.pluck(:name, :id)
     @frequencies = Schedule::FREQUENCIES
     @days_out = [['One Week', 7], ['One Month', 30], ['Three Months', 90]]
   end
@@ -51,6 +52,10 @@ class SchedulesController < ApplicationController
       :frequency_data,
       :days_out,
     )
+  end
+
+  def requested_org_id
+    params.dig(:schedule, :organization_id) || @schedule.organization_id
   end
 
 end

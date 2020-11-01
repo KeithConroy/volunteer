@@ -27,19 +27,22 @@ Rails.application.routes.draw do
 
   resources :shift_types
   resources :schedules
-  resources :roles
+
+  resources :roles do
+    collection do
+      post :assign_user
+      post :remove_user
+    end
+  end
+
   resources :addresses
   resources :users do
     member do
       get :profile
       get :change_tab
     end
-
-    collection do
-      post :assign_role
-      post :remove_role
-    end
   end
+
   resources :organizations do
     member do
       post :request_access

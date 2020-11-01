@@ -1,6 +1,7 @@
 class ShiftsController < ApplicationController
   before_action :find_shift, except: [:search, :index, :new]
   before_action :find_selections, only: [:new, :edit]
+  before_action :authorize_admin!, except: [:new, :search, :sign_up, :user_cancel]
 
   def search
     # params[:organization_ids]
@@ -68,7 +69,7 @@ class ShiftsController < ApplicationController
     @shifts = Shift.for_current_organization.order(:date)
     @shift_types = [["All", 0]]
 
-    @organization.shift_types.each do |type|
+    current_user.admin_organization.shift_types.each do |type|
       @shift_types << [type.name, type.id]
     end
 
@@ -142,7 +143,7 @@ class ShiftsController < ApplicationController
     end
     @shift.destroy
     flash[:info] = "Shift has been cancelled#{', volunteers have been notified' if had_volunteers}"
-    redirect_to manage_organization_path(@organization)
+    redirect_to manage_organization_path(current_user.admin_organization)
   end
 
   private
@@ -152,10 +153,14 @@ class ShiftsController < ApplicationController
   end
 
   def find_selections
-    @types = @organization.shift_types.pluck(:name, :id)
+    @types = current_user.admin_organization.shift_types.pluck(:name, :id)
   end
 
   def shift_params
     params.require(:shift).permit(:organization_id, :shift_type_id, :spots, :date, :start_time, :end_time)
+  end
+
+  def requested_org_id
+    params.dig(:shift, :organization_id) || @shift.organization_id
   end
 end

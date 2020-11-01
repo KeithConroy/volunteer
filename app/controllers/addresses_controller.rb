@@ -1,5 +1,6 @@
 class AddressesController < ApplicationController
   before_action :find_address, except: [:new, :create]
+  before_action :authorize_admin!, except: [:new]
 
   def new
     @address = Address.new
@@ -34,4 +35,9 @@ class AddressesController < ApplicationController
   def address_params
     params.require(:address).permit(:line_1, :line_2, :city, :state, :zip_code, :organization_id)
   end
+
+  def requested_org_id
+    params.dig(:address, :organization_id) || @address.organization_id
+  end
+
 end

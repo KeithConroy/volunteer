@@ -11,13 +11,13 @@
 
 - current_user.admin_organization.roles.each do |role|
   - if @user.has_role?(role.id)
-    = bootstrap_form_tag url: remove_role_users_path, :method => "post" do
-      = hidden_field_tag :role_id, role.id
+    = bootstrap_form_tag url: remove_user_roles_path, :method => "post" do
+      = hidden_field_tag :id, role.id
       = hidden_field_tag :user_id, @user.id
       = submit_tag "Remove #{role.name} Role", class: 'btn btn-danger'
   - else
-    = bootstrap_form_tag url: assign_role_users_path, :method => "post" do
-      = hidden_field_tag :role_id, role.id
+    = bootstrap_form_tag url: assign_user_roles_path, :method => "post" do
+      = hidden_field_tag :id, role.id
       = hidden_field_tag :user_id, @user.id
       = submit_tag "Assign #{role.name} Role", class: 'btn btn-primary'
 

@@ -1,5 +1,6 @@
 class RolesController < ApplicationController
-  before_action :find_role, only: [:show, :edit, :update, :destroy]
+  before_action :find_role, only: [:show, :edit, :update, :destroy, :assign_role, :remove_role]
+  before_action :authorize_admin!, except: [:new]
 
   def index
     @roles = Role.where(organization_id: current_user.admin_organization&.id)
@@ -39,6 +40,23 @@ class RolesController < ApplicationController
     redirect_to(action: 'index')
   end
 
+  def assign_user
+    @user = User.find(params[:user_id])
+    UserRole.create(user_id: @user.id, role_id: @role.id)
+    # UserMailer.role_assigned(@user, @role).deliver_later
+
+    flash[:info] = "#{@role.name} role assigned to #{@user.full_name}"
+    redirect_back(fallback_location: authenticated_root_path)
+  end
+
+  def remove_user
+    @user = User.find(params[:user_id])
+    UserRole.where(user_id: @user.id, role_id: @role.id).first.destroy
+    # notify user
+    flash[:info] = "#{@role.name} role removed from #{@user.full_name}"
+    redirect_back(fallback_location: authenticated_root_path)
+  end
+
   private
 
   def find_role
@@ -47,5 +65,9 @@ class RolesController < ApplicationController
 
   def role_params
     params.require(:role).permit(:name, :description, :organization_id)
+  end
+
+  def requested_org_id
+    params.dig(:role, :organization_id) || @role.organization_id
   end
 end

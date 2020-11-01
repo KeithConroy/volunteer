@@ -1,6 +1,7 @@
 class ShiftTypesController < ApplicationController
   before_action :find_shift_type, only: [:show, :edit, :update, :destroy]
   before_action :find_selections, only: [:new, :edit]
+  before_action :authorize_admin!, except: [:new]
 
   def index
     @shift_types = ShiftType.for_current_organization
@@ -54,4 +55,9 @@ class ShiftTypesController < ApplicationController
   def shift_type_params
     params.require(:shift_type).permit(:name, :description, :organization_id, :address_id, :role_id)
   end
+
+  def requested_org_id
+    params.dig(:shift_type, :organization_id) || @shift_type.organization_id
+  end
+
 end

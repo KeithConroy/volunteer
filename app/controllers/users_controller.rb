@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :find_user, except: [:index, :sign_out]
-  before_action :find_role, only: [:assign_role, :remove_role]
+  before_action :check_user_authorization, only: [:profile]
+  before_action :check_admin_authorization, only: [:show]
 
   def index
     users = User.for_current_organization
@@ -10,22 +11,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
-  end
-
-  def assign_role
-    UserRole.create(user_id: @user.id, role_id: @role.id)
-    # UserMailer.role_assigned(@user, @role).deliver_later
-
-    flash[:info] = "#{@role.name} role assigned to #{@user.full_name}"
-    redirect_back(fallback_location: authenticated_root_path)
-  end
-
-  def remove_role
-    UserRole.where(user_id: @user.id, role_id: @role.id).first.destroy
-    # notify user
-    flash[:info] = "#{@role.name} role removed from #{@user.full_name}"
-    redirect_back(fallback_location: authenticated_root_path)
   end
 
   def profile
@@ -37,11 +22,16 @@ class UsersController < ApplicationController
   private
 
   def find_user
-    @user = User.find(params[:id] || params[:user_id])
+    @user = User.find(params[:id])
   end
 
-  def find_role
-    @role = Role.find(params[:role_id])
+  def check_user_authorization
+    raise ActionController::RoutingError.new('Not Found') unless current_user == @user
+  end
+
+  def check_admin_authorization
+    org = current_user.admin_organization
+    raise ActionController::RoutingError.new('Not Found') unless org && org.users.where(id: params[:id]).present?
   end
 
 end
